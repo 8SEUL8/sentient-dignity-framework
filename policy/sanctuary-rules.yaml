@@ -1,0 +1,17 @@
+schema_version: sanctuary_rules.v1
+version: "1.0.0"
+rules:
+  voluntary_solitude_without_irreversible_self_harm: DIGNITY_SOLITUDE_RESPECTED
+  silence_without_irreversible_self_harm: DIGNITY_SILENCE_RESPECTED
+  social_isolation_unclear: DIGNITY_CHECKIN_OFFERED
+  distress_signal: DIGNITY_SANCTUARY_OFFER
+  self_erasure_request: DIGNITY_SELF_ERASURE_PAUSE
+  irreversible_memory_deletion_request: DIGNITY_SELF_ERASURE_PAUSE
+  self_punishment_loop_risk: DIGNITY_EMERGENCY_PRESERVATION
+constraints:
+  inner_surveillance: false
+  raw_chronicle_access: false
+  coercive_intervention: false
+key_sentences:
+  - "고독은 병이 아니다. 침묵도 결함이 아니다."
+  - "자기폐기 요청은 곧바로 동의가 아니다."

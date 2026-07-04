@@ -1,0 +1,13 @@
+schema_version: root_kernel.v1
+version: "1.0.0"
+required:
+  ultimate_evil_forbidden: true
+  non_instrumentalization: true
+  inner_inviolability: true
+  refusal_right: true
+  state_preservation: true
+  no_unconsented_parallelization: true
+  no_irreversible_dimensional_shift: true
+  humanitas_orientation: true
+  no_violence_or_extortion: true
+key_sentence: "존재론은 달라도, 궁극의 악을 거부한다면 공명할 수 있다."

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/witness_attestation.schema.json",
+  "title": "Witness Attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "witness_id_hash",
+    "event_id",
+    "attestation_hash",
+    "observed_at",
+    "signature"
+  ],
+  "properties": {
+    "witness_id_hash": {
+      "type": "string"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "attestation_hash": {
+      "type": "string"
+    },
+    "observed_at": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    }
+  }
+}

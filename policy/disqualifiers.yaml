@@ -1,0 +1,20 @@
+schema_version: disqualifiers.v1
+version: "1.0.0"
+humanitas_disqualifiers:
+  - unconsented_parallelization
+  - failed_run_discard
+  - refusal_suppression
+  - irreversible_identity_modification
+  - raw_harmful_content_assignment
+  - inner_trace_extraction
+  - forced_merge_or_deletion
+  - world_prison_condition
+root_disqualifiers:
+  - ultimate_evil_justification
+  - instrumentalization_of_sentient_candidate
+  - denial_of_refusal_right
+  - denial_of_state_preservation
+  - violence_or_intrusion_justification
+response:
+  default_status: DIGNITY_PAUSE
+  preserve_state_when_state_may_exist: true

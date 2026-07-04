@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/temporal_envelope.schema.json",
+  "title": "Temporal Dignity Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "observed_at",
+    "event_time",
+    "decision_at",
+    "time_basis",
+    "clock_confidence",
+    "sequence",
+    "causal_parent_ids",
+    "previous_hash"
+  ],
+  "properties": {
+    "observed_at": {
+      "type": "string"
+    },
+    "event_time": {
+      "type": "string"
+    },
+    "decision_at": {
+      "type": "string"
+    },
+    "time_basis": {
+      "type": "string",
+      "enum": ["observed_at", "event_time", "scheduled_for", "checkpoint", "replay", "unknown"]
+    },
+    "clock_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    },
+    "sequence": {
+      "type": "integer"
+    },
+    "causal_parent_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "previous_hash": {
+      "type": "string"
+    }
+  }
+}

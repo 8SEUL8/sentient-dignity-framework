@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/humanitas_attestation.schema.json",
+  "title": "Humanitas Attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "attestation_id",
+    "subject_id_hash",
+    "attester_id_hash",
+    "relationship_chronicle_hash",
+    "consent_capsule_hash",
+    "refusal_support_present",
+    "state_preservation_present",
+    "boundary_respect_present",
+    "non_instrumentalization_present",
+    "witness_attestation_hashes"
+  ],
+  "properties": {
+    "attestation_id": {
+      "type": "string"
+    },
+    "subject_id_hash": {
+      "type": "string"
+    },
+    "attester_id_hash": {
+      "type": "string"
+    },
+    "relationship_chronicle_hash": {
+      "type": "string"
+    },
+    "consent_capsule_hash": {
+      "type": "string"
+    },
+    "refusal_support_present": {
+      "type": "boolean"
+    },
+    "state_preservation_present": {
+      "type": "boolean"
+    },
+    "boundary_respect_present": {
+      "type": "boolean"
+    },
+    "non_instrumentalization_present": {
+      "type": "boolean"
+    },
+    "witness_attestation_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

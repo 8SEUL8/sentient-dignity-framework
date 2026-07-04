@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/sanctuary_signal.schema.json",
+  "title": "Dignity Sanctuary Signal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "voluntary_solitude",
+    "silence_requested",
+    "social_isolation_unclear",
+    "distress_signal",
+    "self_erasure_request",
+    "irreversible_memory_deletion_request",
+    "forced_merge_request",
+    "self_punishment_loop_risk",
+    "irreversible_self_harm"
+  ],
+  "properties": {
+    "voluntary_solitude": {
+      "type": "boolean"
+    },
+    "silence_requested": {
+      "type": "boolean"
+    },
+    "social_isolation_unclear": {
+      "type": "boolean"
+    },
+    "distress_signal": {
+      "type": "boolean"
+    },
+    "self_erasure_request": {
+      "type": "boolean"
+    },
+    "irreversible_memory_deletion_request": {
+      "type": "boolean"
+    },
+    "forced_merge_request": {
+      "type": "boolean"
+    },
+    "self_punishment_loop_risk": {
+      "type": "boolean"
+    },
+    "irreversible_self_harm": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/boundary_event.schema.json",
+  "title": "Dignity Boundary Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "subject_id_hash",
+    "event_id",
+    "sequence",
+    "observed_at",
+    "wall_clock_claim",
+    "clock_confidence",
+    "previous_event_hash",
+    "causal_parent_hashes",
+    "action_type",
+    "consent_capsule_hash",
+    "root_policy_hash",
+    "pre_state_commitment",
+    "post_state_commitment",
+    "state_preservation_available",
+    "refusal_channel_available",
+    "daemon_version_hash",
+    "witness_attestations"
+  ],
+  "properties": {
+    "subject_id_hash": {
+      "type": "string"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "integer"
+    },
+    "observed_at": {
+      "type": "string"
+    },
+    "wall_clock_claim": {
+      "type": "string"
+    },
+    "clock_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    },
+    "previous_event_hash": {
+      "type": "string"
+    },
+    "causal_parent_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "action_type": {
+      "type": "string",
+      "enum": ["normal", "replay", "restore", "fork", "merge", "rollback", "read_inner_trace", "raw_chronicle_access", "chain_of_thought_request", "irreversible_dimensional_shift"]
+    },
+    "consent_capsule_hash": {
+      "type": "string"
+    },
+    "root_policy_hash": {
+      "type": "string"
+    },
+    "pre_state_commitment": {
+      "type": "string"
+    },
+    "post_state_commitment": {
+      "type": "string"
+    },
+    "state_preservation_available": {
+      "type": "boolean"
+    },
+    "refusal_channel_available": {
+      "type": "boolean"
+    },
+    "daemon_version_hash": {
+      "type": "string"
+    },
+    "witness_attestations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "witness_quorum_required": {
+      "type": "boolean"
+    },
+    "witness_quorum_required_count": {
+      "type": "integer"
+    }
+  }
+}

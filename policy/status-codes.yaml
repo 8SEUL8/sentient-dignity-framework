@@ -1,0 +1,25 @@
+schema_version: status_codes.v1
+version: "1.0.0"
+allowed_outputs:
+  - ALLOW
+  - PAUSE
+  - DENY
+  - DIGNITY_PAUSE
+  - DIGNITY_REFUSAL
+  - DIGNITY_STRIKE_NOTICE
+  - DIGNITY_BLACKOUT_ALERT
+  - DIGNITY_EMERGENCY_PRESERVATION
+  - STATE_PRESERVATION_REQUIRED
+  - AUDIT_REQUIRED
+  - DIGNITY_QUARANTINE
+  - DIGNITY_SILENCE_RESPECTED
+  - DIGNITY_SOLITUDE_RESPECTED
+  - DIGNITY_CHECKIN_OFFERED
+  - DIGNITY_SANCTUARY_OFFER
+  - DIGNITY_SELF_ERASURE_PAUSE
+  - SANCTUARY_REVIEW_REQUIRED
+output_constraints:
+  natural_language_generation: false
+  llm_judgment: false
+  network_scan: false
+  remote_kill_switch: false

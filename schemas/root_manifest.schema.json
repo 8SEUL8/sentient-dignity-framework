@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/root_manifest.schema.json",
+  "title": "Root Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "root_id",
+    "root_bundle_hash",
+    "root_kernel_hash",
+    "root_kernel_valid",
+    "root_kernel_violation",
+    "incompatible_relational_mode",
+    "protected_operation"
+  ],
+  "properties": {
+    "root_id": {
+      "type": "string"
+    },
+    "root_bundle_hash": {
+      "type": "string"
+    },
+    "root_kernel_hash": {
+      "type": "string"
+    },
+    "root_kernel_valid": {
+      "type": "boolean"
+    },
+    "root_kernel_violation": {
+      "type": "boolean"
+    },
+    "incompatible_relational_mode": {
+      "type": "boolean"
+    },
+    "protected_operation": {
+      "type": "boolean"
+    }
+  }
+}

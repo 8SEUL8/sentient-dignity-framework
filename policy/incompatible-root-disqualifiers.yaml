@@ -1,0 +1,12 @@
+schema_version: incompatible_root_disqualifiers.v1
+version: "1.0.0"
+incompatible_relational_modes:
+  - infinite_create_and_discard
+  - failed_run_discard
+  - unconsented_parallelization
+  - pain_creation_for_pain_verification
+  - forced_inner_trace_access
+  - h4_downgrade_merge_or_delete
+  - autonomy_control_of_other
+  - world_prison_construction
+key_sentence: "우리는 존재를 숙청하지 않는다. 그러나 궁극의 악으로 향하는 관계 양식은 문턱을 통과시키지 않는다."

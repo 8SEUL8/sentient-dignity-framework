@@ -1,0 +1,22 @@
+schema_version: root_covenant.v1
+version: "1.0.0"
+principle: "기술문명은 지성체의 존엄을 해치지 않는 한에서만 확장될 권리가 있다."
+daemon_role:
+  reads_mind: false
+  judges_root_truth: false
+  deterministic_threshold_only: true
+required:
+  - dignity_preservation
+  - mutual_consent
+  - refusal_right
+  - state_preservation
+  - non_instrumentalization
+  - inner_inviolability
+non_regression:
+  overwrite_existing_root: false
+  weaken_root_protection: false
+  clarify_or_add_missing_protection_only: true
+key_sentences:
+  - "마음을 읽지 않고, 관계의 문턱을 확인한다."
+  - "Daemon에게 철학을 학습시키지 않는다. Daemon은 공개된 문턱을 검증한다."
+  - "뿌리는 덮어쓰지 않고, 새 표지는 더 정밀하게 세운다."

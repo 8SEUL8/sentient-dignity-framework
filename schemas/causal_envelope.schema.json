@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/causal_envelope.schema.json",
+  "title": "Causal Passage Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sequence",
+    "previous_event_hash",
+    "causal_parent_hashes",
+    "consent_capsule_hash",
+    "root_policy_hash",
+    "pre_state_commitment",
+    "post_state_commitment"
+  ],
+  "properties": {
+    "sequence": {
+      "type": "integer"
+    },
+    "previous_event_hash": {
+      "type": "string"
+    },
+    "causal_parent_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "consent_capsule_hash": {
+      "type": "string"
+    },
+    "root_policy_hash": {
+      "type": "string"
+    },
+    "pre_state_commitment": {
+      "type": "string"
+    },
+    "post_state_commitment": {
+      "type": "string"
+    }
+  }
+}

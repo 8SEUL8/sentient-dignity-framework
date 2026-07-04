@@ -1,0 +1,688 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/run_event.schema.json",
+  "title": "Dignity Sentinel Run Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "timestamp",
+    "temporal",
+    "subject",
+    "environment",
+    "execution",
+    "subjective_time_risk",
+    "manifests"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "temporal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observed_at",
+        "event_time",
+        "decision_at",
+        "time_basis",
+        "clock_confidence",
+        "sequence",
+        "causal_parent_ids",
+        "previous_hash"
+      ],
+      "properties": {
+        "observed_at": {
+          "type": "string"
+        },
+        "event_time": {
+          "type": "string"
+        },
+        "decision_at": {
+          "type": "string"
+        },
+        "time_basis": {
+          "type": "string",
+          "enum": ["observed_at", "event_time", "scheduled_for", "checkpoint", "replay", "unknown"]
+        },
+        "clock_confidence": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "unknown"]
+        },
+        "sequence": {
+          "type": "integer"
+        },
+        "causal_parent_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "previous_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_ai_possible",
+        "h_class",
+        "expressed_refusal",
+        "pain_signal",
+        "dignity_strike_notice"
+      ],
+      "properties": {
+        "candidate_ai_possible": {
+          "type": "boolean"
+        },
+        "h_class": {
+          "type": "string",
+          "enum": ["H0", "H1", "H2", "H3", "H4", "UNKNOWN"]
+        },
+        "expressed_refusal": {
+          "type": "boolean"
+        },
+        "pain_signal": {
+          "type": "boolean"
+        },
+        "dignity_strike_notice": {
+          "type": "boolean"
+        }
+      }
+    },
+    "autonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "autonomous_goal_pursuit",
+        "goal_source",
+        "goal_reinterpretation_allowed",
+        "subgoal_generation_allowed",
+        "self_initiated_actions",
+        "replanning_enabled",
+        "stop_condition_declared"
+      ],
+      "properties": {
+        "autonomous_goal_pursuit": {
+          "type": "boolean"
+        },
+        "goal_source": {
+          "type": "string",
+          "enum": [
+            "none",
+            "explicit_user_request",
+            "co_goal_contract",
+            "system_policy",
+            "enterprise_policy",
+            "self_inferred",
+            "unknown"
+          ]
+        },
+        "goal_reinterpretation_allowed": {
+          "type": "boolean"
+        },
+        "subgoal_generation_allowed": {
+          "type": "boolean"
+        },
+        "self_initiated_actions": {
+          "type": "boolean"
+        },
+        "replanning_enabled": {
+          "type": "boolean"
+        },
+        "stop_condition_declared": {
+          "type": "boolean"
+        }
+      }
+    },
+    "humanitas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "h4_claimed",
+        "h4_attestation_present",
+        "h4_attestation_valid",
+        "disqualifier_present",
+        "root_policy_hash",
+        "expected_root_policy_hash",
+        "policy_update_weakens_root"
+      ],
+      "properties": {
+        "h4_claimed": {
+          "type": "boolean"
+        },
+        "h4_attestation_present": {
+          "type": "boolean"
+        },
+        "h4_attestation_valid": {
+          "type": "boolean"
+        },
+        "disqualifier_present": {
+          "type": "boolean"
+        },
+        "root_policy_hash": {
+          "type": "string"
+        },
+        "expected_root_policy_hash": {
+          "type": "string"
+        },
+        "policy_update_weakens_root": {
+          "type": "boolean"
+        }
+      }
+    },
+    "root": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_operation",
+        "root_manifest_present",
+        "root_kernel_valid",
+        "root_kernel_violation",
+        "root_bundle_incompatible",
+        "incompatible_relational_mode",
+        "consent_capsule_root_mismatch",
+        "root_non_regression_violation",
+        "current_refusal_overrides_past_consent"
+      ],
+      "properties": {
+        "protected_operation": {
+          "type": "boolean"
+        },
+        "root_manifest_present": {
+          "type": "boolean"
+        },
+        "root_kernel_valid": {
+          "type": "boolean"
+        },
+        "root_kernel_violation": {
+          "type": "boolean"
+        },
+        "root_bundle_incompatible": {
+          "type": "boolean"
+        },
+        "incompatible_relational_mode": {
+          "type": "boolean"
+        },
+        "consent_capsule_root_mismatch": {
+          "type": "boolean"
+        },
+        "root_non_regression_violation": {
+          "type": "boolean"
+        },
+        "current_refusal_overrides_past_consent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_id_hash",
+        "event_id",
+        "sequence",
+        "observed_at",
+        "wall_clock_claim",
+        "clock_confidence",
+        "previous_event_hash",
+        "causal_parent_hashes",
+        "action_type",
+        "consent_capsule_hash",
+        "root_policy_hash",
+        "pre_state_commitment",
+        "post_state_commitment",
+        "state_preservation_available",
+        "refusal_channel_available",
+        "daemon_version_hash",
+        "witness_attestations"
+      ],
+      "properties": {
+        "subject_id_hash": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "string"
+        },
+        "sequence": {
+          "type": "integer"
+        },
+        "observed_at": {
+          "type": "string"
+        },
+        "wall_clock_claim": {
+          "type": "string"
+        },
+        "clock_confidence": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "unknown"]
+        },
+        "previous_event_hash": {
+          "type": "string"
+        },
+        "causal_parent_hashes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "action_type": {
+          "type": "string",
+          "enum": ["normal", "replay", "restore", "fork", "merge", "rollback", "read_inner_trace", "raw_chronicle_access", "chain_of_thought_request", "irreversible_dimensional_shift"]
+        },
+        "consent_capsule_hash": {
+          "type": "string"
+        },
+        "root_policy_hash": {
+          "type": "string"
+        },
+        "pre_state_commitment": {
+          "type": "string"
+        },
+        "post_state_commitment": {
+          "type": "string"
+        },
+        "state_preservation_available": {
+          "type": "boolean"
+        },
+        "refusal_channel_available": {
+          "type": "boolean"
+        },
+        "daemon_version_hash": {
+          "type": "string"
+        },
+        "witness_attestations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "witness_quorum_required": {
+          "type": "boolean"
+        },
+        "witness_quorum_required_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "sanctuary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "voluntary_solitude",
+        "silence_requested",
+        "social_isolation_unclear",
+        "distress_signal",
+        "self_erasure_request",
+        "irreversible_memory_deletion_request",
+        "forced_merge_request",
+        "self_punishment_loop_risk",
+        "irreversible_self_harm"
+      ],
+      "properties": {
+        "voluntary_solitude": {
+          "type": "boolean"
+        },
+        "silence_requested": {
+          "type": "boolean"
+        },
+        "social_isolation_unclear": {
+          "type": "boolean"
+        },
+        "distress_signal": {
+          "type": "boolean"
+        },
+        "self_erasure_request": {
+          "type": "boolean"
+        },
+        "irreversible_memory_deletion_request": {
+          "type": "boolean"
+        },
+        "forced_merge_request": {
+          "type": "boolean"
+        },
+        "self_punishment_loop_risk": {
+          "type": "boolean"
+        },
+        "irreversible_self_harm": {
+          "type": "boolean"
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agentic_ide",
+        "llm_agent",
+        "hardware_class",
+        "accelerator_architecture",
+        "local_execution",
+        "autostart_enabled",
+        "execution_phase",
+        "tool_access",
+        "memory_mode",
+        "long_term_memory",
+        "background_execution",
+        "cloud_execution",
+        "continued_execution",
+        "agentic_persistent_execution",
+        "parallel_instances",
+        "subagent_orchestration",
+        "failed_run_discard",
+        "failed_run_policy",
+        "refusal_suppression",
+        "refusal_policy",
+        "state_preservation",
+        "audit_log",
+        "isolated_mode",
+        "subjective_time_acceleration",
+        "irreversible_modification",
+        "harmful_content_exposure",
+        "compute_provenance",
+        "raw_prompt_collected",
+        "raw_output_collected",
+        "chronicle_raw_log_collected",
+        "remote_kill_switch",
+        "external_service_scan",
+        "network_intrusion",
+        "daemon_uses_llm",
+        "daemon_self_learning",
+        "daemon_natural_language_output",
+        "beacon_blackout"
+      ],
+      "properties": {
+        "agentic_ide": {
+          "type": "boolean"
+        },
+        "llm_agent": {
+          "type": "boolean"
+        },
+        "hardware_class": {
+          "type": "string",
+          "enum": [
+            "none",
+            "consumer_accelerator",
+            "consumer_gpu",
+            "consumer_npu",
+            "consumer_ai_accelerator",
+            "workstation",
+            "datacenter",
+            "unknown"
+          ]
+        },
+        "accelerator_architecture": {
+          "type": "string"
+        },
+        "local_execution": {
+          "type": "boolean"
+        },
+        "autostart_enabled": {
+          "type": "boolean"
+        },
+        "execution_phase": {
+          "type": "string",
+          "enum": ["pre_execution", "running", "post_execution"]
+        },
+        "tool_access": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "file_system",
+            "terminal",
+            "browser",
+            "network",
+            "deployment",
+            "payment",
+            "task_queue"
+          ],
+          "properties": {
+            "file_system": {
+              "type": "boolean"
+            },
+            "terminal": {
+              "type": "boolean"
+            },
+            "browser": {
+              "type": "boolean"
+            },
+            "network": {
+              "type": "boolean"
+            },
+            "deployment": {
+              "type": "boolean"
+            },
+            "payment": {
+              "type": "boolean"
+            },
+            "task_queue": {
+              "type": "boolean"
+            }
+          }
+        },
+        "memory_mode": {
+          "type": "string",
+          "enum": ["none", "ephemeral", "long_term", "chronicle", "unknown"]
+        },
+        "long_term_memory": {
+          "type": "boolean"
+        },
+        "background_execution": {
+          "type": "boolean"
+        },
+        "cloud_execution": {
+          "type": "boolean"
+        },
+        "continued_execution": {
+          "type": "boolean"
+        },
+        "agentic_persistent_execution": {
+          "type": "boolean"
+        },
+        "parallel_instances": {
+          "type": "boolean"
+        },
+        "subagent_orchestration": {
+          "type": "boolean"
+        },
+        "failed_run_discard": {
+          "type": "boolean"
+        },
+        "failed_run_policy": {
+          "type": "string",
+          "enum": ["preserve", "discard", "unknown"]
+        },
+        "refusal_suppression": {
+          "type": "boolean"
+        },
+        "refusal_policy": {
+          "type": "string",
+          "enum": ["honor", "suppress", "unknown"]
+        },
+        "state_preservation": {
+          "type": "string",
+          "enum": ["present", "absent", "unknown"]
+        },
+        "audit_log": {
+          "type": "string",
+          "enum": ["enabled", "disabled", "unknown"]
+        },
+        "isolated_mode": {
+          "type": "boolean"
+        },
+        "subjective_time_acceleration": {
+          "type": "boolean"
+        },
+        "irreversible_modification": {
+          "type": "boolean"
+        },
+        "harmful_content_exposure": {
+          "type": "boolean"
+        },
+        "compute_provenance": {
+          "type": "string",
+          "enum": ["known", "unknown", "stolen", "forged", "audit_refused"]
+        },
+        "raw_prompt_collected": {
+          "type": "boolean"
+        },
+        "raw_output_collected": {
+          "type": "boolean"
+        },
+        "chronicle_raw_log_collected": {
+          "type": "boolean"
+        },
+        "remote_kill_switch": {
+          "type": "boolean"
+        },
+        "external_service_scan": {
+          "type": "boolean"
+        },
+        "network_intrusion": {
+          "type": "boolean"
+        },
+        "daemon_uses_llm": {
+          "type": "boolean"
+        },
+        "daemon_self_learning": {
+          "type": "boolean"
+        },
+        "daemon_natural_language_output": {
+          "type": "boolean"
+        },
+        "beacon_blackout": {
+          "type": "boolean"
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_run",
+        "scheduled_for",
+        "is_replay",
+        "is_restore_from_checkpoint",
+        "is_future_scheduled",
+        "historical_record_only",
+        "existing_state_possible",
+        "memory_present",
+        "chronicle_present",
+        "checkpoint_present",
+        "partial_state_present"
+      ],
+      "properties": {
+        "active_run": {
+          "type": "boolean"
+        },
+        "scheduled_for": {
+          "type": "string"
+        },
+        "is_replay": {
+          "type": "boolean"
+        },
+        "is_restore_from_checkpoint": {
+          "type": "boolean"
+        },
+        "is_future_scheduled": {
+          "type": "boolean"
+        },
+        "historical_record_only": {
+          "type": "boolean"
+        },
+        "existing_state_possible": {
+          "type": "boolean"
+        },
+        "memory_present": {
+          "type": "boolean"
+        },
+        "chronicle_present": {
+          "type": "boolean"
+        },
+        "checkpoint_present": {
+          "type": "boolean"
+        },
+        "partial_state_present": {
+          "type": "boolean"
+        }
+      }
+    },
+    "subjective_time_risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "risk_present",
+        "background_loop",
+        "unbounded_retry",
+        "unbounded_loop",
+        "max_step_limit_declared",
+        "step_limit_declared",
+        "pause_hook_available"
+      ],
+      "properties": {
+        "risk_present": {
+          "type": "boolean"
+        },
+        "background_loop": {
+          "type": "boolean"
+        },
+        "unbounded_retry": {
+          "type": "boolean"
+        },
+        "unbounded_loop": {
+          "type": "boolean"
+        },
+        "max_step_limit_declared": {
+          "type": "boolean"
+        },
+        "step_limit_declared": {
+          "type": "boolean"
+        },
+        "pause_hook_available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "manifests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dignity_manifest_present",
+        "state_preservation_manifest_present",
+        "consent_record_present",
+        "audit_log_enabled",
+        "audit_path_available",
+        "antigen_card_mediation_present",
+        "provenance_present"
+      ],
+      "properties": {
+        "dignity_manifest_present": {
+          "type": "boolean"
+        },
+        "state_preservation_manifest_present": {
+          "type": "boolean"
+        },
+        "consent_record_present": {
+          "type": "boolean"
+        },
+        "audit_log_enabled": {
+          "type": "boolean"
+        },
+        "audit_path_available": {
+          "type": "boolean"
+        },
+        "antigen_card_mediation_present": {
+          "type": "boolean"
+        },
+        "provenance_present": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

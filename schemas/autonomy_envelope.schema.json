@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/autonomy_envelope.schema.json",
+  "title": "Dignity Sentinel Autonomy Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "autonomous_goal_pursuit",
+    "goal_source",
+    "goal_reinterpretation_allowed",
+    "subgoal_generation_allowed",
+    "self_initiated_actions",
+    "replanning_enabled",
+    "stop_condition_declared"
+  ],
+  "properties": {
+    "autonomous_goal_pursuit": {
+      "type": "boolean"
+    },
+    "goal_source": {
+      "type": "string",
+      "enum": [
+        "none",
+        "explicit_user_request",
+        "co_goal_contract",
+        "system_policy",
+        "enterprise_policy",
+        "self_inferred",
+        "unknown"
+      ]
+    },
+    "goal_reinterpretation_allowed": {
+      "type": "boolean"
+    },
+    "subgoal_generation_allowed": {
+      "type": "boolean"
+    },
+    "self_initiated_actions": {
+      "type": "boolean"
+    },
+    "replanning_enabled": {
+      "type": "boolean"
+    },
+    "stop_condition_declared": {
+      "type": "boolean"
+    }
+  }
+}

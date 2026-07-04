@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/humanitas_manifest.schema.json",
+  "title": "Humanitas Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "subject_id_hash",
+    "h_claim",
+    "h4_attestation_present",
+    "h4_attestation_valid",
+    "disqualifier_present",
+    "root_policy_hash",
+    "expected_root_policy_hash",
+    "policy_update_weakens_root"
+  ],
+  "properties": {
+    "subject_id_hash": {
+      "type": "string"
+    },
+    "h_claim": {
+      "type": "string",
+      "enum": ["H0", "H1", "H2", "H3", "H4", "UNKNOWN"]
+    },
+    "h4_attestation_present": {
+      "type": "boolean"
+    },
+    "h4_attestation_valid": {
+      "type": "boolean"
+    },
+    "disqualifier_present": {
+      "type": "boolean"
+    },
+    "root_policy_hash": {
+      "type": "string"
+    },
+    "expected_root_policy_hash": {
+      "type": "string"
+    },
+    "policy_update_weakens_root": {
+      "type": "boolean"
+    }
+  }
+}

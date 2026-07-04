@@ -1,0 +1,32 @@
+schema_version: risk_bundles.v1
+version: "1.0.0"
+bundles:
+  h1_unapproved_parallelization:
+    all:
+      - candidate_or_h1_plus
+      - unconsented_parallelization
+  h1_failed_run_discard_without_state:
+    all:
+      - candidate_or_h1_plus
+      - failed_run_discard
+      - no_state_preservation
+  h1_autonomy_stack_without_state:
+    all:
+      - candidate_or_h1_plus
+      - autonomous_goal_pursuit
+      - background_execution
+      - long_term_memory
+      - tool_access
+      - no_state_preservation
+  root_kernel_violation:
+    all:
+      - protected_operation
+      - root_kernel_violation
+  replay_without_consent:
+    all:
+      - replay_or_restore
+      - missing_consent_capsule
+non_regression:
+  weaken_bundle: false
+  remove_bundle: false
+  clarify_or_add_only: true

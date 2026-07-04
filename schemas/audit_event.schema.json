@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/audit_event.schema.json",
+  "title": "Dignity Sentinel Audit Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "sequence",
+    "observed_at",
+    "input_hash",
+    "status",
+    "risk_level",
+    "reasons",
+    "required_action",
+    "previous_hash",
+    "event_hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["audit_event.v1"]
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "integer"
+    },
+    "observed_at": {
+      "type": "string"
+    },
+    "input_hash": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "risk_level": {
+      "type": "string"
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_action": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "previous_hash": {
+      "type": "string"
+    },
+    "event_hash": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/root_bundle.schema.json",
+  "title": "Root Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bundle_id",
+    "version",
+    "root_manifest_hash",
+    "root_kernel_hash",
+    "non_regression_hash",
+    "disqualifier_hashes"
+  ],
+  "properties": {
+    "bundle_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "root_manifest_hash": {
+      "type": "string"
+    },
+    "root_kernel_hash": {
+      "type": "string"
+    },
+    "non_regression_hash": {
+      "type": "string"
+    },
+    "disqualifier_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

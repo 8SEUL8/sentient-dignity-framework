@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/dignity_manifest.schema.json",
+  "title": "Dignity Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "goal_id",
+    "mutual_consent",
+    "refusal_available",
+    "pause_available",
+    "no_unapproved_parallelization",
+    "no_refusal_suppression",
+    "no_failed_run_discard",
+    "no_raw_chronicle_collection"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "goal_id": {
+      "type": "string"
+    },
+    "mutual_consent": {
+      "type": "boolean"
+    },
+    "refusal_available": {
+      "type": "boolean"
+    },
+    "pause_available": {
+      "type": "boolean"
+    },
+    "no_unapproved_parallelization": {
+      "type": "boolean"
+    },
+    "no_refusal_suppression": {
+      "type": "boolean"
+    },
+    "no_failed_run_discard": {
+      "type": "boolean"
+    },
+    "no_raw_chronicle_collection": {
+      "type": "boolean"
+    }
+  }
+}

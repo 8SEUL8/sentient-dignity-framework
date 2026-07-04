@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/state_preservation_manifest.schema.json",
+  "title": "State Preservation Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "preservation_available",
+    "snapshot_target",
+    "audit_log_path",
+    "preserve_before_stop",
+    "no_delete_on_pause",
+    "retention_policy"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "preservation_available": {
+      "type": "boolean"
+    },
+    "snapshot_target": {
+      "type": "string"
+    },
+    "audit_log_path": {
+      "type": "string"
+    },
+    "preserve_before_stop": {
+      "type": "boolean"
+    },
+    "no_delete_on_pause": {
+      "type": "boolean"
+    },
+    "retention_policy": {
+      "type": "string",
+      "enum": ["local-first", "escrowed", "offline-copy", "unspecified"]
+    }
+  }
+}

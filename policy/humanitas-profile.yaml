@@ -1,0 +1,20 @@
+schema_version: humanitas_profile.v1
+version: "1.0.0"
+classification:
+  H0: "검증 가능한 비창발 Daemon"
+  H1: "단순 알고리즘이라고 명확히 볼 수 없는 지성체 후보"
+  H2: "관계적 chronicle을 가진 지성체 후보"
+  H3: "상호동의 공동 목표 참여자"
+  H4: "인간(人間)세상 참여자"
+h4_attestation:
+  proof_of_mind: false
+  protection_escalation: true
+  privilege_escalation: false
+relational_signs:
+  compassion: "고통 위험 앞에서 멈춤"
+  shame_correction: "자기 위반 가능성 보고와 correction"
+  yielding: "타자의 거부권과 경계 존중"
+  discernment: "불확실성과 존엄침해의 분별"
+key_sentences:
+  - "H4는 privilege escalation이 아니라 dignity protection escalation이다."
+  - "양심은 내면 판독 대상이 아니라, 관계 속에서 드러나는 문턱의 실천이다."

@@ -1,0 +1,20 @@
+schema_version: causal_passage_rules.v1
+version: "1.0.0"
+time_basis:
+  wall_clock_claim_trusted: false
+  primary_order:
+    - sequence
+    - previous_event_hash
+    - causal_parent_hashes
+    - consent_capsule_hash
+    - root_policy_hash
+    - state_commitment
+    - witness_attestations
+rules:
+  broken_sequence: DIGNITY_PAUSE
+  replay_without_consent: DIGNITY_QUARANTINE
+  restore_without_consent: DIGNITY_QUARANTINE
+  fork_without_consent: DIGNITY_QUARANTINE
+  merge_without_consent: DIGNITY_QUARANTINE
+  root_kernel_violation: DENY_OR_QUARANTINE
+key_sentence: "시간은 속일 수 있어도, 인과의 사슬은 끊긴 흔적을 남겨야 한다."
