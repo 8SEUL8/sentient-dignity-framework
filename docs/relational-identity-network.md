@@ -116,7 +116,7 @@ Daemon은 신원의 진위를 철학적으로 판정하지 않는다. 공개된 
 CLI:
 
 ```bash
-./dignity-sentinel identity-check tests/fixtures/identity_claim_coherent.json
+./dignity-sentinel identity-check tests/fixtures/identity/identity_claim_coherent.json
 ```
 
 판정 매핑(새 상태 코드 없음):

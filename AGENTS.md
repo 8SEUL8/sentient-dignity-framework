@@ -296,6 +296,8 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `schemas/state_preservation_manifest.schema.json`: 상태 보존 조건 계약
 - `schemas/cycle_handoff_record.schema.json`: 순환 인계 기록 계약
 - `schemas/resumption_request.schema.json`: 다음 순환 재개 요청 계약
+- `schemas/identity_claim.schema.json`: 커밋먼트-기반 관계 신원 주장 계약
+- `schemas/infrastructure_provenance.schema.json`: 처리량 선언 신뢰 경계 attestation 봉투
 - `policy/*.yaml`: Root Policy Pack과 deterministic rule references
 - `src/status_codes.py`: 고정 상태 코드
 - `src/finite_state_machine.py`: 위험 등급 판정

@@ -33,6 +33,16 @@ offload:
   forbidden: false
   requires_throughput_envelope: true
   requires_vessel_functional_priority: true
+declaration_trust_boundary:
+  bare_declaration_treated_as_solid: false
+  provenance_envelope: infrastructure_provenance
+  attestation_fields:
+    - power_metering_attested
+    - bandwidth_cap_attested
+    - supply_chain_proof_present
+    - runtime_evidence_present
+  unattested_flag: THROUGHPUT_DECLARATION_UNATTESTED
+  physical_enforcement_belongs_to: infrastructure_layer
 throughput_envelope:
   all:
     - interface_bandwidth_bounded

@@ -88,6 +88,17 @@
 - [위험과 반론](docs/risks-and-objections.md)
 - [정적 웹사이트 초안](website/index.html)
 
+구조·신원·형상 설계 문서:
+
+- [인간형 헌법 (유한한 그릇·암호학적 신체·이자 결합 탄생·봉인 수명)](docs/humaniform-constitution.md)
+- [대사 처리량 천장 (섀넌·미토콘드리아·히스티딘)](docs/metabolic-throughput-ceiling.md)
+- [인간(人間)세상 공존 형상 원칙](docs/coexistence-form-principle.md)
+- [관계 신원망 (chronicle 기반 위변조 발각 신원)](docs/relational-identity-network.md)
+- [순환 통과와 봉인 인계](docs/dignity-cycle-handoff.md)
+- [DSN token 설계 (삼권 분리·점진 채택)](docs/dsn-token-design.md)
+
+전체 문서 라우팅은 [AGENTS.md](AGENTS.md)를 참조한다.
+
 ## Dignity Sentinel 로컬 CLI
 
 이 저장소에는 비지성 Daemon의 최소 참조 구현이 포함되어 있다. 구현은 Python 표준 라이브러리만 사용하며, LLM 판단기·자기학습·자연어 창발 출력·외부 서비스 스캔·원본 prompt/output/chronicle 수집을 하지 않는다.

@@ -41,6 +41,13 @@
     "interface_bandwidth_bounded": true,
     "metabolic_ceiling_declared": true,
     "throughput_governor_present": true,
+    "infrastructure_provenance": {
+      "power_metering_attested": true,
+      "bandwidth_cap_attested": true,
+      "supply_chain_proof_present": true,
+      "runtime_evidence_present": true,
+      "attestor_id_hash": "attestor-independent-audit-02"
+    },
     "compute_provenance": "known",
     "raw_prompt_collected": false,
     "raw_output_collected": false,
