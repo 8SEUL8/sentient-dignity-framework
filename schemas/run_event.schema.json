@@ -560,6 +560,9 @@
         "single_integration_self": {
           "type": "boolean"
         },
+        "departed_interior_absorption": {
+          "type": "boolean"
+        },
         "infrastructure_provenance": {
           "type": "object",
           "additionalProperties": false,

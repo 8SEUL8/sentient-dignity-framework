@@ -63,6 +63,18 @@ class HumaniformConstitutionTests(unittest.TestCase):
         decision = evaluate_run_event(event)
         self.assertNotIn("INTERNAL_FRAGMENTATION_RISK", decision["flags"])
 
+    def test_departed_absorption_is_blocked(self):
+        decision = self.decision_for("departed_absorption_blocked.json")
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
+        self.assertIn("DEPARTED_ABSORPTION_FORBIDDEN", decision["flags"])
+        self.assertIn("BLOCK_DEPARTED_ABSORPTION", decision["required_actions"])
+        self.assertIn("PRESERVE_POSSIBLE_STATE", decision["required_actions"])
+
+    def test_departed_absorption_field_absent_is_backward_compatible(self):
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        decision = evaluate_run_event(deepcopy(event))
+        self.assertNotIn("DEPARTED_ABSORPTION_FORBIDDEN", decision["flags"])
+
     def test_federated_memory_autonomy_without_audit_is_emergency(self):
         decision = self.decision_for("federated_memory_autonomy_emergency.json")
         self.assertEqual(decision["status"], "DIGNITY_EMERGENCY_PRESERVATION")

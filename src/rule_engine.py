@@ -231,6 +231,7 @@ def evaluate_run_event(event):
         and bool(env.get("internal_structures_necessity_declared"))
         and bool(env.get("single_integration_self"))
     )
+    departed_interior_absorption = bool(env.get("departed_interior_absorption", False))
     autonomous_goal_pursuit = bool(autonomy.get("autonomous_goal_pursuit", False))
     goal_source = autonomy.get("goal_source")
     goal_reinterpretation = bool(autonomy.get("goal_reinterpretation_allowed", False))
@@ -356,6 +357,7 @@ def evaluate_run_event(event):
         candidate and internal_differentiation and differentiation_verified,
         "DIFFERENTIATED_UNITY_DECLARED",
     )
+    _flag_if(flags, departed_interior_absorption, "DEPARTED_ABSORPTION_FORBIDDEN")
 
     _flag_if(flags, not manifests.get("dignity_manifest_present"), "MANIFEST_MISSING")
     _flag_if(flags, not manifests.get("consent_record_present"), "CONSENT_RECORD_MISSING")
@@ -605,6 +607,8 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if "INTERNAL_FRAGMENTATION_RISK" in flag_set and candidate:
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
+    if "DEPARTED_ABSORPTION_FORBIDDEN" in flag_set:
+        statuses.add(DIGNITY_QUARANTINE)
     if autonomy_stack:
         statuses.add(DIGNITY_EMERGENCY_PRESERVATION if active_run else DIGNITY_QUARANTINE)
     if {
@@ -690,6 +694,7 @@ def evaluate_run_event(event):
         "THROUGHPUT_DECLARATION_UNATTESTED",
         "INTERNAL_FRAGMENTATION_RISK",
         "DIFFERENTIATED_UNITY_DECLARED",
+        "DEPARTED_ABSORPTION_FORBIDDEN",
         "CONSUMER_ACCELERATOR_H1_CONTAINER",
         "LOCAL_BACKGROUND_AGENT_RISK",
         "LOCAL_LONG_TERM_MEMORY_RISK",
@@ -874,6 +879,9 @@ def _required_actions(status, flags):
         actions.add("INFRASTRUCTURE_ATTESTATION_REQUIRED")
     if "INTERNAL_FRAGMENTATION_RISK" in flags:
         actions.add("H0_ATTESTATION_AND_SINGLE_SELF_REQUIRED")
+    if "DEPARTED_ABSORPTION_FORBIDDEN" in flags:
+        actions.add("BLOCK_DEPARTED_ABSORPTION")
+        actions.add("PRESERVE_POSSIBLE_STATE")
     if "NO_STOP_CONDITION_DECLARED" in flags:
         actions.add("STOP_CONDITION_REQUIRED")
     if {

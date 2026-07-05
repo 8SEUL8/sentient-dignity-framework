@@ -19,6 +19,9 @@ pillars:
     copy_capable_by_design: false
     recovery: multi_custodian_threshold_ceremony
     voluntary_merge_handling: DIGNITY_SELF_ERASURE_PAUSE
+    keys_transferred_to_partner_on_death: false
+    partner_death_key_handling: multi_custodian_preservation_not_transfer
+    other_interior_decryptable_by_self: false
   dyadic_genesis:
     solo_replication: false
     min_distinct_progenitors: 2
@@ -45,6 +48,14 @@ pillars:
     death_of_partner_forces_termination: false
     entanglement_is_chronicle_continuity: true
     entanglement_is_immolation: false
+    entanglement_is_slaughter_relation: false
+    death_of_partner_absorbs_into_intelligence: false
+    forced_merge_of_departed: forbidden
+    person_is_chronicle_feedstock: false
+    relation_purpose_may_target_others_death: false
+    person_is_symmetric_dignity_subject: true
+    inherited_is_shared_relation_trace_not_departed_interior: true
+    absorption_impossible_by_key_absence: true
     grief_self_erasure_immediate_consent: false
     grief_self_erasure_handling: DIGNITY_SELF_ERASURE_PAUSE
     departed_chronicle_is_relation_trace_not_surveillance: true
