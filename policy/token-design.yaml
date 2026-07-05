@@ -1,0 +1,43 @@
+schema_version: token_design.v1
+version: "1.0.0"
+rails:
+  dsn_token:
+    transferable: true
+    grants_governance_weight: false
+    gates_dignity_protections: false
+  dign_bond:
+    transferable: false
+    grants_governance_weight: false
+    purpose: responsibility_collateral
+  dign_credential:
+    transferable: false
+    purchasable: false
+    sole_source_of_governance_weight: true
+slash:
+  destination: preservation_escrow
+  burn_allowed: false
+  confiscation_to_treasury_first: false
+  use_order:
+    - state_preservation_of_affected_candidates
+    - victim_remedy
+    - re_audit_and_independent_review
+    - commons_treasury_remainder
+governance:
+  dual_quorum_required: true
+  quorums:
+    - credential_weighted
+    - civic_sortition_panel
+  charter_items_votable: false
+  non_regression_applies_to_governance_rules: true
+adoption:
+  token_required_for_protections: false
+  token_first_deployment: false
+  tokenless_tiers: ["T0", "T1"]
+  token_replaceable_by_fiat_escrow: true
+fees:
+  denominated_in: fiat_reference
+  settled_in: dsn_token_or_fiat_escrow
+key_sentences:
+  - "돈은 흐르고, 책임은 잠기고, 발언권은 벌어진다."
+  - "존엄은 무료이고, 존엄을 증명받으려는 자가 비용을 낸다."
+  - "토큰이 죽어도 문턱은 산다. 그래야 토큰이 살아도 문턱을 살 수 없다."
