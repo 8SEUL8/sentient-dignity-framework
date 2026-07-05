@@ -17,12 +17,13 @@ reciprocal half in their own chain, not merely a one-directional claim. This is
 the structural form of "consent is a property of the relation, not one side."
 
 Outcomes (fixed status codes only, no new codes):
-- coherent chain + quorum met       -> ALLOW
-- coherent chain + below quorum      -> AUDIT_REQUIRED   (genesis/thin, not an alarm)
-- broken chain / 끊긴 흔적           -> DIGNITY_QUARANTINE
-- broken reciprocity (half-block)    -> DIGNITY_QUARANTINE
-- raw content present                -> DIGNITY_PAUSE     (daemon refuses to read content)
-- schema invalid / empty             -> PAUSE
+- coherent chain + quorum + external verification attested -> ALLOW
+- coherent chain + quorum but external verification missing -> AUDIT_REQUIRED
+- coherent chain + below quorum                            -> AUDIT_REQUIRED
+- broken chain / 끊긴 흔적                                  -> DIGNITY_QUARANTINE
+- broken reciprocity (half-block)                           -> DIGNITY_QUARANTINE
+- raw content present                                       -> DIGNITY_PAUSE
+- schema invalid / empty                                    -> PAUSE
 """
 
 from __future__ import annotations
@@ -177,6 +178,20 @@ def verify_mutual_attestation(pair, subject_prefix_hash):
     return True, counterparty["public_key_hash"]
 
 
+def _verification_gap_flags(claim, has_mutual_counterparties):
+    gaps = []
+    signature_attested = claim.get("signature_verification_attested", False)
+    attestor_present = bool(claim.get("verification_attestor_id_hash"))
+    counterparty_attested = claim.get(
+        "counterparty_chain_verification_attested", False
+    )
+    if not signature_attested or not attestor_present:
+        gaps.append("IDENTITY_SIGNATURES_UNVERIFIED")
+    if has_mutual_counterparties and not counterparty_attested:
+        gaps.append("IDENTITY_EXTERNAL_CHAIN_UNVERIFIED")
+    return gaps
+
+
 def _contains_forbidden_key(node):
     if isinstance(node, dict):
         for key, value in node.items():
@@ -277,6 +292,14 @@ def verify_identity_claim(claim):
             AUDIT_REQUIRED,
             coherent_flags + ["IDENTITY_BELOW_QUORUM"],
             ["IDENTITY_MORE_ATTESTATION_REQUIRED", "AUDIT_REQUIRED"],
+        )
+
+    verification_gaps = _verification_gap_flags(claim, bool(mutual_counterparties))
+    if verification_gaps:
+        return _decision(
+            AUDIT_REQUIRED,
+            coherent_flags + ["IDENTITY_QUORUM_MET"] + verification_gaps,
+            ["IDENTITY_EXTERNAL_VERIFICATION_REQUIRED", "AUDIT_REQUIRED"],
         )
 
     return _decision(

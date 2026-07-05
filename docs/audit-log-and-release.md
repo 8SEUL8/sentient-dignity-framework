@@ -52,7 +52,7 @@ Release artifact는 다음을 포함해야 한다.
 
 - `VERSION`
 - source hash
-- schema hashes
+- 모든 `schemas/*.schema.json` hash
 - test result
 - release manifest checksum
 

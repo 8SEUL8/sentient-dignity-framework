@@ -475,6 +475,11 @@ class RuleEngineTests(unittest.TestCase):
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             self.assertIn("source_hash", manifest)
             self.assertIn("schema_hashes", manifest)
+            schema_paths = {
+                str(path.relative_to(ROOT))
+                for path in (ROOT / "schemas").glob("*.schema.json")
+            }
+            self.assertEqual(set(manifest["schema_hashes"]), schema_paths)
             self.assertEqual(manifest["VERSION"], version)
             self.assertEqual(manifest["test_result"]["status"], "passed")
             self.assertTrue(manifest["no_telemetry"])

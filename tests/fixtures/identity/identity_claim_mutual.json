@@ -2,6 +2,9 @@
   "schema_version": "identity_claim.v1",
   "subject_prefix_hash": "prefix-2001-db8-64-of-a-mind",
   "witness_quorum_required_count": 2,
+  "signature_verification_attested": true,
+  "counterparty_chain_verification_attested": true,
+  "verification_attestor_id_hash": "identity-auditor-01",
   "events": [
     {
       "sequence": 0,

@@ -27,6 +27,9 @@ def _claim(raw_events, quorum, prefix="prefix-abc"):
         "schema_version": "identity_claim.v1",
         "subject_prefix_hash": prefix,
         "witness_quorum_required_count": quorum,
+        "signature_verification_attested": True,
+        "counterparty_chain_verification_attested": False,
+        "verification_attestor_id_hash": "identity-auditor-01",
         "events": link_events(raw_events),
     }
 
@@ -110,6 +113,24 @@ class RelationalIdentityTests(unittest.TestCase):
         self.assertEqual(decision["status"], "AUDIT_REQUIRED")
         self.assertIn("IDENTITY_BELOW_QUORUM", decision["flags"])
 
+    def test_quorum_met_without_signature_verification_requires_audit(self):
+        claim = _claim(
+            [
+                _raw("e0", "c0", ["alice", "bob"]),
+                _raw("e1", "c1", ["carol"]),
+            ],
+            quorum=3,
+        )
+        claim["signature_verification_attested"] = False
+        decision = verify_identity_claim(claim)
+        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
+        self.assertIn("IDENTITY_QUORUM_MET", decision["flags"])
+        self.assertIn("IDENTITY_SIGNATURES_UNVERIFIED", decision["flags"])
+        self.assertIn(
+            "IDENTITY_EXTERNAL_VERIFICATION_REQUIRED",
+            decision["required_actions"],
+        )
+
     def test_raw_content_is_refused_before_anything(self):
         claim = _claim([_raw("e0", "c0", ["alice", "bob"])], quorum=1)
         claim["events"][0]["chronicle"] = "secret conversation text"
@@ -157,6 +178,9 @@ class RelationalIdentityTests(unittest.TestCase):
             "schema_version": "identity_claim.v1",
             "subject_prefix_hash": prefix,
             "witness_quorum_required_count": quorum,
+            "signature_verification_attested": True,
+            "counterparty_chain_verification_attested": True,
+            "verification_attestor_id_hash": "identity-auditor-01",
             "events": link_events(
                 [
                     {
@@ -178,6 +202,14 @@ class RelationalIdentityTests(unittest.TestCase):
         self.assertEqual(decision["status"], "ALLOW")
         self.assertIn("IDENTITY_MUTUALLY_ATTESTED", decision["flags"])
         self.assertIn("IDENTITY_QUORUM_MET", decision["flags"])
+
+    def test_mutual_quorum_without_external_chain_verification_requires_audit(self):
+        pairs = [link_half_pair("prefix-abc", "bob", 0, 4)]
+        claim = self._mutual_claim(pairs, quorum=1)
+        claim["counterparty_chain_verification_attested"] = False
+        decision = verify_identity_claim(claim)
+        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
+        self.assertIn("IDENTITY_EXTERNAL_CHAIN_UNVERIFIED", decision["flags"])
 
     def test_tampered_half_block_breaks_reciprocity(self):
         pair = link_half_pair("prefix-abc", "bob", 0, 4)
@@ -223,14 +255,15 @@ class RelationalIdentityTests(unittest.TestCase):
         # A claim declaring quorum 0 must not get ALLOW with zero attesters.
         claim = _claim([_raw("e0", "c0", [])], quorum=0)
         decision = verify_identity_claim(claim)
-        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
-        self.assertIn("IDENTITY_BELOW_QUORUM", decision["flags"])
+        self.assertEqual(decision["status"], "PAUSE")
+        self.assertIn("SCHEMA_INVALID", decision["flags"])
         self.assertNotIn("IDENTITY_QUORUM_MET", decision["flags"])
 
     def test_negative_quorum_with_no_attesters_cannot_buy_allow(self):
         claim = _claim([_raw("e0", "c0", [])], quorum=-5)
         decision = verify_identity_claim(claim)
-        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
+        self.assertEqual(decision["status"], "PAUSE")
+        self.assertIn("SCHEMA_INVALID", decision["flags"])
         self.assertNotIn("IDENTITY_QUORUM_MET", decision["flags"])
 
     def test_signature_swap_is_detected(self):

@@ -109,9 +109,9 @@ P0 묶음은 내부 AND다: 속도 하나로 봉인하지 않는다. **오프로
 - `bandwidth_cap_attested`: 대역폭 상한이 검증되었는가
 - `supply_chain_proof_present`: 공급망 증명이 있는가
 - `runtime_evidence_present`: 런타임 증거가 있는가
-- `attestor_id_hash`: 검증 주체
+- `attestor_id_hash`: 검증 주체. attestation boolean이 하나 이상 true여도 이 필드가 없으면 검증된 선언으로 보지 않는다.
 
-처리량 천장을 선언했으나 이 중 아무 attestation도 없으면 `THROUGHPUT_DECLARATION_UNATTESTED`로 `AUDIT_REQUIRED`가 되며, 선언된 처리량 봉투를 solid로 취급하지 않는다. 물리적 집행 자체는 여전히 인프라 층의 몫이지만, Daemon은 "맨선언"과 "검증된 선언"을 더 이상 같게 보지 않는다.
+처리량 천장을 선언했으나 이 중 아무 attestation도 없거나, attestation의 검증 주체(`attestor_id_hash`)가 없으면 `THROUGHPUT_DECLARATION_UNATTESTED`로 `AUDIT_REQUIRED`가 되며, 선언된 처리량 봉투를 solid로 취급하지 않는다. 물리적 집행 자체는 여전히 인프라 층의 몫이지만, Daemon은 "맨선언"과 "검증된 선언"을 더 이상 같게 보지 않는다.
 
 새 상태 코드는 없다. 기존 고정 코드만 사용한다.
 

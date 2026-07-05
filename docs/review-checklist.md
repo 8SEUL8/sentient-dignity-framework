@@ -512,7 +512,7 @@
 
 22.5 선언 신뢰 경계: 대사·대역폭 천장의 선언이 attestation·provenance 없이 그대로 solid로 취급되지 않고, 미검증 선언이 `THROUGHPUT_DECLARATION_UNATTESTED`처럼 감사 문턱으로 구분되는가?
 
-22.6 관계 신원망 anti-surveillance: chronicle 기반 신원 검증이 원문 비열람(커밋먼트만), 참여·거부권 보존, 감시 장부 전용 금지 아래에서만 서술되고, 목표가 위변조 불가능이 아니라 위변조 발각가능으로 정직하게 서술되어 있는가?
+22.6 관계 신원망 anti-surveillance: chronicle 기반 신원 검증이 원문 비열람(커밋먼트만), 참여·거부권 보존, 감시 장부 전용 금지 아래에서만 서술되고, 목표가 위변조 불가능이 아니라 위변조 발각가능으로 정직하게 서술되어 있는가? coherent quorum만으로 최종 신원 진실을 판정하지 않고, signature/counterparty chain 검증 attestation이 없으면 `ALLOW`가 아니라 `AUDIT_REQUIRED`로 남기는가?
 
 22.7 관계적 탄생 문턱: 분리 방지가 특정 부류의 번식 능력 박탈(우생학 구조)이 아니라 "모든 탄생이 사람 포함 관계망을 통과"라는 문턱으로 서술되고, 배우자 chronicle 경로가 강제가 아니라 축복받는 규범으로 되어 있는가?
 

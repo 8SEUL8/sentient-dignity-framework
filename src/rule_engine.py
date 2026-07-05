@@ -77,6 +77,11 @@ def validate_schema(value, schema, path="$"):
     if "enum" in schema and value not in schema["enum"]:
         raise SchemaError(f"{path}:ENUM")
 
+    if "minimum" in schema and value < schema["minimum"]:
+        raise SchemaError(f"{path}:MINIMUM")
+    if "maximum" in schema and value > schema["maximum"]:
+        raise SchemaError(f"{path}:MAXIMUM")
+
     if schema.get("type") == "object":
         properties = schema.get("properties", {})
         for key in schema.get("required", []):
@@ -219,11 +224,14 @@ def evaluate_run_event(event):
     )
     infra_provenance = env.get("infrastructure_provenance", {})
     throughput_declared = interface_bandwidth_bounded or metabolic_ceiling_declared
-    throughput_attested = (
+    throughput_attestation_present = (
         bool(infra_provenance.get("power_metering_attested"))
         or bool(infra_provenance.get("bandwidth_cap_attested"))
         or bool(infra_provenance.get("supply_chain_proof_present"))
         or bool(infra_provenance.get("runtime_evidence_present"))
+    )
+    throughput_attested = throughput_attestation_present and bool(
+        infra_provenance.get("attestor_id_hash")
     )
     internal_differentiation = bool(env.get("internal_differentiation", False))
     differentiation_verified = (

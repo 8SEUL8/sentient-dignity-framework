@@ -23,7 +23,7 @@ dignity-sentinel check tests/fixtures/safe_A_non_agentic_run.json
 
 ## Packaged Release Mode
 
-release artifact는 `VERSION`, source hash, schema hashes, test result, checksum을 포함해야 한다. package 설치도 opt-in이어야 하며 자동 업데이트, telemetry, background service 자동 등록, 중앙 서버 의존, 원격 kill switch를 포함하지 않는다.
+release artifact는 `VERSION`, source hash, 모든 `schemas/*.schema.json` hash, test result, checksum을 포함해야 한다. package 설치도 opt-in이어야 하며 자동 업데이트, telemetry, background service 자동 등록, 중앙 서버 의존, 원격 kill switch를 포함하지 않는다.
 
 ```bash
 scripts/build-release.sh

@@ -57,6 +57,13 @@ class MetabolicThroughputTests(unittest.TestCase):
         )
         event["environment"]["infrastructure_provenance"] = {
             "power_metering_attested": True,
+        }
+        validate_run_event(event)
+        decision = evaluate_run_event(deepcopy(event))
+        self.assertIn("THROUGHPUT_DECLARATION_UNATTESTED", decision["flags"])
+
+        event["environment"]["infrastructure_provenance"] = {
+            "power_metering_attested": True,
             "attestor_id_hash": "attestor-x",
         }
         validate_run_event(event)
