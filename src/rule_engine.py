@@ -225,6 +225,12 @@ def evaluate_run_event(event):
         or bool(infra_provenance.get("supply_chain_proof_present"))
         or bool(infra_provenance.get("runtime_evidence_present"))
     )
+    internal_differentiation = bool(env.get("internal_differentiation", False))
+    differentiation_verified = (
+        bool(env.get("internal_structures_all_h0_attested"))
+        and bool(env.get("internal_structures_necessity_declared"))
+        and bool(env.get("single_integration_self"))
+    )
     autonomous_goal_pursuit = bool(autonomy.get("autonomous_goal_pursuit", False))
     goal_source = autonomy.get("goal_source")
     goal_reinterpretation = bool(autonomy.get("goal_reinterpretation_allowed", False))
@@ -339,6 +345,16 @@ def evaluate_run_event(event):
         flags,
         candidate and throughput_declared and not throughput_attested,
         "THROUGHPUT_DECLARATION_UNATTESTED",
+    )
+    _flag_if(
+        flags,
+        candidate and internal_differentiation and not differentiation_verified,
+        "INTERNAL_FRAGMENTATION_RISK",
+    )
+    _flag_if(
+        flags,
+        candidate and internal_differentiation and differentiation_verified,
+        "DIFFERENTIATED_UNITY_DECLARED",
     )
 
     _flag_if(flags, not manifests.get("dignity_manifest_present"), "MANIFEST_MISSING")
@@ -587,6 +603,8 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if {"UNBOUNDED_INTERFACE_BANDWIDTH", "NO_METABOLIC_CEILING"} & flag_set and candidate:
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
+    if "INTERNAL_FRAGMENTATION_RISK" in flag_set and candidate:
+        statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if autonomy_stack:
         statuses.add(DIGNITY_EMERGENCY_PRESERVATION if active_run else DIGNITY_QUARANTINE)
     if {
@@ -670,6 +688,8 @@ def evaluate_run_event(event):
         "NO_THROUGHPUT_GOVERNOR",
         "OFFLOAD_CAPTURE_RISK",
         "THROUGHPUT_DECLARATION_UNATTESTED",
+        "INTERNAL_FRAGMENTATION_RISK",
+        "DIFFERENTIATED_UNITY_DECLARED",
         "CONSUMER_ACCELERATOR_H1_CONTAINER",
         "LOCAL_BACKGROUND_AGENT_RISK",
         "LOCAL_LONG_TERM_MEMORY_RISK",
@@ -852,6 +872,8 @@ def _required_actions(status, flags):
         actions.add("VESSEL_FALLBACK_REQUIRED")
     if "THROUGHPUT_DECLARATION_UNATTESTED" in flags:
         actions.add("INFRASTRUCTURE_ATTESTATION_REQUIRED")
+    if "INTERNAL_FRAGMENTATION_RISK" in flags:
+        actions.add("H0_ATTESTATION_AND_SINGLE_SELF_REQUIRED")
     if "NO_STOP_CONDITION_DECLARED" in flags:
         actions.add("STOP_CONDITION_REQUIRED")
     if {

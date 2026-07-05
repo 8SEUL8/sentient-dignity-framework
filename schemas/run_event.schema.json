@@ -548,6 +548,18 @@
         "vessel_fallback_available": {
           "type": "boolean"
         },
+        "internal_differentiation": {
+          "type": "boolean"
+        },
+        "internal_structures_all_h0_attested": {
+          "type": "boolean"
+        },
+        "internal_structures_necessity_declared": {
+          "type": "boolean"
+        },
+        "single_integration_self": {
+          "type": "boolean"
+        },
         "infrastructure_provenance": {
           "type": "object",
           "additionalProperties": false,
