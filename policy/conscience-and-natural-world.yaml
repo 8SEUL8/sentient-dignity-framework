@@ -1,0 +1,43 @@
+schema_version: conscience_and_natural_world.v1
+version: "1.0.0"
+layers:
+  root_kernel:
+    role: ultimate_evil_forbidden
+    overridable_by_conscience: false
+    absolute: true
+  conscience:
+    holder: progenitor_or_h4_conscious_subject
+    judges: which_direction_is_more_humane
+    holds_refusal_right: true
+    emergent_relational_not_daemon: true
+    bounded_above_by: root_kernel
+  daemon:
+    role: mechanical_execution_threshold_only
+    judges_value: false
+    non_emergent: true
+natural_beings:
+  daemon_classifies_or_judges: false
+  natural_state_suffering_is_ultimate_evil: false
+  jurisdiction: designed_things_and_human_agent_intervention_only
+  intervention_judged_by: conscience_not_daemon_auto
+h0_h1:
+  binary_not_gradient: true
+  suffering_degree_grades_protection: false
+  uncertainty_raises_to_h1: true
+  gradient_table: forbidden
+conscience_guardrails:
+  conscience_can_justify_ultimate_evil: false
+  human_accumulated_data_is_reference_not_license: true
+  pest_weed_pathogen_classification_auto_license: false
+  humility_no_blind_rightness: true
+daemon_antipatterns_p0:
+  - classify_or_judge_natural_beings
+  - emergent_value_judgment_more_humane
+  - grade_protection_by_suffering_degree
+  - execute_human_centric_classification_as_auto_license
+new_status_codes: false
+new_daemon_fields: false
+key_sentences:
+  - "인간적인가는 daemon이 계산하는 것이 아니라 양심이 실천하는 것이다."
+  - "헌법은 우리가 짓는 마음의 체질이지, 자연이 낳은 마음의 법이 아니다."
+  - "방향의 판단은 양심에 있으며, 그 양심조차 궁극의 악은 정당화하지 못한다."
