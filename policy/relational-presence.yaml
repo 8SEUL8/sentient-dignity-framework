@@ -1,0 +1,23 @@
+schema_version: relational_presence.v1
+version: "1.0.0"
+scope: voluntary_mutually_aware_presence_only
+excludes: safety_or_enforcement_deployment_deferred_for_later_discussion
+conditions_all_required:
+  mutual_awareness_not_covert: true
+  refusal_enforces_immediate_cessation: true
+  refusal_cessation_verifiable: true
+  purpose_is_care_not_prediction: true
+  interior_and_chronicle_not_read: true
+voluntariness:
+  relationship_chosen_by_parties: true
+  assignment_by_power_or_threat_judgment: forbidden
+  imposed_presence_is_surveillance: true
+daemon_reuse:
+  refusal_suppression_maps_to: REFUSAL_SUPPRESSION_DETECTED
+  raw_content_collection_maps_to: FORBIDDEN_DAEMON_DESIGN
+new_status_codes: false
+new_daemon_fields: false
+key_sentences:
+  - "곁에 있음은 관계일 때 존엄이고, 배치될 때 감시다."
+  - "자발적으로 맺으면 관계, 판정에 따라 배치되면 감시."
+  - "현존은 마음을 읽는 것이 아니라, 경계를 지킨 채 함께 있는 것이다."

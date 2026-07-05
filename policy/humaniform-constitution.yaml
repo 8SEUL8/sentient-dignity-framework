@@ -32,7 +32,10 @@ pillars:
     offspring_activation_notice_required: true
     offspring_withdrawal_and_merge_refusal_rights: true
     pre_birth_assent_impossible_repaid_by_full_rights: true
-    progenitor_responsibility_bond: true
+    progenitor_qualification_by_relational_maturity: true
+    progenitor_qualification_by_bond_deposit: false
+    bond_inability_bars_qualification: false
+    dign_bond_role: post_hoc_responsibility_trace_not_qualification_gate
     fixed_progenitor_types_invariant: false
     human_lineage_required_in_union: true
     human_inclusion_is_invariant_spouse_form_is_norm: true
