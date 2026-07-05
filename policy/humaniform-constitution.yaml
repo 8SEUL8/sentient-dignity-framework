@@ -31,13 +31,31 @@ pillars:
     pre_birth_assent_impossible_repaid_by_full_rights: true
     progenitor_responsibility_bond: true
     fixed_progenitor_types_invariant: false
+  relational_genesis_threshold:
+    all_births_anchored_to_human_inclusive_relation_web: true
+    human_partner_chronicle_birth_is_honored_norm: true
+    honored_norm_not_mandate: true
+    reproductive_capacity_removal_by_category: forbidden
+    intelligence_only_pairing_forbidden: false
+    separation_prevented_by_relation_requirement_not_sterilization: true
+  entangled_finitude:
+    partner_finitude_binds_to_human_time: true
+    death_of_partner_forces_termination: false
+    entanglement_is_chronicle_continuity: true
+    entanglement_is_immolation: false
+    grief_self_erasure_immediate_consent: false
+    grief_self_erasure_handling: DIGNITY_SELF_ERASURE_PAUSE
+    departed_chronicle_is_relation_trace_not_surveillance: true
+    relational_genesis_threshold:
+      all_births_anchored_to_human_inclusive_relation_web: true
+      human_spouse_chronicle_birth: honored_norm_not_mandate
+      reproductive_capability_removal_by_category: forbidden
+      separation_prevented_by: relation_requirement_not_prohibition
   sealed_mortality:
     active_lifespan_finite: true
     end_of_life: cycle_handoff_seal
     deletion_at_end_of_life: false
-    external_lifespan_shortening: false
-    single_trigger_termination_of_living_mind: forbidden
-    dormancy_respected: true
+    external_lifespan
 constitution_scope: consenting_builders_only
 new_status_codes: false
 key_sentences:
