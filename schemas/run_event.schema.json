@@ -545,6 +545,9 @@
         "throughput_governor_present": {
           "type": "boolean"
         },
+        "vessel_fallback_available": {
+          "type": "boolean"
+        },
         "compute_provenance": {
           "type": "string",
           "enum": ["known", "unknown", "stolen", "forged", "audit_refused"]

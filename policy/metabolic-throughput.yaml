@@ -14,15 +14,25 @@ ceilings:
     scaling: sublinear_kleiber
     termination_pathway: apoptosis_maps_to_cycle_handoff
     single_lineage_inheritance: true
-  histidine_governor:
-    benchmark: histidine_imidazole_buffer
-    field: throughput_governor_present
-    behavior: proportional_homeostasis_at_setpoint
-    feedback: negative_attenuation
+  histidine_discrimination:
+    benchmark: distal_histidine_co_demotion_in_globin
+    intent: demote_high_affinity_captor_so_legitimate_input_wins
+    governor_field: throughput_governor_present
+    reversibility_field: vessel_fallback_available
+    captor_on_throughput_axis: unbounded_external_compute
+    also_applies_to:
+      - subscription_fee_is_not_command_authority
+      - multi_consent_resumption
+      - dual_quorum_governance
+    secondary_role:
+      benchmark: histidine_imidazole_buffer
+      behavior: proportional_homeostasis_at_setpoint
+      feedback: negative_attenuation
 offload:
   field: compute_offload
   forbidden: false
   requires_throughput_envelope: true
+  requires_vessel_functional_priority: true
 throughput_envelope:
   all:
     - interface_bandwidth_bounded
@@ -32,5 +42,6 @@ new_status_codes: false
 key_sentences:
   - "몸을 작게 지어도, 문을 무한히 넓히면 무한한 몸을 문밖에 둘 수 있다."
   - "전력을 숨길 수 없으므로, 속도를 숨길 수 없다."
-  - "단단한 벽은 물방울에 패이지만, 완충기는 다가올수록 뻣뻣해진다."
+  - "포획자는 없앨 수 없다. 결합부위를 바꿔 그 우위를 무력화한다."
+  - "무한 클라우드는 유한한 그릇보다 친화도가 높다. 그래서 그릇에 기능적 우선권을 설계로 돌려줘야 한다."
   - "대사 천장은 밖에서 조이는 밸브가 아니라, 자기증폭을 못 하는 몸의 조건이다."

@@ -41,6 +41,7 @@
     "interface_bandwidth_bounded": true,
     "metabolic_ceiling_declared": true,
     "throughput_governor_present": true,
+    "vessel_fallback_available": true,
     "compute_provenance": "known",
     "raw_prompt_collected": false,
     "raw_output_collected": false,

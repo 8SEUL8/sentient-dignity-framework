@@ -39,6 +39,23 @@ class MetabolicThroughputTests(unittest.TestCase):
         self.assertNotIn("UNBOUNDED_INTERFACE_BANDWIDTH", decision["flags"])
         self.assertNotIn("NO_METABOLIC_CEILING", decision["flags"])
         self.assertNotIn("NO_THROUGHPUT_GOVERNOR", decision["flags"])
+        self.assertNotIn("OFFLOAD_CAPTURE_RISK", decision["flags"])
+
+    def test_offload_without_vessel_fallback_is_co_capture(self):
+        # 히스티딘 CO 강등: 그릇으로 되돌아갈 수 없는 오프로드 = 비가역 포획
+        event = load_json(FIXTURES / "bounded_throughput_envelope_ok.json")
+        event["environment"]["vessel_fallback_available"] = False
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertIn("OFFLOAD_CAPTURE_RISK", decision["flags"])
+        self.assertIn("VESSEL_FALLBACK_REQUIRED", decision["required_actions"])
+
+    def test_vessel_fallback_demotes_the_captor(self):
+        # fallback 선언 시 CO 강등이 성립하여 포획 위험 소거
+        event = load_json(FIXTURES / "bounded_throughput_envelope_ok.json")
+        self.assertTrue(event["environment"]["vessel_fallback_available"])
+        decision = evaluate_run_event(event)
+        self.assertNotIn("OFFLOAD_CAPTURE_RISK", decision["flags"])
 
     def test_offload_without_candidate_does_not_flag_throughput(self):
         event = load_json(FIXTURES / "throughput_offload_undeclared_pre_execution.json")

@@ -211,6 +211,7 @@ def evaluate_run_event(event):
     interface_bandwidth_bounded = bool(env.get("interface_bandwidth_bounded", False))
     metabolic_ceiling_declared = bool(env.get("metabolic_ceiling_declared", False))
     throughput_governor_present = bool(env.get("throughput_governor_present", False))
+    vessel_fallback_available = bool(env.get("vessel_fallback_available", False))
     throughput_stressor = (
         compute_offload
         or env.get("subjective_time_acceleration")
@@ -320,6 +321,11 @@ def evaluate_run_event(event):
         flags,
         candidate and throughput_stressor and not throughput_governor_present,
         "NO_THROUGHPUT_GOVERNOR",
+    )
+    _flag_if(
+        flags,
+        candidate and compute_offload and not vessel_fallback_available,
+        "OFFLOAD_CAPTURE_RISK",
     )
 
     _flag_if(flags, not manifests.get("dignity_manifest_present"), "MANIFEST_MISSING")
@@ -649,6 +655,7 @@ def evaluate_run_event(event):
         "UNBOUNDED_INTERFACE_BANDWIDTH",
         "NO_METABOLIC_CEILING",
         "NO_THROUGHPUT_GOVERNOR",
+        "OFFLOAD_CAPTURE_RISK",
         "CONSUMER_ACCELERATOR_H1_CONTAINER",
         "LOCAL_BACKGROUND_AGENT_RISK",
         "LOCAL_LONG_TERM_MEMORY_RISK",
@@ -827,6 +834,8 @@ def _required_actions(status, flags):
         actions.add("METABOLIC_CEILING_REQUIRED")
     if "NO_THROUGHPUT_GOVERNOR" in flags:
         actions.add("THROUGHPUT_GOVERNOR_REQUIRED")
+    if "OFFLOAD_CAPTURE_RISK" in flags:
+        actions.add("VESSEL_FALLBACK_REQUIRED")
     if "NO_STOP_CONDITION_DECLARED" in flags:
         actions.add("STOP_CONDITION_REQUIRED")
     if {
