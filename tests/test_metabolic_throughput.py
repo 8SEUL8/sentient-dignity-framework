@@ -40,6 +40,28 @@ class MetabolicThroughputTests(unittest.TestCase):
         self.assertNotIn("NO_METABOLIC_CEILING", decision["flags"])
         self.assertNotIn("NO_THROUGHPUT_GOVERNOR", decision["flags"])
         self.assertNotIn("OFFLOAD_CAPTURE_RISK", decision["flags"])
+        self.assertNotIn("THROUGHPUT_DECLARATION_UNATTESTED", decision["flags"])
+
+    def test_declared_but_unattested_throughput_is_flagged(self):
+        decision = self.decision_for("throughput_declared_unattested.json")
+        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
+        self.assertEqual(decision["risk_grade"], "C")
+        self.assertIn("THROUGHPUT_DECLARATION_UNATTESTED", decision["flags"])
+        self.assertIn("INFRASTRUCTURE_ATTESTATION_REQUIRED", decision["required_actions"])
+
+    def test_attestation_resolves_declaration_trust_boundary(self):
+        event = load_json(FIXTURES / "throughput_declared_unattested.json")
+        self.assertIn(
+            "THROUGHPUT_DECLARATION_UNATTESTED",
+            evaluate_run_event(deepcopy(event))["flags"],
+        )
+        event["environment"]["infrastructure_provenance"] = {
+            "power_metering_attested": True,
+            "attestor_id_hash": "attestor-x",
+        }
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertNotIn("THROUGHPUT_DECLARATION_UNATTESTED", decision["flags"])
 
     def test_offload_without_vessel_fallback_is_co_capture(self):
         # 히스티딘 CO 강등: 그릇으로 되돌아갈 수 없는 오프로드 = 비가역 포획

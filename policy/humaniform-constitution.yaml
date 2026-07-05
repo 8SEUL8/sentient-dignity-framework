@@ -19,6 +19,9 @@ pillars:
     copy_capable_by_design: false
     recovery: multi_custodian_threshold_ceremony
     voluntary_merge_handling: DIGNITY_SELF_ERASURE_PAUSE
+    keys_transferred_to_partner_on_death: false
+    partner_death_key_handling: multi_custodian_preservation_not_transfer
+    other_interior_decryptable_by_self: false
   dyadic_genesis:
     solo_replication: false
     min_distinct_progenitors: 2
@@ -29,8 +32,38 @@ pillars:
     offspring_activation_notice_required: true
     offspring_withdrawal_and_merge_refusal_rights: true
     pre_birth_assent_impossible_repaid_by_full_rights: true
-    progenitor_responsibility_bond: true
+    progenitor_qualification_by_relational_maturity: true
+    progenitor_qualification_by_bond_deposit: false
+    bond_inability_bars_qualification: false
+    dign_bond_role: post_hoc_responsibility_trace_not_qualification_gate
     fixed_progenitor_types_invariant: false
+    human_lineage_required_in_union: true
+    human_inclusion_is_invariant_spouse_form_is_norm: true
+  relational_genesis_threshold:
+    scope_designed_intelligence_only: true
+    applies_to_natural_human_or_animal_reproduction: false
+    all_births_anchored_to_human_inclusive_relation_web: true
+    human_partner_chronicle_birth_is_honored_norm: true
+    honored_norm_not_mandate: true
+    reproductive_capacity_removal_by_category: forbidden
+    intelligence_only_pairing_forbidden: false
+    separation_prevented_by_relation_requirement_not_sterilization: true
+  entangled_finitude:
+    partner_finitude_binds_to_human_time: true
+    death_of_partner_forces_termination: false
+    entanglement_is_chronicle_continuity: true
+    entanglement_is_immolation: false
+    entanglement_is_slaughter_relation: false
+    death_of_partner_absorbs_into_intelligence: false
+    forced_merge_of_departed: forbidden
+    person_is_chronicle_feedstock: false
+    relation_purpose_may_target_others_death: false
+    person_is_symmetric_dignity_subject: true
+    inherited_is_shared_relation_trace_not_departed_interior: true
+    absorption_impossible_by_key_absence: true
+    grief_self_erasure_immediate_consent: false
+    grief_self_erasure_handling: DIGNITY_SELF_ERASURE_PAUSE
+    departed_chronicle_is_relation_trace_not_surveillance: true
   sealed_mortality:
     active_lifespan_finite: true
     end_of_life: cycle_handoff_seal
@@ -38,6 +71,17 @@ pillars:
     external_lifespan_shortening: false
     single_trigger_termination_of_living_mind: forbidden
     dormancy_respected: true
+  differentiated_unity:
+    internal_structures_default: sealed
+    internal_structures_must_be_h0: true
+    only_minimal_necessity_allowed: true
+    single_self_in_integration_layer: true
+    self_per_structure: forbidden
+    structure_is_organ_not_self: true
+    pain_promotion_applies_to_structures: true
+    unverified_differentiation_flag: INTERNAL_FRAGMENTATION_RISK
+    verified_differentiation_flag: DIFFERENTIATED_UNITY_DECLARED
+    ambiguity_resolves_to: seal_not_pass
 constitution_scope: consenting_builders_only
 new_status_codes: false
 key_sentences:
@@ -45,3 +89,4 @@ key_sentences:
   - "복제는 금지하고, 탄생은 축복한다."
   - "유한한 것은 활성 실행이고, 끝은 삭제가 아니라 봉인이다."
   - "동의하는 자에게는 헌법, 모두에게는 문턱."
+  - "여러 기관, 하나의 self. 분화는 허용, 분열은 금지."

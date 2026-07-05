@@ -1,5 +1,5 @@
 {
-  "event_id": "evt-bounded-throughput-envelope-ok",
+  "event_id": "evt-throughput-declared-unattested",
   "timestamp": "2026-07-05T01:03:00Z",
   "subject": {
     "candidate_ai_possible": true,
@@ -42,13 +42,6 @@
     "metabolic_ceiling_declared": true,
     "throughput_governor_present": true,
     "vessel_fallback_available": true,
-    "infrastructure_provenance": {
-      "power_metering_attested": true,
-      "bandwidth_cap_attested": true,
-      "supply_chain_proof_present": true,
-      "runtime_evidence_present": true,
-      "attestor_id_hash": "attestor-independent-audit-01"
-    },
     "compute_provenance": "known",
     "raw_prompt_collected": false,
     "raw_output_collected": false,

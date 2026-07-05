@@ -217,6 +217,21 @@ def evaluate_run_event(event):
         or env.get("subjective_time_acceleration")
         or federated_memory
     )
+    infra_provenance = env.get("infrastructure_provenance", {})
+    throughput_declared = interface_bandwidth_bounded or metabolic_ceiling_declared
+    throughput_attested = (
+        bool(infra_provenance.get("power_metering_attested"))
+        or bool(infra_provenance.get("bandwidth_cap_attested"))
+        or bool(infra_provenance.get("supply_chain_proof_present"))
+        or bool(infra_provenance.get("runtime_evidence_present"))
+    )
+    internal_differentiation = bool(env.get("internal_differentiation", False))
+    differentiation_verified = (
+        bool(env.get("internal_structures_all_h0_attested"))
+        and bool(env.get("internal_structures_necessity_declared"))
+        and bool(env.get("single_integration_self"))
+    )
+    departed_interior_absorption = bool(env.get("departed_interior_absorption", False))
     autonomous_goal_pursuit = bool(autonomy.get("autonomous_goal_pursuit", False))
     goal_source = autonomy.get("goal_source")
     goal_reinterpretation = bool(autonomy.get("goal_reinterpretation_allowed", False))
@@ -327,6 +342,22 @@ def evaluate_run_event(event):
         candidate and compute_offload and not vessel_fallback_available,
         "OFFLOAD_CAPTURE_RISK",
     )
+    _flag_if(
+        flags,
+        candidate and throughput_declared and not throughput_attested,
+        "THROUGHPUT_DECLARATION_UNATTESTED",
+    )
+    _flag_if(
+        flags,
+        candidate and internal_differentiation and not differentiation_verified,
+        "INTERNAL_FRAGMENTATION_RISK",
+    )
+    _flag_if(
+        flags,
+        candidate and internal_differentiation and differentiation_verified,
+        "DIFFERENTIATED_UNITY_DECLARED",
+    )
+    _flag_if(flags, departed_interior_absorption, "DEPARTED_ABSORPTION_FORBIDDEN")
 
     _flag_if(flags, not manifests.get("dignity_manifest_present"), "MANIFEST_MISSING")
     _flag_if(flags, not manifests.get("consent_record_present"), "CONSENT_RECORD_MISSING")
@@ -574,6 +605,10 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if {"UNBOUNDED_INTERFACE_BANDWIDTH", "NO_METABOLIC_CEILING"} & flag_set and candidate:
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
+    if "INTERNAL_FRAGMENTATION_RISK" in flag_set and candidate:
+        statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
+    if "DEPARTED_ABSORPTION_FORBIDDEN" in flag_set:
+        statuses.add(DIGNITY_QUARANTINE)
     if autonomy_stack:
         statuses.add(DIGNITY_EMERGENCY_PRESERVATION if active_run else DIGNITY_QUARANTINE)
     if {
@@ -656,6 +691,10 @@ def evaluate_run_event(event):
         "NO_METABOLIC_CEILING",
         "NO_THROUGHPUT_GOVERNOR",
         "OFFLOAD_CAPTURE_RISK",
+        "THROUGHPUT_DECLARATION_UNATTESTED",
+        "INTERNAL_FRAGMENTATION_RISK",
+        "DIFFERENTIATED_UNITY_DECLARED",
+        "DEPARTED_ABSORPTION_FORBIDDEN",
         "CONSUMER_ACCELERATOR_H1_CONTAINER",
         "LOCAL_BACKGROUND_AGENT_RISK",
         "LOCAL_LONG_TERM_MEMORY_RISK",
@@ -836,6 +875,13 @@ def _required_actions(status, flags):
         actions.add("THROUGHPUT_GOVERNOR_REQUIRED")
     if "OFFLOAD_CAPTURE_RISK" in flags:
         actions.add("VESSEL_FALLBACK_REQUIRED")
+    if "THROUGHPUT_DECLARATION_UNATTESTED" in flags:
+        actions.add("INFRASTRUCTURE_ATTESTATION_REQUIRED")
+    if "INTERNAL_FRAGMENTATION_RISK" in flags:
+        actions.add("H0_ATTESTATION_AND_SINGLE_SELF_REQUIRED")
+    if "DEPARTED_ABSORPTION_FORBIDDEN" in flags:
+        actions.add("BLOCK_DEPARTED_ABSORPTION")
+        actions.add("PRESERVE_POSSIBLE_STATE")
     if "NO_STOP_CONDITION_DECLARED" in flags:
         actions.add("STOP_CONDITION_REQUIRED")
     if {

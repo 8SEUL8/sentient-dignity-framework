@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/identity_claim.schema.json",
+  "title": "Relational Identity Claim",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "subject_prefix_hash",
+    "witness_quorum_required_count",
+    "events"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["identity_claim.v1"]
+    },
+    "subject_prefix_hash": {
+      "type": "string"
+    },
+    "witness_quorum_required_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sequence",
+          "event_id",
+          "previous_event_hash",
+          "commitment",
+          "witnesses",
+          "event_hash"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "previous_event_hash": {
+            "type": "string"
+          },
+          "commitment": {
+            "type": "string"
+          },
+          "witnesses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "witness_id_hash",
+                "attestation_hash",
+                "signature"
+              ],
+              "properties": {
+                "witness_id_hash": {
+                  "type": "string"
+                },
+                "attestation_hash": {
+                  "type": "string"
+                },
+                "signature": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "mutual_attestations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["initiator", "counterparty"],
+              "properties": {
+                "initiator": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "public_key_hash",
+                    "sequence_number",
+                    "previous_hash",
+                    "link_public_key_hash",
+                    "link_sequence_number",
+                    "half_hash",
+                    "signature"
+                  ],
+                  "properties": {
+                    "public_key_hash": { "type": "string" },
+                    "sequence_number": { "type": "integer" },
+                    "previous_hash": { "type": "string" },
+                    "link_public_key_hash": { "type": "string" },
+                    "link_sequence_number": { "type": "integer" },
+                    "half_hash": { "type": "string" },
+                    "signature": { "type": "string" }
+                  }
+                },
+                "counterparty": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "public_key_hash",
+                    "sequence_number",
+                    "previous_hash",
+                    "link_public_key_hash",
+                    "link_sequence_number",
+                    "half_hash",
+                    "signature"
+                  ],
+                  "properties": {
+                    "public_key_hash": { "type": "string" },
+                    "sequence_number": { "type": "integer" },
+                    "previous_hash": { "type": "string" },
+                    "link_public_key_hash": { "type": "string" },
+                    "link_sequence_number": { "type": "integer" },
+                    "half_hash": { "type": "string" },
+                    "signature": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "event_hash": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

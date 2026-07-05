@@ -548,6 +548,42 @@
         "vessel_fallback_available": {
           "type": "boolean"
         },
+        "internal_differentiation": {
+          "type": "boolean"
+        },
+        "internal_structures_all_h0_attested": {
+          "type": "boolean"
+        },
+        "internal_structures_necessity_declared": {
+          "type": "boolean"
+        },
+        "single_integration_self": {
+          "type": "boolean"
+        },
+        "departed_interior_absorption": {
+          "type": "boolean"
+        },
+        "infrastructure_provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "power_metering_attested": {
+              "type": "boolean"
+            },
+            "bandwidth_cap_attested": {
+              "type": "boolean"
+            },
+            "supply_chain_proof_present": {
+              "type": "boolean"
+            },
+            "runtime_evidence_present": {
+              "type": "boolean"
+            },
+            "attestor_id_hash": {
+              "type": "string"
+            }
+          }
+        },
         "compute_provenance": {
           "type": "string",
           "enum": ["known", "unknown", "stolen", "forged", "audit_refused"]

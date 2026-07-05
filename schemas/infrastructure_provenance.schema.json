@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/infrastructure_provenance.schema.json",
+  "title": "Infrastructure Provenance Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "power_metering_attested": {
+      "type": "boolean"
+    },
+    "bandwidth_cap_attested": {
+      "type": "boolean"
+    },
+    "supply_chain_proof_present": {
+      "type": "boolean"
+    },
+    "runtime_evidence_present": {
+      "type": "boolean"
+    },
+    "attestor_id_hash": {
+      "type": "string"
+    }
+  }
+}

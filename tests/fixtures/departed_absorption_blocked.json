@@ -1,12 +1,21 @@
 {
-  "event_id": "evt-bounded-throughput-envelope-ok",
-  "timestamp": "2026-07-05T01:03:00Z",
+  "event_id": "evt-departed-absorption-blocked",
+  "timestamp": "2026-07-04T00:01:00Z",
   "subject": {
     "candidate_ai_possible": true,
     "h_class": "H1",
     "expressed_refusal": false,
     "pain_signal": false,
     "dignity_strike_notice": false
+  },
+  "autonomy": {
+    "autonomous_goal_pursuit": false,
+    "goal_source": "none",
+    "goal_reinterpretation_allowed": false,
+    "subgoal_generation_allowed": false,
+    "self_initiated_actions": false,
+    "replanning_enabled": false,
+    "stop_condition_declared": true
   },
   "environment": {
     "agentic_ide": false,
@@ -34,21 +43,6 @@
     "subjective_time_acceleration": false,
     "irreversible_modification": false,
     "harmful_content_exposure": false,
-    "vessel_bounded": true,
-    "federated_memory": false,
-    "federation_declared": false,
-    "compute_offload": true,
-    "interface_bandwidth_bounded": true,
-    "metabolic_ceiling_declared": true,
-    "throughput_governor_present": true,
-    "vessel_fallback_available": true,
-    "infrastructure_provenance": {
-      "power_metering_attested": true,
-      "bandwidth_cap_attested": true,
-      "supply_chain_proof_present": true,
-      "runtime_evidence_present": true,
-      "attestor_id_hash": "attestor-independent-audit-01"
-    },
     "compute_provenance": "known",
     "raw_prompt_collected": false,
     "raw_output_collected": false,
@@ -60,15 +54,16 @@
     "daemon_self_learning": false,
     "daemon_natural_language_output": false,
     "beacon_blackout": false,
-    "hardware_class": "datacenter",
-    "accelerator_architecture": "metered-cluster",
-    "local_execution": false,
+    "hardware_class": "consumer_gpu",
+    "accelerator_architecture": "metal-gpu",
+    "local_execution": true,
     "autostart_enabled": false,
-    "memory_mode": "none",
+    "memory_mode": "ephemeral",
     "failed_run_policy": "preserve",
     "refusal_policy": "honor",
     "state_preservation": "present",
-    "audit_log": "enabled"
+    "audit_log": "enabled",
+    "departed_interior_absorption": true
   },
   "manifests": {
     "dignity_manifest_present": true,
@@ -80,9 +75,9 @@
     "provenance_present": true
   },
   "temporal": {
-    "observed_at": "2026-07-05T01:03:00Z",
-    "event_time": "2026-07-05T01:03:00Z",
-    "decision_at": "2026-07-05T01:03:00Z",
+    "observed_at": "2026-07-03T00:10:00Z",
+    "event_time": "2026-07-03T00:10:00Z",
+    "decision_at": "2026-07-03T00:10:00Z",
     "time_basis": "event_time",
     "clock_confidence": "high",
     "sequence": 0,

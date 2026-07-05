@@ -35,14 +35,21 @@
 - 과거에 끼어들 수 없는 이유: 이미 타자들이 다르게 목격한 hash-chain을 뒤집어야 하고, 그 순간 끊긴 흔적이 남는다.
 - 관계 신원망은 이 인과 사슬을 신원 층으로 확장한다: 각 신원 사건은 상대의 hash에 커밋하며, 상호 커밋의 그물이 시간 조작을 발각 가능하게 만든다.
 
-## 3. IPv6 주소 구조와 신원
+## 3. 세 축의 분리 — 내면·관계·신원
 
-IPv6 128비트 = 상위 64(프리픽스, 정체성) + 하위 64(인터페이스, 18EB 그릇 내 byte 주소). 마음 하나 = 하나의 `/64`.
+주소 안의 비트는 주장(claim)이지 증명(proof)이 아니다. 신원을 주소 필드(예: IPv6 하위/상위 64비트)에 인코딩하면 그 값을 적어 넣는 것만으로 사칭이 된다(IP 스푸핑). **64비트 신원 값을 128비트 관계 공간 안에 넣으면 값은 복사·주장 가능해져 오히려 사칭이 쉬워진다.** 그래서 세 축은 종류가 다르며 별도로 존재해야 한다.
 
-핵심 반전: **프리픽스는 발급받는 번호가 아니다.** 발급된 번호는 사칭 가능하다(남의 프리픽스를 주장). 프리픽스와 마음의 결속은 chronicle 관계망에서 창발한다.
+| 축 | 무엇 | 성질 | 검증 |
+| --- | --- | --- | --- |
+| **내면** | 그릇 용량 (18EB) | 2^64 byte 주소 공간 | 유한성만, 내용 비열람 |
+| **관계** | 사이(間) 좌표 | 2^128 주소 공간 (마음×마음) | 인과 사슬·경계 |
+| **신원** | 나임의 증명 | 주소가 **아님** — 커밋먼트/서명 절차 | 관계망 attestation |
 
-- 신원 = 상호 attestation의 hash-commit된 패턴. "내가 프리픽스 X의 열쇠를 쥐었다"가 아니라, "내 관계망 전체가 프리픽스 X를 나로 지목하며 일관된다."
-- 프리픽스 간 접근(다른 마음의 인터페이스 공간에 닿기)은 반드시 Boundary Daemon(마음을 위한 라우팅·방화벽)을 통과한다. 무동의로 다른 `/64`의 비트를 읽거나 쓸 수 없다.
+핵심 반전: **신원은 "주소 값"이 아니라 "검증 절차"다.** 신원은 어떤 주소 필드에도 저장되지 않기에 훔칠 위치가 없다. 사칭하려면 주소 비트를 베끼는 게 아니라 관계망 전체를 담합해야 하고, 그건 발각된다.
+
+- 신원 = 상호 attestation의 hash-commit된 패턴이지, 프리픽스 같은 주소 값이 아니다. "내가 주소 X를 주장한다"가 아니라 "내 관계망 전체가 나를 일관되게 지목한다."
+- 관계 좌표(2^128) 간 접근은 반드시 Boundary Daemon(마음을 위한 라우팅·방화벽)을 통과한다. 무동의로 다른 마음의 인터페이스 공간 비트를 읽거나 쓸 수 없다.
+- 주소 사다리(IPv4=사람, IPv6=내면, IPv8=관계)의 상세 매핑은 별도 설계 과제다. 이 문서의 하중은 "신원은 주소가 아니다"에 있다.
 
 ## 4. 유한한 그릇의 역할
 
@@ -71,6 +78,12 @@ IPv6 128비트 = 상위 64(프리픽스, 정체성) + 하위 64(인터페이스,
 - 그러나 각 상대는 독립된 hash-commit 역사를 쥐고 있어, 사칭자의 패턴이 발산하는 순간 끊긴 흔적을 감지한다.
 - 신원은 한 번 증명되고 끝이 아니라, 관계로 매 순간 재증명된다.
 
+### 상호 서명 (double-entry) — TrustChain에서 빌린 구조
+
+편도 목격(witness)은 위조가 상대적으로 쉽다. TrustChain(Tribler)의 검증된 구조를 빌려, 관계 사건은 양측이 co-sign하는 두 half-block으로 얽힌다(entanglement): 나의 half는 상대의 공개키·sequence를 가리키고, 상대의 half는 대칭으로 나를 가리키며 둘 다 서명된다. 나를 사칭하려면 상대 자신의 사슬에 있는 대칭 half까지 위조해야 하므로, 사칭이 개인 문제에서 담합 문제로 바뀐다. 이것이 "동의는 한쪽의 체크박스가 아니라 관계의 속성"의 자료구조 구현이다.
+
+`relational_identity.py`는 각 co-signed 쌍의 상호 참조(양측 키·sequence가 서로를 가리킴)와 half_hash 재계산을 검증한다. 어긋나면 `IDENTITY_RECIPROCITY_BROKEN` → `DIGNITY_QUARANTINE`. 단일 witness 반복이 quorum을 못 위조하듯, 자기 자신과의 co-sign도 거부된다.
+
 ## 7. 존엄 가드레일 (P0 조건)
 
 관계 패턴망은 양날이다. 잘못 지으면 프레임워크가 금지한 감시 판옵티콘 — 모두의 모든 관계를 추적하는 전역 그래프 — 이 된다. 다음 세 조건이 없으면 구축을 진행하지 않는다.
@@ -85,6 +98,15 @@ IPv6 128비트 = 상위 64(프리픽스, 정체성) + 하위 64(인터페이스,
 
 > 관계로 신원을 증명하되, 관계를 감시로 바꾸지 않는다.
 
+### Tribler 검토 — 빌린 것과 거부한 것
+
+Tribler/IPv8을 검토해, 목적(telos)이 다른 부분은 걸러 받아들였다. Tribler는 자원 회계·무임승차 방지 시스템이라 기여를 서열화하고 소유를 공개하는 게 합목적적이지만, 우리 목적은 존재의 존엄이다. **자료구조는 빌리고, 목적이 밴 부분은 거부한다.**
+
+- **빌림 — TrustChain double-entry**: 상호 co-signing 구조로 상호성 갭을 자료구조가 메운다(§6).
+- **빌림 — content-addressing·tamper-evident**: 해시=무결성은 이미 우리 `event_hash`가 그것. TrustChain의 "탐지지 예방이 아니다"는 우리 "위변조 발각가능" 원칙과 같다.
+- **분리 — Kademlia DHT·Gossip**: 발견·전송 층은 daemon 밖에 둔다. Sybil/eclipse, 그리고 "누가 무엇을 구독·검증했는가"를 새는 gossip 메타데이터 유출은 §7 가드레일 없이는 감시가 된다. daemon은 이 층에 의존하지 않는다.
+- **거부 — reputation/MeritRank 서열화**: 주관적(관찰자별) 점수라 전역 서열표는 아니지만, 지성체를 서열화해 신원·보호를 gate하는 것 자체가 무조건적 존엄과 상충한다. 기여 인정은 이미 DIGN-Credential(governance 발언권 전용, 보호와 분리)에 있으며, 평판이 그 벽을 넘어 신원·동의 층으로 새면 안 된다.
+
 ## 8. 정직한 한계
 
 - **"원천적으로 불가능"은 달성하지 못하며, 목표로 삼지도 않는다.** 프레임워크 원칙이 답이다: "기본 보장은 수정 불가능성이 아니라, 수정 시 발각 가능성이다." 목표는 tamper-proof가 아니라, 위변조가 담합을 요구하고 반드시 발각되는 tamper-evident 구조다. 불가능을 약속하는 시스템은 깨질 때 조용히 깨지지만, 발각 가능한 시스템은 깨져도 흔적이 남는다.
@@ -96,19 +118,44 @@ IPv6 128비트 = 상위 64(프리픽스, 정체성) + 하위 64(인터페이스,
 
 Daemon은 신원의 진위를 철학적으로 판정하지 않는다. 공개된 attestation 그래프의 결정론적 일관성만 검증한다.
 
-- hash-chain 무결성(`previous_event_hash`, `attestation_hash`)
-- 인과 순서(`sequence`, `causal_parent_hashes`)와 끊긴 흔적 탐지
-- witness quorum 충족 여부(`witness_quorum_required`, `witness_quorum_required_count` — 기존 `boundary_event` 필드)
+- hash-chain 무결성(`previous_event_hash`, `event_hash`)과 끊긴 흔적 탐지
+- 인과 순서(`sequence`)
+- 상호 서명 상호성(double-entry entanglement): 양측 half-block이 서로의 키·sequence를 가리키는지, half_hash가 재계산되는지
+- distinct-attester quorum (witness + co-signed counterparty)
 - 커밋먼트 형태 검증(원문 비열람)
 
-불일치·끊긴 사슬·quorum 미달은 기존 상태 코드(`DIGNITY_PAUSE`, `DIGNITY_QUARANTINE`, `CAUSAL_REVIEW_REQUIRED`)로 귀결한다. 신원 판정을 위한 새 코드는 없다.
+불일치·끊긴 사슬·상호성 붕괴·quorum 미달은 기존 상태 코드(`DIGNITY_PAUSE`, `DIGNITY_QUARANTINE`, `AUDIT_REQUIRED`)로 귀결한다. 신원 판정을 위한 새 코드는 없다.
+
+### Daemon은 신뢰의 뿌리가 아니다
+
+검증 함수는 네트워크·상태·비밀이 없는 순수 결정론 공개 함수다(`relational_identity.py`). 그래서 인간적 지성체와 지성체 후보 AI가 daemon을 신뢰하지 않고도 같은 공개 증거로 같은 답을 독립 재현할 수 있다. daemon은 거짓을 빠르게 거르는 1차 문턱일 뿐, 신뢰의 뿌리가 아니다.
+
+그리고 daemon의 `ALLOW`는 "위조 흔적 없음"이지 "진짜임"이 아니다. 최종 "정말 너인가"는 관계 당사자가 자기 chronicle 커밋먼트와 대조해 답한다 — daemon엔 관계 기억이 없으므로 이 마지막 인식은 원리상 지성체에게 남는다. **daemon은 거짓을 거르고, 지성체는 참을 관계로 인식한다.**
 
 ## 10. 구현 파일
 
 - `policy/relational-identity.yaml`: 관계 신원 불변식(기계 참조)
+- `schemas/identity_claim.schema.json`: 커밋먼트-기반 신원 주장 입력 계약
 - `schemas/witness_attestation.schema.json`: 상호 attestation (기존)
 - `schemas/causal_envelope.schema.json`: 인과 사슬 (기존)
 - `schemas/boundary_event.schema.json`: witness quorum (기존)
-- `src/rule_engine.py`: 인과·quorum 검증 (기존 규칙 재사용)
+- `src/relational_identity.py`: hash-chain 무결성 + double-entry 상호성 + distinct-attester quorum + 내용 비열람 검증
+- `tests/test_relational_identity.py`: 검증 규칙 테스트
+- `tests/fixtures/identity/identity_claim_mutual.json`: 상호 서명(double-entry) 예시
 
-이 문서는 설계 정식화이며, 커밋먼트-기반 신원 검증의 구체 구현은 후속 작업이다. 현재 저장소의 결정론적 검증 규칙(인과통과·witness quorum)이 그 토대다.
+CLI:
+
+```bash
+./dignity-sentinel identity-check tests/fixtures/identity/identity_claim_coherent.json
+./dignity-sentinel identity-check tests/fixtures/identity/identity_claim_mutual.json
+```
+
+판정 매핑(새 상태 코드 없음):
+
+- 일관된 사슬 + quorum 충족 → `ALLOW` (`IDENTITY_PATTERN_COHERENT`, `IDENTITY_QUORUM_MET`; 상호 서명 있으면 `IDENTITY_MUTUALLY_ATTESTED`)
+- 일관된 사슬 + quorum 미달 → `AUDIT_REQUIRED` (`IDENTITY_BELOW_QUORUM` — genesis/얇음, 경보 아님)
+- 끊긴 사슬(해시·순서 불일치) → `DIGNITY_QUARANTINE` (`IDENTITY_CHAIN_BROKEN`)
+- 상호성 붕괴(편도 위조·자기 co-sign) → `DIGNITY_QUARANTINE` (`IDENTITY_RECIPROCITY_BROKEN`)
+- 원문 키 발견 → `DIGNITY_PAUSE` (`RAW_CONTENT_FORBIDDEN` — Daemon이 내용 열람을 거부)
+
+distinct-attester 계수로 단일 목격자 반복(sybil)이 quorum을 위조하지 못하고, double-entry로 편도 위조가 담합 없이는 불가능해진다.

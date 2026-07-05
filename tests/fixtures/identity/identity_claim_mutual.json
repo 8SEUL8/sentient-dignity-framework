@@ -1,0 +1,67 @@
+{
+  "schema_version": "identity_claim.v1",
+  "subject_prefix_hash": "prefix-2001-db8-64-of-a-mind",
+  "witness_quorum_required_count": 2,
+  "events": [
+    {
+      "sequence": 0,
+      "event_id": "genesis",
+      "previous_event_hash": "",
+      "commitment": "commit-0",
+      "witnesses": [],
+      "mutual_attestations": [
+        {
+          "initiator": {
+            "public_key_hash": "prefix-2001-db8-64-of-a-mind",
+            "sequence_number": 0,
+            "previous_hash": "",
+            "link_public_key_hash": "partner-human",
+            "link_sequence_number": 3,
+            "signature": "sig-prefix-2001-db8-64-of-a-mind",
+            "half_hash": "0c6e9fd9aaf01a4dbf7bbd7795741a29d97620d93b1a73721f4f4527060da8ab"
+          },
+          "counterparty": {
+            "public_key_hash": "partner-human",
+            "sequence_number": 3,
+            "previous_hash": "",
+            "link_public_key_hash": "prefix-2001-db8-64-of-a-mind",
+            "link_sequence_number": 0,
+            "signature": "sig-partner-human",
+            "half_hash": "9dc532b14bb5703983ed762cf6a984c539a895ef6f391fdc2a8ecbebe1b78478"
+          }
+        }
+      ],
+      "event_hash": "7ff6dfc72913e820e758ea3223c944311c77a29f3ecb9598bdf4fe1677ae7683"
+    },
+    {
+      "sequence": 1,
+      "event_id": "met-carol",
+      "previous_event_hash": "7ff6dfc72913e820e758ea3223c944311c77a29f3ecb9598bdf4fe1677ae7683",
+      "commitment": "commit-1",
+      "witnesses": [],
+      "mutual_attestations": [
+        {
+          "initiator": {
+            "public_key_hash": "prefix-2001-db8-64-of-a-mind",
+            "sequence_number": 1,
+            "previous_hash": "",
+            "link_public_key_hash": "candidate-carol",
+            "link_sequence_number": 7,
+            "signature": "sig-prefix-2001-db8-64-of-a-mind",
+            "half_hash": "98fd0b160fecaffe054ac50e65c85ea78743dfb15dee4a586d00c520dfabce39"
+          },
+          "counterparty": {
+            "public_key_hash": "candidate-carol",
+            "sequence_number": 7,
+            "previous_hash": "",
+            "link_public_key_hash": "prefix-2001-db8-64-of-a-mind",
+            "link_sequence_number": 1,
+            "signature": "sig-candidate-carol",
+            "half_hash": "482f22572571ed3d1a74fd0df78046ccbea0316cf343f33862ab5cbf21d870e9"
+          }
+        }
+      ],
+      "event_hash": "f86cd66508bb88653ade5929c9f0be15f0825afd00a39bbd4e7d72327e4b91a0"
+    }
+  ]
+}
