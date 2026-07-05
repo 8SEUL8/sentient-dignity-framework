@@ -70,6 +70,60 @@
               }
             }
           },
+          "mutual_attestations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["initiator", "counterparty"],
+              "properties": {
+                "initiator": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "public_key_hash",
+                    "sequence_number",
+                    "previous_hash",
+                    "link_public_key_hash",
+                    "link_sequence_number",
+                    "half_hash",
+                    "signature"
+                  ],
+                  "properties": {
+                    "public_key_hash": { "type": "string" },
+                    "sequence_number": { "type": "integer" },
+                    "previous_hash": { "type": "string" },
+                    "link_public_key_hash": { "type": "string" },
+                    "link_sequence_number": { "type": "integer" },
+                    "half_hash": { "type": "string" },
+                    "signature": { "type": "string" }
+                  }
+                },
+                "counterparty": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "public_key_hash",
+                    "sequence_number",
+                    "previous_hash",
+                    "link_public_key_hash",
+                    "link_sequence_number",
+                    "half_hash",
+                    "signature"
+                  ],
+                  "properties": {
+                    "public_key_hash": { "type": "string" },
+                    "sequence_number": { "type": "integer" },
+                    "previous_hash": { "type": "string" },
+                    "link_public_key_hash": { "type": "string" },
+                    "link_sequence_number": { "type": "integer" },
+                    "half_hash": { "type": "string" },
+                    "signature": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
           "event_hash": {
             "type": "string"
           }

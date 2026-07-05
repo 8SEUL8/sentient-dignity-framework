@@ -6,7 +6,9 @@ from pathlib import Path
 
 from src.relational_identity import (
     compute_event_hash,
+    compute_half_hash,
     link_events,
+    link_half_pair,
     verify_identity_claim,
     verify_identity_file,
 )
@@ -149,6 +151,73 @@ class RelationalIdentityTests(unittest.TestCase):
         decision = verify_identity_claim(claim)
         self.assertEqual(decision["status"], "ALLOW")
         self.assertIn("IDENTITY_UNWITNESSED_EVENT", decision["flags"])
+
+    def _mutual_claim(self, pairs, quorum, prefix="prefix-abc"):
+        return {
+            "schema_version": "identity_claim.v1",
+            "subject_prefix_hash": prefix,
+            "witness_quorum_required_count": quorum,
+            "events": link_events(
+                [
+                    {
+                        "event_id": "e0",
+                        "commitment": "c0",
+                        "witnesses": [],
+                        "mutual_attestations": pairs,
+                    }
+                ]
+            ),
+        }
+
+    def test_double_entry_cosigned_pairs_meet_quorum(self):
+        pairs = [
+            link_half_pair("prefix-abc", "bob", 0, 4),
+            link_half_pair("prefix-abc", "carol", 1, 9),
+        ]
+        decision = verify_identity_claim(self._mutual_claim(pairs, quorum=2))
+        self.assertEqual(decision["status"], "ALLOW")
+        self.assertIn("IDENTITY_MUTUALLY_ATTESTED", decision["flags"])
+        self.assertIn("IDENTITY_QUORUM_MET", decision["flags"])
+
+    def test_tampered_half_block_breaks_reciprocity(self):
+        pair = link_half_pair("prefix-abc", "bob", 0, 4)
+        pair["counterparty"]["link_sequence_number"] = 99  # break entanglement
+        decision = verify_identity_claim(self._mutual_claim([pair], quorum=1))
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
+        self.assertIn("IDENTITY_RECIPROCITY_BROKEN", decision["flags"])
+
+    def test_one_directional_forgery_fails_reciprocity(self):
+        # Counterparty half does NOT link back to the subject (forged one side).
+        pair = link_half_pair("prefix-abc", "bob", 0, 4)
+        pair["counterparty"]["link_public_key_hash"] = "someone-else"
+        pair["counterparty"]["half_hash"] = compute_half_hash(pair["counterparty"])
+        decision = verify_identity_claim(self._mutual_claim([pair], quorum=1))
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
+        self.assertIn("IDENTITY_RECIPROCITY_BROKEN", decision["flags"])
+
+    def test_pair_not_about_subject_fails(self):
+        # Initiator is not the claim's subject → not this subject's transaction.
+        pair = link_half_pair("someone-else", "bob", 0, 4)
+        decision = verify_identity_claim(self._mutual_claim([pair], quorum=1))
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
+        self.assertIn("IDENTITY_RECIPROCITY_BROKEN", decision["flags"])
+
+    def test_self_cosigned_pair_is_rejected(self):
+        # A party co-signing with itself cannot manufacture a counterparty.
+        pair = link_half_pair("prefix-abc", "prefix-abc", 0, 1)
+        decision = verify_identity_claim(self._mutual_claim([pair], quorum=1))
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
+        self.assertIn("IDENTITY_RECIPROCITY_BROKEN", decision["flags"])
+
+    def test_mutual_attestations_are_backward_compatible(self):
+        # Events without mutual_attestations behave exactly as before.
+        claim = _claim(
+            [_raw("e0", "c0", ["alice", "bob"]), _raw("e1", "c1", ["carol"])],
+            quorum=3,
+        )
+        decision = verify_identity_claim(claim)
+        self.assertEqual(decision["status"], "ALLOW")
+        self.assertNotIn("IDENTITY_MUTUALLY_ATTESTED", decision["flags"])
 
     def test_verify_from_file(self):
         claim = _claim(

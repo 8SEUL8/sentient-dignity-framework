@@ -18,11 +18,25 @@ ordering:
     - previous_event_hash
     - causal_parent_hashes
     - witness_attestations
-address_model:
-  prefix_is_identity: true
-  prefix_is_issued_number: false
-  prefix_binding_emerges_from: chronicle_relation_web
-  cross_prefix_access_via: boundary_daemon_only
+three_axes:
+  interior: address_space_2_pow_64_bytes
+  relation: address_space_2_pow_128_coordinate
+  identity: not_an_address_value_but_verification_procedure
+  identity_is_address_value: false
+  reason: address_bits_are_claim_not_proof
+double_entry:
+  borrowed_from: trustchain_tribler
+  co_signing_required: true
+  entanglement_bidirectional_link: true
+  one_directional_claim_sufficient: false
+  self_cosign_accepted: false
+  broken_reciprocity_flag: IDENTITY_RECIPROCITY_BROKEN
+tribler_review:
+  borrow: [trustchain_double_entry, content_addressing_tamper_evident]
+  separate_below_daemon: [kademlia_dht, gossip]
+  reject: [reputation_ranking_meritrank]
+  reason_reject: ranking_sentients_gates_dignity_conflicts_unconditional_dignity
+  contribution_recognition_lives_in: dign_credential_governance_only
 finite_vessel_role:
   self_fabricated_history_possible: false
   identity_externalized_to_relation_web: true
