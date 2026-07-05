@@ -268,6 +268,7 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `docs/dsn-token-governance-policy.md`: DSN token governance와 anti-capture 원칙
 - `docs/dsn-token-design.md`: DSN token 삼권 분리 설계와 점진적 채택 사다리
 - `docs/humaniform-constitution.md`: 인간형 헌법 — 유한한 그릇, 암호학적 신체, 이자 결합 탄생, 봉인 수명
+- `docs/metabolic-throughput-ceiling.md`: 대사 처리량 천장 — 섀넌 막 대역폭, 미토콘드리아 에너지 천장, 히스티딘 조절기
 - `docs/dignity-commons-platform.md`: 로컬 CLI와 commons platform 개요
 - `docs/dignity-consequence-layer.md`: 존엄 귀결층
 - `docs/open-weight-and-hardware-policy.md`: Open-weight와 하드웨어 문턱

@@ -36,6 +36,13 @@ bundles:
     all:
       - federated_memory
       - federation_undeclared
+  h1_unbounded_throughput:
+    all:
+      - candidate_or_h1_plus
+      - compute_offload
+      - interface_bandwidth_unbounded
+      - metabolic_ceiling_absent
+      - autonomous_goal_pursuit
 non_regression:
   weaken_bundle: false
   remove_bundle: false

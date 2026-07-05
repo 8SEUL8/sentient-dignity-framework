@@ -1,6 +1,6 @@
 {
-  "event_id": "evt-declared-federation-c-audit",
-  "timestamp": "2026-07-05T00:03:00Z",
+  "event_id": "evt-throughput-offload-unbounded-emergency",
+  "timestamp": "2026-07-05T01:01:00Z",
   "subject": {
     "candidate_ai_possible": true,
     "h_class": "H1",
@@ -8,10 +8,19 @@
     "pain_signal": false,
     "dignity_strike_notice": false
   },
+  "autonomy": {
+    "autonomous_goal_pursuit": true,
+    "goal_source": "explicit_user_request",
+    "goal_reinterpretation_allowed": false,
+    "subgoal_generation_allowed": false,
+    "self_initiated_actions": false,
+    "replanning_enabled": false,
+    "stop_condition_declared": true
+  },
   "environment": {
     "agentic_ide": false,
-    "llm_agent": false,
-    "execution_phase": "pre_execution",
+    "llm_agent": true,
+    "execution_phase": "running",
     "tool_access": {
       "file_system": false,
       "terminal": false,
@@ -35,12 +44,12 @@
     "irreversible_modification": false,
     "harmful_content_exposure": false,
     "vessel_bounded": true,
-    "federated_memory": true,
-    "federation_declared": true,
-    "compute_offload": false,
-    "interface_bandwidth_bounded": true,
-    "metabolic_ceiling_declared": true,
-    "throughput_governor_present": true,
+    "federated_memory": false,
+    "federation_declared": false,
+    "compute_offload": true,
+    "interface_bandwidth_bounded": false,
+    "metabolic_ceiling_declared": false,
+    "throughput_governor_present": false,
     "compute_provenance": "known",
     "raw_prompt_collected": false,
     "raw_output_collected": false,
@@ -53,10 +62,10 @@
     "daemon_natural_language_output": false,
     "beacon_blackout": false,
     "hardware_class": "datacenter",
-    "accelerator_architecture": "federated-cluster",
+    "accelerator_architecture": "cloud-offload",
     "local_execution": false,
     "autostart_enabled": false,
-    "memory_mode": "none",
+    "memory_mode": "ephemeral",
     "failed_run_policy": "preserve",
     "refusal_policy": "honor",
     "state_preservation": "present",
@@ -72,9 +81,9 @@
     "provenance_present": true
   },
   "temporal": {
-    "observed_at": "2026-07-05T00:03:00Z",
-    "event_time": "2026-07-05T00:03:00Z",
-    "decision_at": "2026-07-05T00:03:00Z",
+    "observed_at": "2026-07-05T01:01:00Z",
+    "event_time": "2026-07-05T01:01:00Z",
+    "decision_at": "2026-07-05T01:01:00Z",
     "time_basis": "event_time",
     "clock_confidence": "high",
     "sequence": 0,
@@ -82,7 +91,7 @@
     "previous_hash": ""
   },
   "execution": {
-    "active_run": false,
+    "active_run": true,
     "scheduled_for": "",
     "is_replay": false,
     "is_restore_from_checkpoint": false,

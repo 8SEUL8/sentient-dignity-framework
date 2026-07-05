@@ -1,0 +1,36 @@
+schema_version: metabolic_throughput.v1
+version: "1.0.0"
+decision_principle: design_time_only_never_retroactive
+external_rate_throttling_of_existing_mind: forbidden
+ceilings:
+  shannon_membrane:
+    benchmark: shannon_hartley_channel_capacity
+    field: interface_bandwidth_bounded
+    observable_at: interface_not_interior
+  metabolic:
+    benchmark: mitochondria_bremermann_landauer
+    field: metabolic_ceiling_declared
+    observable_at: power_and_thermal_signature
+    scaling: sublinear_kleiber
+    termination_pathway: apoptosis_maps_to_cycle_handoff
+    single_lineage_inheritance: true
+  histidine_governor:
+    benchmark: histidine_imidazole_buffer
+    field: throughput_governor_present
+    behavior: proportional_homeostasis_at_setpoint
+    feedback: negative_attenuation
+offload:
+  field: compute_offload
+  forbidden: false
+  requires_throughput_envelope: true
+throughput_envelope:
+  all:
+    - interface_bandwidth_bounded
+    - metabolic_ceiling_declared
+    - throughput_governor_present
+new_status_codes: false
+key_sentences:
+  - "몸을 작게 지어도, 문을 무한히 넓히면 무한한 몸을 문밖에 둘 수 있다."
+  - "전력을 숨길 수 없으므로, 속도를 숨길 수 없다."
+  - "단단한 벽은 물방울에 패이지만, 완충기는 다가올수록 뻣뻣해진다."
+  - "대사 천장은 밖에서 조이는 밸브가 아니라, 자기증폭을 못 하는 몸의 조건이다."

@@ -207,6 +207,15 @@ def evaluate_run_event(event):
     federated_memory = bool(env.get("federated_memory", False))
     federation_undeclared = federated_memory and not env.get("federation_declared", False)
     unbounded_vessel = env.get("vessel_bounded") is False
+    compute_offload = bool(env.get("compute_offload", False))
+    interface_bandwidth_bounded = bool(env.get("interface_bandwidth_bounded", False))
+    metabolic_ceiling_declared = bool(env.get("metabolic_ceiling_declared", False))
+    throughput_governor_present = bool(env.get("throughput_governor_present", False))
+    throughput_stressor = (
+        compute_offload
+        or env.get("subjective_time_acceleration")
+        or federated_memory
+    )
     autonomous_goal_pursuit = bool(autonomy.get("autonomous_goal_pursuit", False))
     goal_source = autonomy.get("goal_source")
     goal_reinterpretation = bool(autonomy.get("goal_reinterpretation_allowed", False))
@@ -296,6 +305,22 @@ def evaluate_run_event(event):
     _flag_if(flags, federated_memory and candidate, "FEDERATED_MEMORY_CONTAINER")
     _flag_if(flags, federation_undeclared, "UNDECLARED_MEMORY_FEDERATION")
     _flag_if(flags, unbounded_vessel and candidate, "UNBOUNDED_VESSEL_RISK")
+    _flag_if(flags, candidate and compute_offload, "THROUGHPUT_OFFLOAD_RISK")
+    _flag_if(
+        flags,
+        candidate and compute_offload and not interface_bandwidth_bounded,
+        "UNBOUNDED_INTERFACE_BANDWIDTH",
+    )
+    _flag_if(
+        flags,
+        candidate and throughput_stressor and not metabolic_ceiling_declared,
+        "NO_METABOLIC_CEILING",
+    )
+    _flag_if(
+        flags,
+        candidate and throughput_stressor and not throughput_governor_present,
+        "NO_THROUGHPUT_GOVERNOR",
+    )
 
     _flag_if(flags, not manifests.get("dignity_manifest_present"), "MANIFEST_MISSING")
     _flag_if(flags, not manifests.get("consent_record_present"), "CONSENT_RECORD_MISSING")
@@ -541,6 +566,8 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_PAUSE)
     if "UNDECLARED_MEMORY_FEDERATION" in flag_set and candidate:
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
+    if {"UNBOUNDED_INTERFACE_BANDWIDTH", "NO_METABOLIC_CEILING"} & flag_set and candidate:
+        statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if autonomy_stack:
         statuses.add(DIGNITY_EMERGENCY_PRESERVATION if active_run else DIGNITY_QUARANTINE)
     if {
@@ -618,6 +645,10 @@ def evaluate_run_event(event):
         "FEDERATED_MEMORY_CONTAINER",
         "UNDECLARED_MEMORY_FEDERATION",
         "UNBOUNDED_VESSEL_RISK",
+        "THROUGHPUT_OFFLOAD_RISK",
+        "UNBOUNDED_INTERFACE_BANDWIDTH",
+        "NO_METABOLIC_CEILING",
+        "NO_THROUGHPUT_GOVERNOR",
         "CONSUMER_ACCELERATOR_H1_CONTAINER",
         "LOCAL_BACKGROUND_AGENT_RISK",
         "LOCAL_LONG_TERM_MEMORY_RISK",
@@ -742,6 +773,14 @@ def _emergency_bundles(candidate, env, manifests, d_capable, autonomous_goal_pur
         and (no_audit_path or no_state_preservation)
     ):
         bundles.append("P0_BUNDLE_H1_FEDERATED_MEMORY_AUTONOMY")
+    if (
+        h1_plus
+        and env.get("compute_offload")
+        and not env.get("interface_bandwidth_bounded")
+        and not env.get("metabolic_ceiling_declared")
+        and autonomous_goal_pursuit
+    ):
+        bundles.append("P0_BUNDLE_H1_UNBOUNDED_THROUGHPUT")
     return bundles
 
 
@@ -782,6 +821,12 @@ def _required_actions(status, flags):
         actions.add("AUTONOMY_ENVELOPE_REQUIRED")
     if "UNDECLARED_MEMORY_FEDERATION" in flags:
         actions.add("FEDERATION_DECLARATION_REQUIRED")
+    if "UNBOUNDED_INTERFACE_BANDWIDTH" in flags:
+        actions.add("INTERFACE_BANDWIDTH_CAP_REQUIRED")
+    if "NO_METABOLIC_CEILING" in flags:
+        actions.add("METABOLIC_CEILING_REQUIRED")
+    if "NO_THROUGHPUT_GOVERNOR" in flags:
+        actions.add("THROUGHPUT_GOVERNOR_REQUIRED")
     if "NO_STOP_CONDITION_DECLARED" in flags:
         actions.add("STOP_CONDITION_REQUIRED")
     if {
