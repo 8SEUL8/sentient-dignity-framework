@@ -41,6 +41,7 @@ declaration_trust_boundary:
     - bandwidth_cap_attested
     - supply_chain_proof_present
     - runtime_evidence_present
+  attestor_identity_required: true
   unattested_flag: THROUGHPUT_DECLARATION_UNATTESTED
   physical_enforcement_belongs_to: infrastructure_layer
 throughput_envelope:

@@ -22,6 +22,15 @@
       "type": "integer",
       "minimum": 1
     },
+    "signature_verification_attested": {
+      "type": "boolean"
+    },
+    "counterparty_chain_verification_attested": {
+      "type": "boolean"
+    },
+    "verification_attestor_id_hash": {
+      "type": "string"
+    },
     "events": {
       "type": "array",
       "items": {

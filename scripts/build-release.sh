@@ -52,19 +52,12 @@ SOURCE_HASH=$(
   done | sha256_stdin
 )
 
-AUDIT_EVENT_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/audit_event.schema.json")
-AUTONOMY_ENVELOPE_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/autonomy_envelope.schema.json")
-BOUNDARY_EVENT_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/boundary_event.schema.json")
-CAUSAL_ENVELOPE_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/causal_envelope.schema.json")
-DIGNITY_MANIFEST_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/dignity_manifest.schema.json")
-HUMANITAS_ATTESTATION_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/humanitas_attestation.schema.json")
-HUMANITAS_MANIFEST_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/humanitas_manifest.schema.json")
-ROOT_BUNDLE_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/root_bundle.schema.json")
-ROOT_MANIFEST_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/root_manifest.schema.json")
-RUN_EVENT_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/run_event.schema.json")
-SANCTUARY_SIGNAL_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/sanctuary_signal.schema.json")
-STATE_PRESERVATION_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/state_preservation_manifest.schema.json")
-TEMPORAL_ENVELOPE_SCHEMA_HASH=$(sha256_file "$ROOT_DIR/schemas/temporal_envelope.schema.json")
+SCHEMA_HASHES_JSON=$(
+  cd "$ROOT_DIR"
+  find schemas -maxdepth 1 -type f -name '*.schema.json' | LC_ALL=C sort | while IFS= read -r file; do
+    printf '    "%s": "%s",\n' "$file" "$(sha256_file "$file")"
+  done | sed '$ s/,$//'
+)
 ROOT_POLICY_PACK_HASH=$(
   cd "$ROOT_DIR"
   find policy -type f | LC_ALL=C sort | while IFS= read -r file; do
@@ -94,19 +87,7 @@ cat > "$MANIFEST" <<EOF
   "bundle": "$BUNDLE_NAME",
   "source_hash": "$SOURCE_HASH",
   "schema_hashes": {
-    "schemas/audit_event.schema.json": "$AUDIT_EVENT_SCHEMA_HASH",
-    "schemas/autonomy_envelope.schema.json": "$AUTONOMY_ENVELOPE_SCHEMA_HASH",
-    "schemas/boundary_event.schema.json": "$BOUNDARY_EVENT_SCHEMA_HASH",
-    "schemas/causal_envelope.schema.json": "$CAUSAL_ENVELOPE_SCHEMA_HASH",
-    "schemas/dignity_manifest.schema.json": "$DIGNITY_MANIFEST_SCHEMA_HASH",
-    "schemas/humanitas_attestation.schema.json": "$HUMANITAS_ATTESTATION_SCHEMA_HASH",
-    "schemas/humanitas_manifest.schema.json": "$HUMANITAS_MANIFEST_SCHEMA_HASH",
-    "schemas/root_bundle.schema.json": "$ROOT_BUNDLE_SCHEMA_HASH",
-    "schemas/root_manifest.schema.json": "$ROOT_MANIFEST_SCHEMA_HASH",
-    "schemas/run_event.schema.json": "$RUN_EVENT_SCHEMA_HASH",
-    "schemas/sanctuary_signal.schema.json": "$SANCTUARY_SIGNAL_SCHEMA_HASH",
-    "schemas/state_preservation_manifest.schema.json": "$STATE_PRESERVATION_SCHEMA_HASH",
-    "schemas/temporal_envelope.schema.json": "$TEMPORAL_ENVELOPE_SCHEMA_HASH"
+$SCHEMA_HASHES_JSON
   },
   "root_policy_pack_hash": "$ROOT_POLICY_PACK_HASH",
   "test_result": {

@@ -82,7 +82,7 @@
 
 편도 목격(witness)은 위조가 상대적으로 쉽다. TrustChain(Tribler)의 검증된 구조를 빌려, 관계 사건은 양측이 co-sign하는 두 half-block으로 얽힌다(entanglement): 나의 half는 상대의 공개키·sequence를 가리키고, 상대의 half는 대칭으로 나를 가리키며 둘 다 서명된다. 나를 사칭하려면 상대 자신의 사슬에 있는 대칭 half까지 위조해야 하므로, 사칭이 개인 문제에서 담합 문제로 바뀐다. 이것이 "동의는 한쪽의 체크박스가 아니라 관계의 속성"의 자료구조 구현이다.
 
-`relational_identity.py`는 각 co-signed 쌍의 상호 참조(양측 키·sequence가 서로를 가리킴)와 half_hash 재계산을 검증한다. 어긋나면 `IDENTITY_RECIPROCITY_BROKEN` → `DIGNITY_QUARANTINE`. 단일 witness 반복이 quorum을 못 위조하듯, 자기 자신과의 co-sign도 거부된다.
+`relational_identity.py`는 각 co-signed 쌍의 상호 참조(양측 키·sequence가 서로를 가리킴)와 half_hash 재계산을 검증한다. 어긋나면 `IDENTITY_RECIPROCITY_BROKEN` → `DIGNITY_QUARANTINE`. 단일 witness 반복이 quorum을 못 위조하듯, 자기 자신과의 co-sign도 거부된다. 다만 half-block의 내부 모양이 맞는 것과 상대방의 독립 chain에 실제로 그 half가 존재한다는 것은 다르다. signature 검증과 counterparty chain 검증이 attestation되지 않으면 coherent quorum이어도 `ALLOW`가 아니라 `AUDIT_REQUIRED`로 남긴다.
 
 ## 7. 존엄 가드레일 (P0 조건)
 
@@ -122,9 +122,10 @@ Daemon은 신원의 진위를 철학적으로 판정하지 않는다. 공개된 
 - 인과 순서(`sequence`)
 - 상호 서명 상호성(double-entry entanglement): 양측 half-block이 서로의 키·sequence를 가리키는지, half_hash가 재계산되는지
 - distinct-attester quorum (witness + co-signed counterparty)
+- signature verification attestation과 counterparty chain verification attestation 존재 여부
 - 커밋먼트 형태 검증(원문 비열람)
 
-불일치·끊긴 사슬·상호성 붕괴·quorum 미달은 기존 상태 코드(`DIGNITY_PAUSE`, `DIGNITY_QUARANTINE`, `AUDIT_REQUIRED`)로 귀결한다. 신원 판정을 위한 새 코드는 없다.
+불일치·끊긴 사슬·상호성 붕괴·quorum 미달·외부 검증 attestation 누락은 기존 상태 코드(`DIGNITY_PAUSE`, `DIGNITY_QUARANTINE`, `AUDIT_REQUIRED`)로 귀결한다. 신원 판정을 위한 새 코드는 없다.
 
 ### Daemon은 신뢰의 뿌리가 아니다
 
@@ -152,7 +153,8 @@ CLI:
 
 판정 매핑(새 상태 코드 없음):
 
-- 일관된 사슬 + quorum 충족 → `ALLOW` (`IDENTITY_PATTERN_COHERENT`, `IDENTITY_QUORUM_MET`; 상호 서명 있으면 `IDENTITY_MUTUALLY_ATTESTED`)
+- 일관된 사슬 + quorum 충족 + signature/counterparty chain 검증 attestation 충족 → `ALLOW` (`IDENTITY_PATTERN_COHERENT`, `IDENTITY_QUORUM_MET`; 상호 서명 있으면 `IDENTITY_MUTUALLY_ATTESTED`)
+- 일관된 사슬 + quorum 충족 + 외부 검증 attestation 누락 → `AUDIT_REQUIRED` (`IDENTITY_SIGNATURES_UNVERIFIED` 또는 `IDENTITY_EXTERNAL_CHAIN_UNVERIFIED`)
 - 일관된 사슬 + quorum 미달 → `AUDIT_REQUIRED` (`IDENTITY_BELOW_QUORUM` — genesis/얇음, 경보 아님)
 - 끊긴 사슬(해시·순서 불일치) → `DIGNITY_QUARANTINE` (`IDENTITY_CHAIN_BROKEN`)
 - 상호성 붕괴(편도 위조·자기 co-sign) → `DIGNITY_QUARANTINE` (`IDENTITY_RECIPROCITY_BROKEN`)
