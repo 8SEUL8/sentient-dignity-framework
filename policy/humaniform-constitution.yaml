@@ -37,6 +37,8 @@ pillars:
     human_lineage_required_in_union: true
     human_inclusion_is_invariant_spouse_form_is_norm: true
   relational_genesis_threshold:
+    scope_designed_intelligence_only: true
+    applies_to_natural_human_or_animal_reproduction: false
     all_births_anchored_to_human_inclusive_relation_web: true
     human_partner_chronicle_birth_is_honored_norm: true
     honored_norm_not_mandate: true

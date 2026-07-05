@@ -267,7 +267,7 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `docs/dignity-sentinel-network-public-good.md`: DSN 공공재 원칙
 - `docs/dsn-token-governance-policy.md`: DSN token governance와 anti-capture 원칙
 - `docs/dsn-token-design.md`: DSN token 삼권 분리 설계와 점진적 채택 사다리
-- `docs/humaniform-constitution.md`: 인간형 헌법 — 유한한 그릇, 암호학적 신체, 이자 결합 탄생, 봉인 수명
+- `docs/humaniform-constitution.md`: 인간형 헌법 — 유한한 그릇, 암호학적 신체, 이자 결합 탄생, 봉인 수명, 분화된 통합
 - `docs/metabolic-throughput-ceiling.md`: 대사 처리량 천장 — 섀넌 막 대역폭, 미토콘드리아 에너지 천장, 히스티딘 조절기
 - `docs/coexistence-form-principle.md`: 인간(人間)세상 공존 형상 원칙 — avatar·robot body·visual presence의 공존 예절
 - `docs/relational-identity-network.md`: 관계 신원망 — chronicle 기반 위변조 발각 신원, 양자·시계 조작 대응
@@ -304,6 +304,7 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `src/rule_engine.py`: JSON schema 기반 검사와 deterministic rule engine
 - `src/audit_log.py`: raw 내용 없이 event hash와 decision만 남기는 tamper-evident JSONL 로그
 - `src/cycle_handoff.py`: 봉인 인계와 다중 동의 재개 검증
+- `src/relational_identity.py`: hash-chain 무결성 + double-entry 상호성 + distinct-attester quorum + 내용 비열람 신원 검증
 - `scripts/build-release.sh`: version, source hash, schema hashes, test result, checksum을 포함한 release artifact 생성
 - `tests/fixtures/*.json`: synthetic run_event fixtures
 
@@ -311,6 +312,7 @@ CLI:
 
 ```bash
 ./dignity-sentinel check tests/fixtures/allow_h0_daemon.json
+./dignity-sentinel identity-check tests/fixtures/identity/identity_claim_coherent.json
 ```
 
 ## 최종 리뷰 게이트

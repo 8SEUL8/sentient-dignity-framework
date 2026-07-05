@@ -219,6 +219,29 @@ class RelationalIdentityTests(unittest.TestCase):
         self.assertEqual(decision["status"], "ALLOW")
         self.assertNotIn("IDENTITY_MUTUALLY_ATTESTED", decision["flags"])
 
+    def test_zero_quorum_cannot_buy_allow(self):
+        # A claim declaring quorum 0 must not get ALLOW with zero attesters.
+        claim = _claim([_raw("e0", "c0", [])], quorum=0)
+        decision = verify_identity_claim(claim)
+        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
+        self.assertIn("IDENTITY_BELOW_QUORUM", decision["flags"])
+        self.assertNotIn("IDENTITY_QUORUM_MET", decision["flags"])
+
+    def test_negative_quorum_with_no_attesters_cannot_buy_allow(self):
+        claim = _claim([_raw("e0", "c0", [])], quorum=-5)
+        decision = verify_identity_claim(claim)
+        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
+        self.assertNotIn("IDENTITY_QUORUM_MET", decision["flags"])
+
+    def test_signature_swap_is_detected(self):
+        # Swapping a signature without recomputing half_hash must be caught
+        # (signature is committed into the half_hash — tamper-evident).
+        pair = link_half_pair("prefix-abc", "bob", 0, 4)
+        pair["initiator"]["signature"] = "FORGED"
+        decision = verify_identity_claim(self._mutual_claim([pair], quorum=1))
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
+        self.assertIn("IDENTITY_RECIPROCITY_BROKEN", decision["flags"])
+
     def test_verify_from_file(self):
         claim = _claim(
             [_raw("e0", "c0", ["alice", "bob"]), _raw("e1", "c1", ["carol"])],

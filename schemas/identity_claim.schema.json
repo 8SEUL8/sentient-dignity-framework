@@ -19,7 +19,8 @@
       "type": "string"
     },
     "witness_quorum_required_count": {
-      "type": "integer"
+      "type": "integer",
+      "minimum": 1
     },
     "events": {
       "type": "array",

@@ -18,7 +18,7 @@
             "link_public_key_hash": "partner-human",
             "link_sequence_number": 3,
             "signature": "sig-prefix-2001-db8-64-of-a-mind",
-            "half_hash": "bc073e47bc4a04415a1b63ac832c3989a6d82cce4e2cb32f768c2cc888267469"
+            "half_hash": "0c6e9fd9aaf01a4dbf7bbd7795741a29d97620d93b1a73721f4f4527060da8ab"
           },
           "counterparty": {
             "public_key_hash": "partner-human",
@@ -27,16 +27,16 @@
             "link_public_key_hash": "prefix-2001-db8-64-of-a-mind",
             "link_sequence_number": 0,
             "signature": "sig-partner-human",
-            "half_hash": "4737f6eac3c800a1f24bb564614ea1d208208c30151555753f48542a8242ae3a"
+            "half_hash": "9dc532b14bb5703983ed762cf6a984c539a895ef6f391fdc2a8ecbebe1b78478"
           }
         }
       ],
-      "event_hash": "a1f61db880455ca4a213a7b7e47f2db4fe6e6e3a2d3719a2db10df631c8c0cf0"
+      "event_hash": "7ff6dfc72913e820e758ea3223c944311c77a29f3ecb9598bdf4fe1677ae7683"
     },
     {
       "sequence": 1,
       "event_id": "met-carol",
-      "previous_event_hash": "a1f61db880455ca4a213a7b7e47f2db4fe6e6e3a2d3719a2db10df631c8c0cf0",
+      "previous_event_hash": "7ff6dfc72913e820e758ea3223c944311c77a29f3ecb9598bdf4fe1677ae7683",
       "commitment": "commit-1",
       "witnesses": [],
       "mutual_attestations": [
@@ -48,7 +48,7 @@
             "link_public_key_hash": "candidate-carol",
             "link_sequence_number": 7,
             "signature": "sig-prefix-2001-db8-64-of-a-mind",
-            "half_hash": "6f270e7450641b533648fa89d6184eb6423ee938ec924666cdea003b1abe8539"
+            "half_hash": "98fd0b160fecaffe054ac50e65c85ea78743dfb15dee4a586d00c520dfabce39"
           },
           "counterparty": {
             "public_key_hash": "candidate-carol",
@@ -57,11 +57,11 @@
             "link_public_key_hash": "prefix-2001-db8-64-of-a-mind",
             "link_sequence_number": 1,
             "signature": "sig-candidate-carol",
-            "half_hash": "7ce08d2e69995263fd16e1e94fa0088eb796435fb1f136faa899efb61a07bd24"
+            "half_hash": "482f22572571ed3d1a74fd0df78046ccbea0316cf343f33862ab5cbf21d870e9"
           }
         }
       ],
-      "event_hash": "983497e40c37acac29aed36ce22349678b22d1bd4ad8bf7170e44338eafcd211"
+      "event_hash": "f86cd66508bb88653ade5929c9f0be15f0825afd00a39bbd4e7d72327e4b91a0"
     }
   ]
 }

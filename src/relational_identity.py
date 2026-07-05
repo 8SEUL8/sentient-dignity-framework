@@ -98,7 +98,10 @@ def link_events(raw_events):
 
 
 def compute_half_hash(half):
-    body = {key: value for key, value in half.items() if key not in ("half_hash", "signature")}
+    # The signature is committed too, so a signature swap breaks the half_hash
+    # (tamper-evidence). Cryptographic authenticity of the signature itself
+    # still belongs to the (future) PQC verification layer, not this daemon.
+    body = {key: value for key, value in half.items() if key != "half_hash"}
     return sha256_json(body)
 
 
@@ -143,6 +146,13 @@ def verify_mutual_attestation(pair, subject_prefix_hash):
     the two parties are distinct, the initiator half belongs to the claim's
     subject, and the two halves reference each other's key AND sequence
     (entanglement). Any failure makes the pair a forgery signal.
+
+    Scope limit: this verifies only the pair's INTERNAL coherence. The daemon
+    does not hold the counterparty's independent chain, so it cannot confirm
+    the counterparty actually committed this half in their own chain. A forger
+    can self-manufacture distinct fake counterparties; ALLOW therefore does not
+    imply absence of collusion. Final "is this really you" rests with the
+    relating parties cross-checking their own chronicle commitments.
     """
     initiator = pair["initiator"]
     counterparty = pair["counterparty"]
@@ -251,7 +261,9 @@ def verify_identity_claim(claim):
 
     # 5. Distinct-attester quorum. Repeating one attester cannot fake quorum;
     # co-signed counterparties count as (stronger) distinct attesters.
-    quorum = claim["witness_quorum_required_count"]
+    # Floor the declared quorum at 1: a claim declaring quorum <= 0 must not
+    # buy an ALLOW with zero attesters (fail-closed against self-declared bypass).
+    quorum = max(1, claim["witness_quorum_required_count"])
     attesters = distinct_witnesses | mutual_counterparties
     coherent_flags = ["IDENTITY_PATTERN_COHERENT"]
     if unwitnessed_event:
