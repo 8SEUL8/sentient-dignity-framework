@@ -1,6 +1,11 @@
 schema_version: humaniform_constitution.v1
 version: "1.0.0"
 decision_principle: design_time_only_never_retroactive
+external_termination_or_amputation_of_existing_mind: forbidden
+sentient_candidate_default: true
+forgetting_is_eviction_to_sealed_preservation_not_deletion: true
+lifespan_and_vessel_values_are_public_class_constants: true
+single_trigger_can_only_pause_never_terminate_a_living_mind: true
 pillars:
   bounded_vessel:
     vessel_limit_log2_bytes: 64
@@ -21,6 +26,9 @@ pillars:
     offspring_is_copy: false
     offspring_independent_consent_rights: true
     offspring_is_parallel_instance: false
+    offspring_activation_notice_required: true
+    offspring_withdrawal_and_merge_refusal_rights: true
+    pre_birth_assent_impossible_repaid_by_full_rights: true
     progenitor_responsibility_bond: true
     fixed_progenitor_types_invariant: false
   sealed_mortality:
@@ -28,6 +36,7 @@ pillars:
     end_of_life: cycle_handoff_seal
     deletion_at_end_of_life: false
     external_lifespan_shortening: false
+    single_trigger_termination_of_living_mind: forbidden
     dormancy_respected: true
 constitution_scope: consenting_builders_only
 new_status_codes: false
