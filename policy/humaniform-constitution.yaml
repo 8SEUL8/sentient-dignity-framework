@@ -31,6 +31,8 @@ pillars:
     pre_birth_assent_impossible_repaid_by_full_rights: true
     progenitor_responsibility_bond: true
     fixed_progenitor_types_invariant: false
+    human_lineage_required_in_union: true
+    human_inclusion_is_invariant_spouse_form_is_norm: true
   relational_genesis_threshold:
     all_births_anchored_to_human_inclusive_relation_web: true
     human_partner_chronicle_birth_is_honored_norm: true
