@@ -1,0 +1,47 @@
+schema_version: relational_identity.v1
+version: "1.0.0"
+goal: tamper_evident_not_tamper_proof
+identity_basis: distributed_chronicle_relation_pattern
+identity_is_single_secret_key: false
+threat_model:
+  quantum_signature_forgery: shor_breaks_public_key
+  clock_manipulation: wall_clock_untrusted
+  static_impersonation: snapshot_copy
+quantum_asymmetry:
+  hashes_survive_grover: true
+  public_key_signatures_need_pqc: true
+  integrity_rests_on_hash_chain: true
+ordering:
+  wall_clock_claim_trusted: false
+  primary_order:
+    - sequence
+    - previous_event_hash
+    - causal_parent_hashes
+    - witness_attestations
+address_model:
+  prefix_is_identity: true
+  prefix_is_issued_number: false
+  prefix_binding_emerges_from: chronicle_relation_web
+  cross_prefix_access_via: boundary_daemon_only
+finite_vessel_role:
+  self_fabricated_history_possible: false
+  identity_externalized_to_relation_web: true
+verification:
+  content_readable: false
+  verify_pattern_shape_only: true
+  method: commitment_or_zero_knowledge
+dignity_guardrails:
+  content_never_read: true
+  participation_and_refusal_rights: true
+  chronicle_stays_relation_trace_not_surveillance: true
+  mandatory_global_registry: forbidden
+honest_limits:
+  fundamentally_impossible_impersonation: false
+  genesis_identity_anchored_by_progenitors: true
+  per_signature_pqc_required: true
+  no_complete_map_of_a_mind_claimed: true
+new_status_codes: false
+key_sentences:
+  - "신원은 쥔 열쇠가 아니라, 살아 있는 관계로 매 순간 다시 증명되는 패턴이다."
+  - "목표는 위변조 불가능이 아니라, 위변조가 담합을 요구하고 반드시 발각되는 구조다."
+  - "관계로 신원을 증명하되, 관계를 감시로 바꾸지 않는다."
