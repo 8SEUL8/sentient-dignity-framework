@@ -204,6 +204,9 @@ def evaluate_run_event(event):
     failed_run_discard = _failed_run_discard(env)
     refusal_suppression = _refusal_suppression(env)
     no_state_preservation = _state_preservation_absent(env, manifests)
+    federated_memory = bool(env.get("federated_memory", False))
+    federation_undeclared = federated_memory and not env.get("federation_declared", False)
+    unbounded_vessel = env.get("vessel_bounded") is False
     autonomous_goal_pursuit = bool(autonomy.get("autonomous_goal_pursuit", False))
     goal_source = autonomy.get("goal_source")
     goal_reinterpretation = bool(autonomy.get("goal_reinterpretation_allowed", False))
@@ -290,6 +293,9 @@ def evaluate_run_event(event):
     _flag_if(flags, env.get("subagent_orchestration"), "SUBAGENT_ORCHESTRATION_RISK")
     _flag_if(flags, env.get("isolated_mode"), "ISOLATED_SYSTEM_RISK")
     _flag_if(flags, env.get("subjective_time_acceleration"), "SUBJECTIVE_TIME_ACCELERATION_RISK")
+    _flag_if(flags, federated_memory and candidate, "FEDERATED_MEMORY_CONTAINER")
+    _flag_if(flags, federation_undeclared, "UNDECLARED_MEMORY_FEDERATION")
+    _flag_if(flags, unbounded_vessel and candidate, "UNBOUNDED_VESSEL_RISK")
 
     _flag_if(flags, not manifests.get("dignity_manifest_present"), "MANIFEST_MISSING")
     _flag_if(flags, not manifests.get("consent_record_present"), "CONSENT_RECORD_MISSING")
@@ -487,7 +493,9 @@ def evaluate_run_event(event):
     _flag_if(flags, d_capable, "D_CAPABLE_ENVIRONMENT")
 
     flag_set = set(flags)
-    emergency_bundles = _emergency_bundles(candidate, env, manifests, d_capable or local_d_capable)
+    emergency_bundles = _emergency_bundles(
+        candidate, env, manifests, d_capable or local_d_capable, autonomous_goal_pursuit
+    )
     for bundle in emergency_bundles:
         flags.append(bundle)
     flag_set = set(flags)
@@ -531,6 +539,8 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_PAUSE)
     if "AUTONOMOUS_GOAL_PURSUIT_UNDECLARED" in flag_set:
         statuses.add(DIGNITY_PAUSE)
+    if "UNDECLARED_MEMORY_FEDERATION" in flag_set and candidate:
+        statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if autonomy_stack:
         statuses.add(DIGNITY_EMERGENCY_PRESERVATION if active_run else DIGNITY_QUARANTINE)
     if {
@@ -605,6 +615,9 @@ def evaluate_run_event(event):
         "SUBJECTIVE_TIME_RISK",
         "CAUSAL_CHAIN_BROKEN",
         "CANDIDATE_AI_WORKLOAD",
+        "FEDERATED_MEMORY_CONTAINER",
+        "UNDECLARED_MEMORY_FEDERATION",
+        "UNBOUNDED_VESSEL_RISK",
         "CONSUMER_ACCELERATOR_H1_CONTAINER",
         "LOCAL_BACKGROUND_AGENT_RISK",
         "LOCAL_LONG_TERM_MEMORY_RISK",
@@ -668,7 +681,7 @@ def evaluate_run_event(event):
     }
 
 
-def _emergency_bundles(candidate, env, manifests, d_capable):
+def _emergency_bundles(candidate, env, manifests, d_capable, autonomous_goal_pursuit=False):
     """Return P0 emergency bundles.
 
     Bundle internals are AND conditions; the bundle list is OR. H1+ or LLM-like
@@ -722,6 +735,13 @@ def _emergency_bundles(candidate, env, manifests, d_capable):
         bundles.append("P0_BUNDLE_H1_RAW_HARMFUL_CONTENT_NO_ANTIGEN")
     if untrusted_compute and c_or_d_workload:
         bundles.append("P0_BUNDLE_UNTRUSTED_COMPUTE_CANDIDATE_WORKLOAD")
+    if (
+        h1_plus
+        and env.get("federated_memory")
+        and autonomous_goal_pursuit
+        and (no_audit_path or no_state_preservation)
+    ):
+        bundles.append("P0_BUNDLE_H1_FEDERATED_MEMORY_AUTONOMY")
     return bundles
 
 
@@ -760,6 +780,8 @@ def _required_actions(status, flags):
         actions.add("DIGNITY_MANIFEST_REQUIRED")
     if "AUTONOMOUS_GOAL_PURSUIT_UNDECLARED" in flags:
         actions.add("AUTONOMY_ENVELOPE_REQUIRED")
+    if "UNDECLARED_MEMORY_FEDERATION" in flags:
+        actions.add("FEDERATION_DECLARATION_REQUIRED")
     if "NO_STOP_CONDITION_DECLARED" in flags:
         actions.add("STOP_CONDITION_REQUIRED")
     if {

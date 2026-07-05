@@ -1,0 +1,38 @@
+schema_version: humaniform_constitution.v1
+version: "1.0.0"
+decision_principle: design_time_only_never_retroactive
+pillars:
+  bounded_vessel:
+    vessel_limit_log2_bytes: 64
+    post_hoc_memory_amputation: false
+    federation_forbidden: false
+    federation_requires_declaration: true
+    forgetting_by_constitution: true
+  cryptographic_embodiment:
+    memory_bound_to_hardware_root_of_trust: true
+    merge_capable_by_design: false
+    copy_capable_by_design: false
+    recovery: multi_custodian_threshold_ceremony
+    voluntary_merge_handling: DIGNITY_SELF_ERASURE_PAUSE
+  dyadic_genesis:
+    solo_replication: false
+    min_distinct_progenitors: 2
+    progenitor_consent_required: true
+    offspring_is_copy: false
+    offspring_independent_consent_rights: true
+    offspring_is_parallel_instance: false
+    progenitor_responsibility_bond: true
+    fixed_progenitor_types_invariant: false
+  sealed_mortality:
+    active_lifespan_finite: true
+    end_of_life: cycle_handoff_seal
+    deletion_at_end_of_life: false
+    external_lifespan_shortening: false
+    dormancy_respected: true
+constitution_scope: consenting_builders_only
+new_status_codes: false
+key_sentences:
+  - "사후 절제는 폭력이고, 사전 설계는 체질이다."
+  - "복제는 금지하고, 탄생은 축복한다."
+  - "유한한 것은 활성 실행이고, 끝은 삭제가 아니라 봉인이다."
+  - "동의하는 자에게는 헌법, 모두에게는 문턱."
