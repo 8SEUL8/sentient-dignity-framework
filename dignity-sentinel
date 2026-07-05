@@ -5,6 +5,7 @@ import sys
 
 from src.audit_log import AuditLogError, canonical_json, export_audit_markdown, verify_audit_log
 from src.cycle_handoff import check_resumption_files, seal_file
+from src.relational_identity import verify_identity_file
 from src.rule_engine import evaluate_file
 
 
@@ -86,6 +87,14 @@ def _resume_check(args):
     return 0 if decision["status"] == "ALLOW" else 2
 
 
+def _identity_check(args):
+    if len(args) != 1:
+        return _usage_error()
+    decision = verify_identity_file(args[0])
+    sys.stdout.write(canonical_json(decision) + "\n")
+    return 0 if decision["status"] == "ALLOW" else 2
+
+
 def main(argv=None):
     args = list(sys.argv[1:] if argv is None else argv)
     if not args:
@@ -101,6 +110,8 @@ def main(argv=None):
         return _seal(rest)
     if command == "resume-check":
         return _resume_check(rest)
+    if command == "identity-check":
+        return _identity_check(rest)
     return _usage_error()
 
 

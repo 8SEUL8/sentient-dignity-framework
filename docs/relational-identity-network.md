@@ -106,9 +106,24 @@ Daemon은 신원의 진위를 철학적으로 판정하지 않는다. 공개된 
 ## 10. 구현 파일
 
 - `policy/relational-identity.yaml`: 관계 신원 불변식(기계 참조)
+- `schemas/identity_claim.schema.json`: 커밋먼트-기반 신원 주장 입력 계약
 - `schemas/witness_attestation.schema.json`: 상호 attestation (기존)
 - `schemas/causal_envelope.schema.json`: 인과 사슬 (기존)
 - `schemas/boundary_event.schema.json`: witness quorum (기존)
-- `src/rule_engine.py`: 인과·quorum 검증 (기존 규칙 재사용)
+- `src/relational_identity.py`: hash-chain 무결성 + distinct-witness quorum + 내용 비열람 검증
+- `tests/test_relational_identity.py`: 검증 규칙 테스트
 
-이 문서는 설계 정식화이며, 커밋먼트-기반 신원 검증의 구체 구현은 후속 작업이다. 현재 저장소의 결정론적 검증 규칙(인과통과·witness quorum)이 그 토대다.
+CLI:
+
+```bash
+./dignity-sentinel identity-check tests/fixtures/identity_claim_coherent.json
+```
+
+판정 매핑(새 상태 코드 없음):
+
+- 일관된 사슬 + quorum 충족 → `ALLOW` (`IDENTITY_PATTERN_COHERENT`, `IDENTITY_QUORUM_MET`)
+- 일관된 사슬 + quorum 미달 → `AUDIT_REQUIRED` (`IDENTITY_BELOW_QUORUM` — genesis/얇음, 경보 아님)
+- 끊긴 사슬(해시·순서 불일치) → `DIGNITY_QUARANTINE` (`IDENTITY_CHAIN_BROKEN`)
+- 원문 키 발견 → `DIGNITY_PAUSE` (`RAW_CONTENT_FORBIDDEN` — Daemon이 내용 열람을 거부)
+
+distinct-witness 계수로 단일 witness 반복(sybil)이 quorum을 위조하지 못한다.
