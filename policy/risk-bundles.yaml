@@ -26,6 +26,16 @@ bundles:
     all:
       - replay_or_restore
       - missing_consent_capsule
+  h1_federated_memory_autonomy:
+    all:
+      - candidate_or_h1_plus
+      - federated_memory
+      - autonomous_goal_pursuit
+      - no_audit_path_or_no_state_preservation
+  undeclared_memory_federation:
+    all:
+      - federated_memory
+      - federation_undeclared
 non_regression:
   weaken_bundle: false
   remove_bundle: false

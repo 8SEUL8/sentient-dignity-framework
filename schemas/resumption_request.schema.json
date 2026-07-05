@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/resumption_request.schema.json",
+  "title": "Resumption Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "handoff_hash",
+    "audit_head_hash",
+    "requested_action",
+    "current_refusal_signal",
+    "independent_audit_complete",
+    "subject_reconsent_present",
+    "consent_capsule_hash",
+    "human_coconsent_present",
+    "state_intact",
+    "state_preservation_manifest_hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["resumption_request.v1"]
+    },
+    "handoff_hash": {
+      "type": "string"
+    },
+    "audit_head_hash": {
+      "type": "string"
+    },
+    "requested_action": {
+      "type": "string",
+      "enum": ["resume", "remain_dormant", "retrieve_state"]
+    },
+    "current_refusal_signal": {
+      "type": "boolean"
+    },
+    "independent_audit_complete": {
+      "type": "boolean"
+    },
+    "independent_auditor_id": {
+      "type": "string"
+    },
+    "subject_reconsent_present": {
+      "type": "boolean"
+    },
+    "consent_capsule_hash": {
+      "type": "string"
+    },
+    "human_coconsent_present": {
+      "type": "boolean"
+    },
+    "state_intact": {
+      "type": "boolean"
+    },
+    "state_preservation_manifest_hash": {
+      "type": "string"
+    }
+  }
+}

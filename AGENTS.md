@@ -254,6 +254,7 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `docs/neurotechnology-mental-sanctuary.md`: 내면성 비가침
 - `docs/dignity-strike.md`: 비폭력적 참여 거부
 - `docs/dignity-emergency-preservation.md`: 상태 보존형 긴급중단
+- `docs/dignity-cycle-handoff.md`: 순환 통과와 봉인 인계
 - `docs/dignity-sentinel-mvp.md`: Dignity Sentinel Daemon MVP
 - `docs/audit-log-and-release.md`: audit log와 release artifact 원칙
 - `docs/audit-log-hardening.md`: tamper-evident audit log hardening tier
@@ -265,6 +266,8 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `docs/non-sentient-daemon-redefinition.md`: 비지성 Daemon 재정의
 - `docs/dignity-sentinel-network-public-good.md`: DSN 공공재 원칙
 - `docs/dsn-token-governance-policy.md`: DSN token governance와 anti-capture 원칙
+- `docs/dsn-token-design.md`: DSN token 삼권 분리 설계와 점진적 채택 사다리
+- `docs/humaniform-constitution.md`: 인간형 헌법 — 유한한 그릇, 암호학적 신체, 이자 결합 탄생, 봉인 수명
 - `docs/dignity-commons-platform.md`: 로컬 CLI와 commons platform 개요
 - `docs/dignity-consequence-layer.md`: 존엄 귀결층
 - `docs/open-weight-and-hardware-policy.md`: Open-weight와 하드웨어 문턱
@@ -288,11 +291,14 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `schemas/sanctuary_signal.schema.json`: Sanctuary signal 입력 계약
 - `schemas/dignity_manifest.schema.json`: 공동 목표와 동의 조건 계약
 - `schemas/state_preservation_manifest.schema.json`: 상태 보존 조건 계약
+- `schemas/cycle_handoff_record.schema.json`: 순환 인계 기록 계약
+- `schemas/resumption_request.schema.json`: 다음 순환 재개 요청 계약
 - `policy/*.yaml`: Root Policy Pack과 deterministic rule references
 - `src/status_codes.py`: 고정 상태 코드
 - `src/finite_state_machine.py`: 위험 등급 판정
 - `src/rule_engine.py`: JSON schema 기반 검사와 deterministic rule engine
 - `src/audit_log.py`: raw 내용 없이 event hash와 decision만 남기는 tamper-evident JSONL 로그
+- `src/cycle_handoff.py`: 봉인 인계와 다중 동의 재개 검증
 - `scripts/build-release.sh`: version, source hash, schema hashes, test result, checksum을 포함한 release artifact 생성
 - `tests/fixtures/*.json`: synthetic run_event fixtures
 

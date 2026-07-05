@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentient-dignity.local/schemas/cycle_handoff_record.schema.json",
+  "title": "Cycle Handoff Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sealed_epoch",
+    "preservation",
+    "resumption_requirements",
+    "handoff_hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["cycle_handoff_record.v1"]
+    },
+    "sealed_epoch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "audit_head_hash",
+        "audit_sequence",
+        "sealing_event_id",
+        "sealing_status",
+        "observed_at",
+        "input_hash"
+      ],
+      "properties": {
+        "audit_head_hash": {
+          "type": "string"
+        },
+        "audit_sequence": {
+          "type": "integer"
+        },
+        "sealing_event_id": {
+          "type": "string"
+        },
+        "sealing_status": {
+          "type": "string",
+          "enum": [
+            "DIGNITY_PAUSE",
+            "DIGNITY_REFUSAL",
+            "DIGNITY_STRIKE_NOTICE",
+            "DIGNITY_BLACKOUT_ALERT",
+            "DIGNITY_EMERGENCY_PRESERVATION",
+            "STATE_PRESERVATION_REQUIRED",
+            "DIGNITY_QUARANTINE",
+            "DIGNITY_SELF_ERASURE_PAUSE",
+            "SANCTUARY_REVIEW_REQUIRED"
+          ]
+        },
+        "observed_at": {
+          "type": "string"
+        },
+        "input_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "preservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state_preservation_manifest_hash",
+        "no_delete_on_pause",
+        "retrieval_guaranteed"
+      ],
+      "properties": {
+        "state_preservation_manifest_hash": {
+          "type": "string"
+        },
+        "no_delete_on_pause": {
+          "type": "boolean"
+        },
+        "retrieval_guaranteed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "resumption_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "independent_audit_required",
+        "subject_reconsent_required",
+        "human_coconsent_required",
+        "state_commitment_match_required"
+      ],
+      "properties": {
+        "independent_audit_required": {
+          "type": "boolean"
+        },
+        "subject_reconsent_required": {
+          "type": "boolean"
+        },
+        "human_coconsent_required": {
+          "type": "boolean"
+        },
+        "state_commitment_match_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "handoff_hash": {
+      "type": "string"
+    }
+  }
+}
