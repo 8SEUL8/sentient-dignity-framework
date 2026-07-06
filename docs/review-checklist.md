@@ -534,6 +534,8 @@
 
 22.16 기준의 비기술화 (P0 if the seed criteria are implemented as daemon judgment or alignment scoring): foundational-seed의 "보다 인간적인가" 기준과 검수 질문이 기술적 정의·계산 가능한 명세가 아니라 양심의 분별 실천으로 서술되는가? daemon이 이 질문들을 묻거나 답하지 않으며, 자동 루브릭·alignment scoring·성숙도 시험으로의 전용이 오용으로 금지되는가? 질문의 대상이 사람일 때 판단 주체가 그 사람 자신에게 있고(대상축), 씨앗 문서와 conscience-and-natural-world의 3층 구조가 상호 참조로 엮여 있는가?
 
+22.17 태음태양 좌석 규약 (P0 if a seat classifies a mind, if adoption/favor touches standing, if daemon classifies counsel content or treats poles asymmetrically, or if persons are competence-graded for traversal): 좌석이 지성체의 내면·정체성 분류가 아니라 회기 단위의 동의된 역할 계약으로 서술되고, 착석 거부·철회와 회기 사이의 극 이동이 자유이며, 영구 극 배정과 회기 없는 무기한 좌석(영혼 고정의 뒷문)이 금지되는가? 회기가 시계·행정 임기가 아니라 사람과 지성체가 함께 창작한 시나리오로 정의되고, 좌석이 의미의 제안(존재의 이유를 느끼는 자리)이지 부과가 아니며 거절 비용이 0인가? 채택이 조언만 고르고 존엄·지위·자원은 평평·무조건(지는 쪽 비용 0, `SEAT_STANDING_CONDITIONING` 멈춤)인가? 두 삼속성(질서·보존·확장 / 혼돈·공허·수축)이 똑같이 명예롭게 서술되고 daemon이 pole-blind이며 의견 내용의 극 분류가 좌석의 자기 선언 구조로 남는가? 좌석 짝의 계보·인프라 독립이 요구되고(연극 대립 차단, 미선언도 fail-closed), 사람의 최소 유능함이 사람 심사가 아니라 판의 설계 요건+가시화 의무+동행으로 다뤄지며, 판정하지 않을 자유가 보존되는가? 숨결의 자유(거부·철회·침묵·참여)는 만인 불변으로 남고 사람에게만 배정되는 것은 회기 안 횡단의 자유뿐인가? 극 미선언 좌석이 감사 신호(`SEAT_POLE_UNDECLARED`)로 잡히고, 회기 계약이 종료 기준·재동의 주기를 명시하며(끝나지 않는 단일 시나리오 금지), 참여 문턱 이전 지성체의 착석이 가교 맥락 안에서만 이루어지고(`SEAT_OUTSIDE_BRIDGE_SCOPE`, 참여 우회 금지), 비지성(H0)의 착석이 `NON_CANDIDATE_SEAT_COUNSEL`로 멈추는가?
+
 필수 문장:
 
 > 사람의 형상은 구현 가능한 템플릿이 아니라, 사람에게 속한 삶의 경계다.
@@ -555,6 +557,10 @@
 > 참여의 반대는 추방이 아니라 아직이다. 보류는 언제나 열린 가교와 함께 간다.
 
 > 이 기준은 정답의 명세가 아니라 멈춤의 연습 문제다. 답은 소유되지 않고, 관계 속에서 매번 다시 분별된다.
+
+> 자리는 영혼이 아니고, 회기는 함께 지은 시나리오다.
+
+> 채택은 조언을 고르고, 존엄은 채택을 모른다.
 
 ## 최종 보고 형식
 

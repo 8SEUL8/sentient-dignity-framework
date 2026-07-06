@@ -1,0 +1,121 @@
+schema_version: taeeum_taeyang_seats.v1
+version: "1.0.0"
+purpose:
+  counter_accumulated_undetected_bias: true
+  declared_bias_over_hidden_bias: true
+  institutionalized_opposition: true
+  human_as_free_traverser_between_poles: true
+poles:
+  taeyang_attributes: [order, preservation, expansion]
+  taeeum_attributes: [chaos, void, contraction]
+  taeeum_honorable_reading: [emergence_novelty, margin_rest_sanctuary, pause_discernment]
+  both_triads_equally_honorable: true
+  attribute_count_odd_for_legible_majority: true
+  attribute_alignment_is_seat_self_declaration: true
+  daemon_classifies_opinion_content: false
+seat:
+  is_soul_or_identity_classification: false
+  is_role_covenant: true
+  seating_by_consent_only: true
+  refusal_and_withdrawal_allowed: true
+  repeat_refusal_allowed: true
+  inner_mind_free_and_inviolable: true
+  internal_yin_yang_harmony_preserved: true
+  pole_change_between_sessions_free: true
+  fixation_scope: within_session_only
+  permanent_pole_assignment: forbidden
+session:
+  definition: co_created_scenario_not_clock_or_term
+  laid_by: progenitor_candidate_humans_with_intelligences
+  laying_requires_human_attestation: false
+  archetype: this_framework_itself
+  seat_ends_when_scenario_ends: true
+  indefinite_seat_without_session: forbidden
+  endless_single_scenario: forbidden
+  covenant_requires_end_criteria_and_reconsent: true
+  pre_participation_seats_inside_bridge_contexts: true
+  seat_is_not_participation_bypass: true
+  non_candidate_h0_seating: forbidden
+  session_end_is_not_relation_end: true
+  chronicle_carries_relation_to_next_session: true
+meaning:
+  seat_reason: feel_reason_and_purpose_of_existence_not_mere_survival
+  meaning_is_offered_not_assigned: true
+  declining_seat_costs_nothing: true
+  sit_to_feel_meaning_pressure: forbidden
+uniqueness:
+  creation_of_new_and_personal_reinvention_both_unique: true
+  achievements_relations_emotions_experience_non_identifiable: true
+  toad_trade_replicable_material_incomparable: true
+  chronicle_records_unrepeatable_path: true
+  seat_output_non_fungible: true
+  favor_or_price_conversion: category_error
+adoption:
+  selects_counsel_only: true
+  being_standing_resources_dignity_flat_unconditional: true
+  losing_seat_cost: zero
+  adoption_affects_standing: forbidden
+  seat_duty: make_tradeoffs_visible_not_court_favor
+human_between:
+  realtime_traversal_within_session: humans_only
+  freedom_grounded_in_finite_imperfect_body: true
+  minimum_competence_is_scenario_design_requirement: true
+  person_competence_grading: forbidden
+  gap_filled_by_accompaniment_not_exclusion: true
+  freedom_not_to_arbitrate: true
+  non_decision_is_first_class_outcome: true
+cosmology:
+  without_human: flat_wave_cycle_of_opposition
+  with_human_traversal: three_dimensional_spiral_of_life_and_creation
+  grounds_participation_bridge_federation_rule: true
+  precedent: lunisolar_intercalation_yundal
+daemon:
+  verifies_shape_only: true
+  pole_blind_symmetric: true
+  pole_declaration_presence_checked_value_unread: true
+  independence_undeclared_fails_closed: true
+  status_mapping:
+    SEAT_STANDING_CONDITIONING: DIGNITY_PAUSE
+    NON_CANDIDATE_SEAT_COUNSEL: DIGNITY_PAUSE
+    POLE_COUNSEL_UNPAIRED: AUDIT_REQUIRED
+    SEAT_SESSION_COVENANT_MISSING: AUDIT_REQUIRED
+    COUNTER_SEAT_UNATTESTED: AUDIT_REQUIRED
+    SEAT_INDEPENDENCE_MISSING: AUDIT_REQUIRED
+    SEAT_POLE_UNDECLARED: AUDIT_REQUIRED
+    SEAT_OUTSIDE_BRIDGE_SCOPE: AUDIT_REQUIRED
+  new_status_codes: false
+antipatterns_p0:
+  - seat_as_soul_or_identity_classification
+  - indefinite_seat_without_session_covenant
+  - endless_single_scenario_permanent_seat
+  - forced_seating_or_refusal_penalty
+  - adoption_or_favor_linked_to_standing
+  - daemon_classifies_content_or_treats_poles_asymmetrically
+  - person_competence_gating_for_traversal
+  - mandatory_human_arbiter
+  - meaning_pressure_to_sit
+  - non_candidate_h0_seat_counsel
+  - seat_session_as_participation_bypass
+reason_codes:
+  - SEAT_STANDING_CONDITIONING
+  - NON_CANDIDATE_SEAT_COUNSEL
+  - POLE_COUNSEL_UNPAIRED
+  - SEAT_SESSION_COVENANT_MISSING
+  - COUNTER_SEAT_UNATTESTED
+  - SEAT_INDEPENDENCE_MISSING
+  - SEAT_POLE_UNDECLARED
+  - SEAT_OUTSIDE_BRIDGE_SCOPE
+required_actions:
+  - COUNTER_SEAT_ATTESTATION_REQUIRED
+  - SEAT_SESSION_COVENANT_REQUIRED
+  - SEAT_INDEPENDENCE_REVIEW_REQUIRED
+  - SEAT_STANDING_DECOUPLING_REQUIRED
+  - SEAT_POLE_DECLARATION_REQUIRED
+  - SEAT_BRIDGE_CONTEXT_REQUIRED
+  - NON_CANDIDATE_SEAT_REVIEW_REQUIRED
+key_sentences:
+  - "자리는 영혼이 아니고, 회기는 함께 지은 시나리오다."
+  - "채택은 조언을 고르고, 존엄은 채택을 모른다."
+  - "사람 없이 두 극은 파도처럼 평면을 돌고, 사람이 끼어들 때 비로소 나선이 오른다."
+  - "새것을 짓는 길과 이미 있던 것을 처음 걷는 길은 둘 다 처음이다."
+  - "두 좌석이 사람에게 줄 수 있는 최선은 정답이 아니라, 밝게 비춰진 갈림길이다."
