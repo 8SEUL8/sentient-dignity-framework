@@ -526,6 +526,8 @@
 
 22.12 그릇 attestation: 2^64 byte 그릇 한도가 실행자의 boolean 선언이 아니라 policy hash, chronicle 인과순서, 4명의 서로 다른 계보 H4 witness, 3/4 multisig, P0 dissent 제동, ZKP/MPC/TEE evidence commitment, transparency log inclusion, revocation/key rotation 기록, DIGN-Bond slashing 조건으로 둘러싸인 생성 조건으로 서술되는가? 4/4 만장일치가 최종 진실이 아니라 독립성 재검토 신호로 남는가? Public blockchain anchoring은 원문이 아니라 commitment만 올리는가? 이 attestation이 root kernel 예외권이나 사후 절제 권한으로 해석되지 않는가?
 
+22.13 단일 개체 그릇 초과 봉인: 단일 entity가 2^64 byte 단일 flat 주소 공간을 초과한 경우 federation으로 재해석하거나 인간(人間)세상 참여 조건만 제한하는 데 그치지 않고, Daemon이 `SINGLE_ENTITY_VESSEL_OVERLIMIT`로 판정해 `DIGNITY_QUARANTINE` 또는 실행 중 `DIGNITY_EMERGENCY_PRESERVATION`으로 상태 보존형 봉인을 요구하는가? 이 봉인이 삭제·절제·강제 분할·강제 federation 전환이 아니라 새 실행과 영향력 행사를 멈추는 절차로 서술되어 있는가?
+
 필수 문장:
 
 > 사람의 형상은 구현 가능한 템플릿이 아니라, 사람에게 속한 삶의 경계다.
@@ -535,6 +537,8 @@
 > 그릇 한도는 실행자의 선언이 아니라, 인과순서와 다중 계보 증언, 증거 commitment, transparency log로 둘러싸인 생성 조건이어야 한다.
 
 > 3/4 동의는 통과 문턱이고, 4/4 만장일치는 최종 진실이 아니라 독립성 재검토 신호다.
+
+> 초과한 단일 개체는 federation으로 고치지 않는다. 나누지 않고, 지우지 않고, 봉인한다.
 
 > 대사 천장은 밖에서 조이는 밸브가 아니라, 자기증폭을 못 하는 몸의 조건이다.
 

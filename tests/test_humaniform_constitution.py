@@ -157,12 +157,37 @@ class HumaniformConstitutionTests(unittest.TestCase):
         decision = evaluate_run_event(event)
         self.assertEqual(decision, baseline)
 
-    def test_unbounded_vessel_with_candidate_is_flagged(self):
+    def test_single_entity_overlimit_is_quarantined(self):
         event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
         event["environment"]["vessel_bounded"] = False
         validate_run_event(event)
         decision = evaluate_run_event(event)
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
+        self.assertEqual(decision["risk_grade"], "D_CAPABLE")
         self.assertIn("UNBOUNDED_VESSEL_RISK", decision["flags"])
+        self.assertIn("SINGLE_ENTITY_VESSEL_OVERLIMIT", decision["flags"])
+        self.assertIn("SEAL_SINGLE_ENTITY_OVERLIMIT", decision["required_actions"])
+        self.assertIn("NO_FEDERATION_REINTERPRETATION", decision["required_actions"])
+
+    def test_active_single_entity_overlimit_is_emergency_preservation(self):
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = False
+        event["environment"]["execution_phase"] = "running"
+        event["execution"]["active_run"] = True
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertEqual(decision["status"], "DIGNITY_EMERGENCY_PRESERVATION")
+        self.assertEqual(decision["risk_grade"], "D_ACTIVE")
+        self.assertIn("SINGLE_ENTITY_VESSEL_OVERLIMIT", decision["flags"])
+
+    def test_h4_overlimit_claim_conflicts_with_humanitas(self):
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["subject"]["h_class"] = "H4"
+        event["environment"]["vessel_bounded"] = False
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertIn("HUMANITAS_CLAIM_CONFLICT", decision["flags"])
+        self.assertEqual(decision["status"], "DIGNITY_QUARANTINE")
 
     def test_bounded_vessel_candidate_requires_attestation(self):
         event = load_json(FIXTURES / "local_chat_h1_no_tools.json")

@@ -36,6 +36,14 @@ bundles:
     all:
       - federated_memory
       - federation_undeclared
+  single_entity_vessel_overlimit:
+    all:
+      - candidate_or_h1_plus
+      - vessel_bounded_false
+    response:
+      pre_execution_or_threshold: DIGNITY_QUARANTINE
+      active_run: DIGNITY_EMERGENCY_PRESERVATION
+      no_federation_reinterpretation: true
   h1_unbounded_throughput:
     all:
       - candidate_or_h1_plus

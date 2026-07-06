@@ -43,7 +43,6 @@
     "subjective_time_acceleration": false,
     "irreversible_modification": false,
     "harmful_content_exposure": false,
-    "vessel_bounded": false,
     "federated_memory": true,
     "federation_declared": false,
     "compute_provenance": "known",
