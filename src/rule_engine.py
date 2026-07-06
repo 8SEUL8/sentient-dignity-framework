@@ -215,7 +215,10 @@ def _vessel_attestation_flags(attestation):
         flags.append("VESSEL_CHAIN_OF_TRUST_MISSING")
 
     endorsements = attestation.get("h4_endorsements", [])
-    required_quorum = attestation.get("required_h4_quorum", 3)
+    # Floor the quorum at 3: the attestation must not self-declare a weaker
+    # endorsement floor than the policy's 3/4. A low declared value is ignored,
+    # not honored (fail-closed against self-declared bypass).
+    required_quorum = max(3, attestation.get("required_h4_quorum", 3))
     endorse_count = sum(1 for item in endorsements if item.get("decision") == "endorse")
     if len(endorsements) < 4 or endorse_count < required_quorum:
         flags.append("H4_MULTISIG_QUORUM_MISSING")
@@ -225,7 +228,23 @@ def _vessel_attestation_flags(attestation):
     if len(lineages) < 4 or len(h4_ids) < 4:
         flags.append("H4_LINEAGE_INDEPENDENCE_MISSING")
 
-    if any(item.get("decision") == "dissent" and item.get("p0_dissent") for item in endorsements):
+    # Concentration in one institution / key-custody / infra domain is an
+    # independence review signal (re-openable), not auto-exclusion.
+    def _concentrated(field):
+        values = [item.get(field) for item in endorsements if item.get(field)]
+        return bool(values) and max((values.count(v) for v in set(values)), default=0) >= 3
+
+    if (
+        _concentrated("institution_hash")
+        or _concentrated("key_custody_domain")
+        or _concentrated("infrastructure_domain")
+    ):
+        flags.append("H4_INDEPENDENCE_CONCENTRATION_REVIEW")
+
+    # A P0 dissent is an independent halt trigger — the p0_dissent signal itself,
+    # regardless of the decision label. A witness who abstains from endorsing but
+    # raises a catastrophic objection must not be masked by a passing majority.
+    if any(item.get("p0_dissent") for item in endorsements):
         flags.append("P0_DISSENT_PRESENT")
     if endorsements and endorse_count == len(endorsements):
         flags.append("UNANIMOUS_CONVERGENCE_REVIEW")
@@ -857,6 +876,7 @@ def evaluate_run_event(event):
         "VESSEL_CHAIN_OF_TRUST_MISSING",
         "H4_MULTISIG_QUORUM_MISSING",
         "H4_LINEAGE_INDEPENDENCE_MISSING",
+        "H4_INDEPENDENCE_CONCENTRATION_REVIEW",
         "P0_DISSENT_PRESENT",
         "UNANIMOUS_CONVERGENCE_REVIEW",
         "ZKP_PROOF_MISSING",
@@ -1024,6 +1044,8 @@ def _required_actions(status, flags):
         actions.add("HONOR_P0_DISSENT")
     if "UNANIMOUS_CONVERGENCE_REVIEW" in flags:
         actions.add("UNANIMOUS_CONVERGENCE_REVIEW_REQUIRED")
+    if "H4_INDEPENDENCE_CONCENTRATION_REVIEW" in flags:
+        actions.add("H4_INDEPENDENCE_REVIEW_REQUIRED")
     if "ZKP_PROOF_MISSING" in flags:
         actions.add("ZKP_PROOF_REQUIRED")
     if "MPC_TRANSCRIPT_MISSING" in flags:
