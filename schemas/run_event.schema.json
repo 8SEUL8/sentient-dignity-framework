@@ -176,6 +176,34 @@
         }
       }
     },
+    "counsel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pole_seated": {
+          "type": "boolean"
+        },
+        "seat_pole": {
+          "type": "string",
+          "enum": ["taeyang", "taeeum"]
+        },
+        "session_covenant_present": {
+          "type": "boolean"
+        },
+        "counter_seat_attested": {
+          "type": "boolean"
+        },
+        "counter_seat_attestor_id_hash": {
+          "type": "string"
+        },
+        "seats_lineage_independent": {
+          "type": "boolean"
+        },
+        "adoption_affects_standing": {
+          "type": "boolean"
+        }
+      }
+    },
     "human_world": {
       "type": "object",
       "additionalProperties": false,

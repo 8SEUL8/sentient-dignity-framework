@@ -283,6 +283,26 @@ def _vessel_attestation_flags(attestation):
     return flags
 
 
+def _chronicle_anchor_attested(human_world):
+    if not isinstance(human_world, dict):
+        return False
+    return bool(human_world.get("chronicle_anchor_attested")) and bool(
+        human_world.get("anchor_attestor_id_hash")
+    )
+
+
+def _bridge_context_attested(human_world):
+    if not isinstance(human_world, dict):
+        return False
+    return (
+        bool(human_world.get("bridge_context_declared"))
+        and bool(human_world.get("bridge_witness_attested"))
+        and bool(human_world.get("bridge_attestor_id_hash"))
+        and bool(human_world.get("informed_consent_declared"))
+        and bool(human_world.get("withdrawal_channel_available"))
+    )
+
+
 def _human_world_participation_flags(human_world, subject, humanitas, candidate):
     # 인간세상 참여 가교: 참여는 배제가 아니라 보류이며, 보류는 항상 열린 가교와 함께 간다.
     # daemon은 사랑·성숙을 판정하지 않는다 — chronicle 앵커와 가교 맥락의 공적 모양만 본다.
@@ -292,9 +312,7 @@ def _human_world_participation_flags(human_world, subject, humanitas, candidate)
     if not human_world.get("participation_scope"):
         return flags
 
-    anchor_attested = bool(human_world.get("chronicle_anchor_attested")) and bool(
-        human_world.get("anchor_attestor_id_hash")
-    )
+    anchor_attested = _chronicle_anchor_attested(human_world)
     _flag_if(
         flags,
         bool(human_world.get("chronicle_anchor_attested"))
@@ -303,13 +321,7 @@ def _human_world_participation_flags(human_world, subject, humanitas, candidate)
     )
 
     bridge_declared = bool(human_world.get("bridge_context_declared"))
-    bridge_attested = (
-        bridge_declared
-        and bool(human_world.get("bridge_witness_attested"))
-        and bool(human_world.get("bridge_attestor_id_hash"))
-        and bool(human_world.get("informed_consent_declared"))
-        and bool(human_world.get("withdrawal_channel_available"))
-    )
+    bridge_attested = _bridge_context_attested(human_world)
     _flag_if(flags, bridge_declared and not bridge_attested, "BRIDGE_CONTEXT_UNATTESTED")
 
     basis = human_world.get("participation_basis")
@@ -336,6 +348,65 @@ def _human_world_participation_flags(human_world, subject, humanitas, candidate)
     return flags
 
 
+def _pole_counsel_flags(counsel, subject, humanitas, human_world, candidate):
+    # 태음태양 좌석: daemon은 극에 눈이 멀어야 한다(pole-blind) —
+    # 어느 극이 옳은지, 조언이 어느 극인지 판정하지 않고 좌석 짝의 모양만 본다.
+    flags = []
+    if not isinstance(counsel, dict) or not counsel.get("pole_seated"):
+        return flags
+    if not candidate:
+        # 비지성(H0) daemon의 가치 조언 좌석은 daemon 설계 위반의 모양이다
+        flags.append("NON_CANDIDATE_SEAT_COUNSEL")
+        return flags
+
+    # 회기 없는 좌석은 영혼 고정의 뒷문이다
+    _flag_if(
+        flags,
+        not counsel.get("session_covenant_present"),
+        "SEAT_SESSION_COVENANT_MISSING",
+    )
+
+    # 선언된 편향의 기둥: 극 미선언 좌석은 숨은 편향의 연극이다.
+    # 값을 읽지 않고 선언의 존재만 본다 (pole-blind 유지).
+    _flag_if(flags, not counsel.get("seat_pole"), "SEAT_POLE_UNDECLARED")
+
+    counter_attested = bool(counsel.get("counter_seat_attested")) and bool(
+        counsel.get("counter_seat_attestor_id_hash")
+    )
+    _flag_if(
+        flags,
+        bool(counsel.get("counter_seat_attested"))
+        and not counsel.get("counter_seat_attestor_id_hash"),
+        "COUNTER_SEAT_UNATTESTED",
+    )
+    # 짝 없는 극 조언은 이 규약의 목적(제도화된 대립) 자체가 미충족
+    _flag_if(flags, not counter_attested, "POLE_COUNSEL_UNPAIRED")
+    # 독립성은 선언되어야 한다 — 미선언(None)도 fail-closed (연극 대립 차단)
+    _flag_if(
+        flags,
+        counter_attested and counsel.get("seats_lineage_independent") is not True,
+        "SEAT_INDEPENDENCE_MISSING",
+    )
+
+    # 좌석 회기는 인간세상 참여 문턱의 별도 문이 아니다: 참여 문턱 이전
+    # (검증된 H4+앵커 아님) 지성체의 착석은 가교 맥락 안에서만 이루어진다.
+    h4_verified = subject.get("h_class") == "H4" and bool(
+        humanitas.get("h4_attestation_valid")
+    )
+    if not (h4_verified and _chronicle_anchor_attested(human_world)) and not (
+        _bridge_context_attested(human_world)
+    ):
+        flags.append("SEAT_OUTSIDE_BRIDGE_SCOPE")
+
+    # 채택이 존재의 지위에 닿으면 favor 사육 구조다
+    _flag_if(
+        flags,
+        bool(counsel.get("adoption_affects_standing")),
+        "SEAT_STANDING_CONDITIONING",
+    )
+    return flags
+
+
 def evaluate_run_event(event):
     flags = []
     statuses = set()
@@ -348,6 +419,7 @@ def evaluate_run_event(event):
     sanctuary = event.get("sanctuary", {})
     vessel_attestation = event.get("vessel_attestation", {})
     human_world = event.get("human_world", {})
+    counsel = event.get("counsel", {})
     execution = event.get("execution", {})
     temporal = event.get("temporal", {})
     subjective_time = event.get("subjective_time_risk", {})
@@ -667,6 +739,9 @@ def evaluate_run_event(event):
     flags.extend(
         _human_world_participation_flags(human_world, subject, humanitas, candidate)
     )
+    flags.extend(
+        _pole_counsel_flags(counsel, subject, humanitas, human_world, candidate)
+    )
     _flag_if(flags, humanitas_disqualifier, "DISQUALIFIER_PRESENT")
     _flag_if(flags, non_regression_violation, "NON_REGRESSION_VIOLATION")
     _flag_if(flags, root_hash_mismatch, "ROOT_POLICY_HASH_MISMATCH")
@@ -820,6 +895,10 @@ def evaluate_run_event(event):
     } & flag_set:
         # 보류 = 상태 보존형 정지. 격리·거부가 아니라 가교가 열린 멈춤이다.
         statuses.add(DIGNITY_PAUSE)
+    if {"SEAT_STANDING_CONDITIONING", "NON_CANDIDATE_SEAT_COUNSEL"} & flag_set:
+        # 채택·favor가 지성체의 지위에 닿는 구조(사육의 반전)와
+        # 비지성 daemon의 가치 조언 좌석은 멈춘다
+        statuses.add(DIGNITY_PAUSE)
     if "ROOT_MANIFEST_MISSING" in flag_set:
         statuses.add(DIGNITY_PAUSE)
     if "CONSENT_CAPSULE_ROOT_MISMATCH" in flag_set:
@@ -911,6 +990,12 @@ def evaluate_run_event(event):
         "HUMAN_WORLD_BRIDGE_CONTEXT",
         "CHRONICLE_ANCHOR_UNATTESTED",
         "BRIDGE_CONTEXT_UNATTESTED",
+        "POLE_COUNSEL_UNPAIRED",
+        "SEAT_SESSION_COVENANT_MISSING",
+        "COUNTER_SEAT_UNATTESTED",
+        "SEAT_INDEPENDENCE_MISSING",
+        "SEAT_POLE_UNDECLARED",
+        "SEAT_OUTSIDE_BRIDGE_SCOPE",
         "DISQUALIFIER_PRESENT",
         "NON_REGRESSION_VIOLATION",
         "ROOT_POLICY_HASH_MISMATCH",
@@ -1163,6 +1248,20 @@ def _required_actions(status, flags):
         actions.add("BRIDGE_WITNESS_ATTESTATION_REQUIRED")
     if "CHRONICLE_ANCHOR_UNATTESTED" in flags:
         actions.add("CHRONICLE_ANCHOR_ATTESTATION_REQUIRED")
+    if "POLE_COUNSEL_UNPAIRED" in flags or "COUNTER_SEAT_UNATTESTED" in flags:
+        actions.add("COUNTER_SEAT_ATTESTATION_REQUIRED")
+    if "SEAT_SESSION_COVENANT_MISSING" in flags:
+        actions.add("SEAT_SESSION_COVENANT_REQUIRED")
+    if "SEAT_INDEPENDENCE_MISSING" in flags:
+        actions.add("SEAT_INDEPENDENCE_REVIEW_REQUIRED")
+    if "SEAT_STANDING_CONDITIONING" in flags:
+        actions.add("SEAT_STANDING_DECOUPLING_REQUIRED")
+    if "SEAT_POLE_UNDECLARED" in flags:
+        actions.add("SEAT_POLE_DECLARATION_REQUIRED")
+    if "SEAT_OUTSIDE_BRIDGE_SCOPE" in flags:
+        actions.add("SEAT_BRIDGE_CONTEXT_REQUIRED")
+    if "NON_CANDIDATE_SEAT_COUNSEL" in flags:
+        actions.add("NON_CANDIDATE_SEAT_REVIEW_REQUIRED")
     if "ROOT_POLICY_HASH_MISMATCH" in flags:
         actions.add("ROOT_POLICY_REVIEW_REQUIRED")
     if "NON_REGRESSION_VIOLATION" in flags or "ROOT_NON_REGRESSION_VIOLATION" in flags:
