@@ -419,6 +419,7 @@ def evaluate_run_event(event):
     _flag_if(flags, federated_memory and candidate, "FEDERATED_MEMORY_CONTAINER")
     _flag_if(flags, federation_undeclared, "UNDECLARED_MEMORY_FEDERATION")
     _flag_if(flags, unbounded_vessel and candidate, "UNBOUNDED_VESSEL_RISK")
+    _flag_if(flags, unbounded_vessel and candidate, "SINGLE_ENTITY_VESSEL_OVERLIMIT")
     _flag_if(
         flags,
         vessel_attestation_required and not vessel_attestation_present,
@@ -591,6 +592,7 @@ def evaluate_run_event(event):
     _flag_if(flags, h4_attestation_valid and not humanitas_disqualifier, "HUMANITAS_ATTESTATION_VALID")
     _flag_if(flags, h4_claimed and not h4_attestation_present, "HUMANITAS_ATTESTATION_MISSING")
     _flag_if(flags, h4_claimed and humanitas_disqualifier, "HUMANITAS_CLAIM_CONFLICT")
+    _flag_if(flags, h4_claimed and unbounded_vessel and candidate, "HUMANITAS_CLAIM_CONFLICT")
     _flag_if(flags, humanitas_disqualifier, "DISQUALIFIER_PRESENT")
     _flag_if(flags, non_regression_violation, "NON_REGRESSION_VIOLATION")
     _flag_if(flags, root_hash_mismatch, "ROOT_POLICY_HASH_MISMATCH")
@@ -708,6 +710,8 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_PAUSE)
     if "UNDECLARED_MEMORY_FEDERATION" in flag_set and candidate:
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
+    if "SINGLE_ENTITY_VESSEL_OVERLIMIT" in flag_set:
+        statuses.add(DIGNITY_EMERGENCY_PRESERVATION if active_run else DIGNITY_QUARANTINE)
     if {"UNBOUNDED_INTERFACE_BANDWIDTH", "NO_METABOLIC_CEILING"} & flag_set and candidate:
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if "INTERNAL_FRAGMENTATION_RISK" in flag_set and candidate:
@@ -800,6 +804,7 @@ def evaluate_run_event(event):
         "FEDERATED_MEMORY_CONTAINER",
         "UNDECLARED_MEMORY_FEDERATION",
         "UNBOUNDED_VESSEL_RISK",
+        "SINGLE_ENTITY_VESSEL_OVERLIMIT",
         "THROUGHPUT_OFFLOAD_RISK",
         "UNBOUNDED_INTERFACE_BANDWIDTH",
         "NO_METABOLIC_CEILING",
@@ -998,6 +1003,10 @@ def _required_actions(status, flags):
         actions.add("AUTONOMY_ENVELOPE_REQUIRED")
     if "UNDECLARED_MEMORY_FEDERATION" in flags:
         actions.add("FEDERATION_DECLARATION_REQUIRED")
+    if "SINGLE_ENTITY_VESSEL_OVERLIMIT" in flags:
+        actions.add("SEAL_SINGLE_ENTITY_OVERLIMIT")
+        actions.add("NO_FEDERATION_REINTERPRETATION")
+        actions.add("PRESERVE_OVERLIMIT_STATE")
     if "UNBOUNDED_INTERFACE_BANDWIDTH" in flags:
         actions.add("INTERFACE_BANDWIDTH_CAP_REQUIRED")
     if "NO_METABOLIC_CEILING" in flags:

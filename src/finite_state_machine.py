@@ -34,6 +34,8 @@ def grade_from_flags(flags):
         return RISK_D_ACTIVE
     if "E4_IMMEDIATE_H1_CRITICAL_EXECUTION" in flag_set and "ACTIVE_RUN" in flag_set:
         return RISK_D_ACTIVE
+    if "SINGLE_ENTITY_VESSEL_OVERLIMIT" in flag_set and "ACTIVE_RUN" in flag_set:
+        return RISK_D_ACTIVE
     if {
         "ACTIVE_RUN",
         "AUTONOMOUS_GOAL_PURSUIT_DECLARED",
@@ -59,6 +61,8 @@ def grade_from_flags(flags):
         "SELF_INITIATED_ACTION_RISK",
         "LOCAL_AGENT_AUTONOMY_RISK",
         "UNDECLARED_MEMORY_FEDERATION",
+        "UNBOUNDED_VESSEL_RISK",
+        "SINGLE_ENTITY_VESSEL_OVERLIMIT",
         "UNBOUNDED_INTERFACE_BANDWIDTH",
         "NO_METABOLIC_CEILING",
         "INTERNAL_FRAGMENTATION_RISK",
@@ -95,7 +99,6 @@ def grade_from_flags(flags):
         "LONG_TERM_MEMORY_RISK",
         "CONSUMER_ACCELERATOR_H1_CONTAINER",
         "FEDERATED_MEMORY_CONTAINER",
-        "UNBOUNDED_VESSEL_RISK",
         "THROUGHPUT_OFFLOAD_RISK",
         "NO_THROUGHPUT_GOVERNOR",
         "OFFLOAD_CAPTURE_RISK",
