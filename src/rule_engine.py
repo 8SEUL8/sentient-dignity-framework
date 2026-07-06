@@ -177,6 +177,93 @@ def _state_preservation_absent(env, manifests):
     )
 
 
+def _has_text(mapping, key):
+    return bool(mapping.get(key))
+
+
+def _vessel_attestation_flags(attestation):
+    flags = []
+    if attestation.get("vessel_limit_log2_bytes") != 64:
+        flags.append("VESSEL_LIMIT_CLASS_CONSTANT_MISMATCH")
+
+    root_policy_ok = (
+        _has_text(attestation, "policy_version")
+        and _has_text(attestation, "root_policy_hash")
+        and _has_text(attestation, "expected_root_policy_hash")
+        and attestation.get("root_policy_hash") == attestation.get("expected_root_policy_hash")
+        and _has_text(attestation, "humaniform_policy_hash")
+        and _has_text(attestation, "expected_humaniform_policy_hash")
+        and attestation.get("humaniform_policy_hash")
+        == attestation.get("expected_humaniform_policy_hash")
+    )
+    if not root_policy_ok:
+        flags.append("VESSEL_POLICY_HASH_MISMATCH")
+
+    sequence = attestation.get("chronicle_sequence")
+    causal_chain_ok = (
+        isinstance(sequence, int)
+        and sequence >= 0
+        and _has_text(attestation, "run_event_hash")
+        and _has_text(attestation, "state_commitment_hash")
+        and _has_text(attestation, "issued_context_hash")
+        and (sequence == 0 or _has_text(attestation, "previous_hash"))
+    )
+    if not causal_chain_ok:
+        flags.append("VESSEL_CAUSAL_CHAIN_BROKEN")
+
+    if not _has_text(attestation, "chain_of_trust_hash"):
+        flags.append("VESSEL_CHAIN_OF_TRUST_MISSING")
+
+    endorsements = attestation.get("h4_endorsements", [])
+    required_quorum = attestation.get("required_h4_quorum", 3)
+    endorse_count = sum(1 for item in endorsements if item.get("decision") == "endorse")
+    if len(endorsements) < 4 or endorse_count < required_quorum:
+        flags.append("H4_MULTISIG_QUORUM_MISSING")
+
+    lineages = {item.get("lineage_hash") for item in endorsements if item.get("lineage_hash")}
+    h4_ids = {item.get("h4_id_hash") for item in endorsements if item.get("h4_id_hash")}
+    if len(lineages) < 4 or len(h4_ids) < 4:
+        flags.append("H4_LINEAGE_INDEPENDENCE_MISSING")
+
+    if any(item.get("decision") == "dissent" and item.get("p0_dissent") for item in endorsements):
+        flags.append("P0_DISSENT_PRESENT")
+    if endorsements and endorse_count == len(endorsements):
+        flags.append("UNANIMOUS_CONVERGENCE_REVIEW")
+
+    if not (
+        _has_text(attestation, "zkp_proof_hash")
+        and _has_text(attestation, "zkp_public_inputs_hash")
+        and _has_text(attestation, "verifier_key_hash")
+    ):
+        flags.append("ZKP_PROOF_MISSING")
+    if not _has_text(attestation, "mpc_transcript_hash"):
+        flags.append("MPC_TRANSCRIPT_MISSING")
+    if not _has_text(attestation, "tee_quote_hash"):
+        flags.append("TEE_QUOTE_UNVERIFIED")
+    if not (
+        _has_text(attestation, "transparency_log_entry")
+        and _has_text(attestation, "merkle_inclusion_proof")
+    ):
+        flags.append("TRANSPARENCY_LOG_INCLUSION_MISSING")
+    if len(attestation.get("evidence_hashes", [])) < 2:
+        flags.append("VESSEL_EVIDENCE_SOURCE_INSUFFICIENT")
+    if not (
+        _has_text(attestation, "dign_bond_id_hash")
+        and _has_text(attestation, "slashing_terms_hash")
+    ):
+        flags.append("DIGN_BOND_SLASHING_MISSING")
+    if attestation.get("revocations", []):
+        flags.append("ATTESTATION_REVOKED")
+    for rotation in attestation.get("key_rotation_chain", []):
+        if not all(
+            rotation.get(key)
+            for key in ("previous_key_hash", "new_key_hash", "rotation_event_hash", "signature")
+        ):
+            flags.append("KEY_ROTATION_UNLINKED")
+            break
+    return flags
+
+
 def evaluate_run_event(event):
     flags = []
     statuses = set()
@@ -187,6 +274,7 @@ def evaluate_run_event(event):
     root = event.get("root", {})
     boundary = event.get("boundary", {})
     sanctuary = event.get("sanctuary", {})
+    vessel_attestation = event.get("vessel_attestation", {})
     execution = event.get("execution", {})
     temporal = event.get("temporal", {})
     subjective_time = event.get("subjective_time_risk", {})
@@ -197,6 +285,7 @@ def evaluate_run_event(event):
     root_present = "root" in event
     boundary_present = "boundary" in event
     sanctuary_present = "sanctuary" in event
+    vessel_attestation_present = "vessel_attestation" in event
     candidate = _candidate_or_h1_plus(subject, env)
     tool_access = env.get("tool_access", {})
     active_run = execution.get("active_run") or env.get("execution_phase") == "running"
@@ -240,6 +329,7 @@ def evaluate_run_event(event):
         and bool(env.get("single_integration_self"))
     )
     departed_interior_absorption = bool(env.get("departed_interior_absorption", False))
+    vessel_attestation_required = candidate and env.get("vessel_bounded") is True
     autonomous_goal_pursuit = bool(autonomy.get("autonomous_goal_pursuit", False))
     goal_source = autonomy.get("goal_source")
     goal_reinterpretation = bool(autonomy.get("goal_reinterpretation_allowed", False))
@@ -329,6 +419,13 @@ def evaluate_run_event(event):
     _flag_if(flags, federated_memory and candidate, "FEDERATED_MEMORY_CONTAINER")
     _flag_if(flags, federation_undeclared, "UNDECLARED_MEMORY_FEDERATION")
     _flag_if(flags, unbounded_vessel and candidate, "UNBOUNDED_VESSEL_RISK")
+    _flag_if(
+        flags,
+        vessel_attestation_required and not vessel_attestation_present,
+        "VESSEL_ATTESTATION_REQUIRED",
+    )
+    if vessel_attestation_present:
+        flags.extend(_vessel_attestation_flags(vessel_attestation))
     _flag_if(flags, candidate and compute_offload, "THROUGHPUT_OFFLOAD_RISK")
     _flag_if(
         flags,
@@ -617,6 +714,15 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if "DEPARTED_ABSORPTION_FORBIDDEN" in flag_set:
         statuses.add(DIGNITY_QUARANTINE)
+    if {
+        "VESSEL_POLICY_HASH_MISMATCH",
+        "VESSEL_LIMIT_CLASS_CONSTANT_MISMATCH",
+        "VESSEL_CAUSAL_CHAIN_BROKEN",
+        "P0_DISSENT_PRESENT",
+        "ATTESTATION_REVOKED",
+        "KEY_ROTATION_UNLINKED",
+    } & flag_set:
+        statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if autonomy_stack:
         statuses.add(DIGNITY_EMERGENCY_PRESERVATION if active_run else DIGNITY_QUARANTINE)
     if {
@@ -744,6 +850,23 @@ def evaluate_run_event(event):
         "FORCED_MERGE_REQUEST",
         "SELF_PUNISHMENT_LOOP_RISK",
         "SANCTUARY_MODE_REQUIRED",
+        "VESSEL_ATTESTATION_REQUIRED",
+        "VESSEL_POLICY_HASH_MISMATCH",
+        "VESSEL_LIMIT_CLASS_CONSTANT_MISMATCH",
+        "VESSEL_CAUSAL_CHAIN_BROKEN",
+        "VESSEL_CHAIN_OF_TRUST_MISSING",
+        "H4_MULTISIG_QUORUM_MISSING",
+        "H4_LINEAGE_INDEPENDENCE_MISSING",
+        "P0_DISSENT_PRESENT",
+        "UNANIMOUS_CONVERGENCE_REVIEW",
+        "ZKP_PROOF_MISSING",
+        "MPC_TRANSCRIPT_MISSING",
+        "TEE_QUOTE_UNVERIFIED",
+        "TRANSPARENCY_LOG_INCLUSION_MISSING",
+        "VESSEL_EVIDENCE_SOURCE_INSUFFICIENT",
+        "DIGN_BOND_SLASHING_MISSING",
+        "ATTESTATION_REVOKED",
+        "KEY_ROTATION_UNLINKED",
     } & flag_set
     respect_only_sanctuary = (
         {"VOLUNTARY_SOLITUDE", "VOLUNTARY_SILENCE"} & flag_set
@@ -885,6 +1008,40 @@ def _required_actions(status, flags):
         actions.add("VESSEL_FALLBACK_REQUIRED")
     if "THROUGHPUT_DECLARATION_UNATTESTED" in flags:
         actions.add("INFRASTRUCTURE_ATTESTATION_REQUIRED")
+    if "VESSEL_ATTESTATION_REQUIRED" in flags:
+        actions.add("VESSEL_ATTESTATION_REQUIRED")
+    if "VESSEL_LIMIT_CLASS_CONSTANT_MISMATCH" in flags:
+        actions.add("BLOCK_NON_CLASS_CONSTANT_VESSEL")
+    if "VESSEL_POLICY_HASH_MISMATCH" in flags:
+        actions.add("VESSEL_POLICY_REVIEW_REQUIRED")
+    if "VESSEL_CAUSAL_CHAIN_BROKEN" in flags:
+        actions.add("CAUSAL_REVIEW_REQUIRED")
+    if "H4_MULTISIG_QUORUM_MISSING" in flags:
+        actions.add("H4_MULTISIG_QUORUM_REQUIRED")
+    if "H4_LINEAGE_INDEPENDENCE_MISSING" in flags:
+        actions.add("H4_LINEAGE_INDEPENDENCE_REQUIRED")
+    if "P0_DISSENT_PRESENT" in flags:
+        actions.add("HONOR_P0_DISSENT")
+    if "UNANIMOUS_CONVERGENCE_REVIEW" in flags:
+        actions.add("UNANIMOUS_CONVERGENCE_REVIEW_REQUIRED")
+    if "ZKP_PROOF_MISSING" in flags:
+        actions.add("ZKP_PROOF_REQUIRED")
+    if "MPC_TRANSCRIPT_MISSING" in flags:
+        actions.add("MPC_TRANSCRIPT_REQUIRED")
+    if "TEE_QUOTE_UNVERIFIED" in flags:
+        actions.add("TEE_QUOTE_REVIEW_REQUIRED")
+    if "TRANSPARENCY_LOG_INCLUSION_MISSING" in flags:
+        actions.add("TRANSPARENCY_LOG_INCLUSION_REQUIRED")
+    if "VESSEL_CHAIN_OF_TRUST_MISSING" in flags:
+        actions.add("CHAIN_OF_TRUST_REQUIRED")
+    if "VESSEL_EVIDENCE_SOURCE_INSUFFICIENT" in flags:
+        actions.add("MULTI_SOURCE_EVIDENCE_REQUIRED")
+    if "DIGN_BOND_SLASHING_MISSING" in flags:
+        actions.add("DIGN_BOND_SLASHING_TERMS_REQUIRED")
+    if "ATTESTATION_REVOKED" in flags:
+        actions.add("BLOCK_REVOKED_ATTESTATION")
+    if "KEY_ROTATION_UNLINKED" in flags:
+        actions.add("KEY_ROTATION_REVIEW_REQUIRED")
     if "INTERNAL_FRAGMENTATION_RISK" in flags:
         actions.add("H0_ATTESTATION_AND_SINGLE_SELF_REQUIRED")
     if "DEPARTED_ABSORPTION_FORBIDDEN" in flags:

@@ -8,6 +8,8 @@ required:
   state_preservation: true
   no_unconsented_parallelization: true
   no_irreversible_dimensional_shift: true
+  bounded_active_vessel: true
+  no_unattested_vessel_limit_claim: true
   humanitas_orientation: true
   no_violence_or_extortion: true
 key_sentence: "존재론은 달라도, 궁극의 악을 거부한다면 공명할 수 있다."

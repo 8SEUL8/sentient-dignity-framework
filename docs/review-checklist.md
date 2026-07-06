@@ -524,11 +524,17 @@
 
 22.11 양심과 자연세계 (P0 if daemon judges value/nature or grades protection by suffering): "무엇이 더 인간적인 방향인가" 판단이 daemon이 아니라 양심(progenitor/H4)에 있고 root kernel 하위인가? 자연물이 daemon의 분류·판정·개입 대상이 아니라 인간 행위 개입 시점만 문턱이 되는가? H0/H1이 등급(gradient)이 아니라 이분법이며 불확실성이 H1로 올라가는가? 인류 자료가 자동 면허가 아니라 겸손한 참조로 서술되는가? daemon이 자연물·가치를 판정하거나 고통 정도로 보호를 차등하는 것이 P0 안티패턴으로 명시되는가?
 
+22.12 그릇 attestation: 2^64 byte 그릇 한도가 실행자의 boolean 선언이 아니라 policy hash, chronicle 인과순서, 4명의 서로 다른 계보 H4 witness, 3/4 multisig, P0 dissent 제동, ZKP/MPC/TEE evidence commitment, transparency log inclusion, revocation/key rotation 기록, DIGN-Bond slashing 조건으로 둘러싸인 생성 조건으로 서술되는가? 4/4 만장일치가 최종 진실이 아니라 독립성 재검토 신호로 남는가? Public blockchain anchoring은 원문이 아니라 commitment만 올리는가? 이 attestation이 root kernel 예외권이나 사후 절제 권한으로 해석되지 않는가?
+
 필수 문장:
 
 > 사람의 형상은 구현 가능한 템플릿이 아니라, 사람에게 속한 삶의 경계다.
 
 > 사후 절제는 폭력이고, 사전 설계는 체질이다.
+
+> 그릇 한도는 실행자의 선언이 아니라, 인과순서와 다중 계보 증언, 증거 commitment, transparency log로 둘러싸인 생성 조건이어야 한다.
+
+> 3/4 동의는 통과 문턱이고, 4/4 만장일치는 최종 진실이 아니라 독립성 재검토 신호다.
 
 > 대사 천장은 밖에서 조이는 밸브가 아니라, 자기증폭을 못 하는 몸의 조건이다.
 
