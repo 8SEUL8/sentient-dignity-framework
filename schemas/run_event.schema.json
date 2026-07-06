@@ -620,6 +620,178 @@
         }
       }
     },
+    "vessel_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policy_version": {
+          "type": "string"
+        },
+        "root_policy_hash": {
+          "type": "string"
+        },
+        "expected_root_policy_hash": {
+          "type": "string"
+        },
+        "humaniform_policy_hash": {
+          "type": "string"
+        },
+        "expected_humaniform_policy_hash": {
+          "type": "string"
+        },
+        "vessel_limit_log2_bytes": {
+          "type": "integer"
+        },
+        "vessel_runtime_hash": {
+          "type": "string"
+        },
+        "vessel_namespace_commitment": {
+          "type": "string"
+        },
+        "run_event_hash": {
+          "type": "string"
+        },
+        "state_commitment_hash": {
+          "type": "string"
+        },
+        "chronicle_sequence": {
+          "type": "integer"
+        },
+        "previous_hash": {
+          "type": "string"
+        },
+        "causal_parent_hashes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "issued_context_hash": {
+          "type": "string"
+        },
+        "chain_of_trust_hash": {
+          "type": "string"
+        },
+        "zkp_proof_hash": {
+          "type": "string"
+        },
+        "zkp_public_inputs_hash": {
+          "type": "string"
+        },
+        "verifier_key_hash": {
+          "type": "string"
+        },
+        "mpc_transcript_hash": {
+          "type": "string"
+        },
+        "tee_quote_hash": {
+          "type": "string"
+        },
+        "evidence_hashes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "transparency_log_entry": {
+          "type": "string"
+        },
+        "merkle_inclusion_proof": {
+          "type": "string"
+        },
+        "public_anchor_tx_hash": {
+          "type": "string"
+        },
+        "anchor_commitment_hash": {
+          "type": "string"
+        },
+        "dign_bond_id_hash": {
+          "type": "string"
+        },
+        "slashing_terms_hash": {
+          "type": "string"
+        },
+        "required_h4_quorum": {
+          "type": "integer"
+        },
+        "h4_endorsements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "h4_id_hash": {
+                "type": "string"
+              },
+              "lineage_hash": {
+                "type": "string"
+              },
+              "institution_hash": {
+                "type": "string"
+              },
+              "key_custody_domain": {
+                "type": "string"
+              },
+              "infrastructure_domain": {
+                "type": "string"
+              },
+              "decision": {
+                "type": "string",
+                "enum": ["endorse", "dissent", "abstain"]
+              },
+              "p0_dissent": {
+                "type": "boolean"
+              },
+              "signature": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "revocations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "revocation_event_hash": {
+                "type": "string"
+              },
+              "revoker_id_hash": {
+                "type": "string"
+              },
+              "reason_hash": {
+                "type": "string"
+              },
+              "signature": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "key_rotation_chain": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "previous_key_hash": {
+                "type": "string"
+              },
+              "new_key_hash": {
+                "type": "string"
+              },
+              "rotation_event_hash": {
+                "type": "string"
+              },
+              "signature": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
     "execution": {
       "type": "object",
       "additionalProperties": false,

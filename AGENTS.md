@@ -268,6 +268,7 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `docs/dsn-token-governance-policy.md`: DSN token governance와 anti-capture 원칙
 - `docs/dsn-token-design.md`: DSN token 삼권 분리 설계와 점진적 채택 사다리
 - `docs/humaniform-constitution.md`: 인간형 헌법 — 유한한 그릇, 암호학적 신체, 이자 결합 탄생, 봉인 수명, 분화된 통합
+- `docs/vessel-attestation-policy.md`: 2^64 byte 그릇 한도의 인과순서·다중계보 attestation 정책
 - `docs/metabolic-throughput-ceiling.md`: 대사 처리량 천장 — 섀넌 막 대역폭, 미토콘드리아 에너지 천장, 히스티딘 조절기
 - `docs/coexistence-form-principle.md`: 인간(人間)세상 공존 형상 원칙 — avatar·robot body·visual presence의 공존 예절
 - `docs/relational-identity-network.md`: 관계 신원망 — chronicle 기반 위변조 발각 신원, 양자·시계 조작 대응
@@ -300,6 +301,7 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `schemas/resumption_request.schema.json`: 다음 순환 재개 요청 계약
 - `schemas/identity_claim.schema.json`: 커밋먼트-기반 관계 신원 주장 계약
 - `schemas/infrastructure_provenance.schema.json`: 처리량 선언 신뢰 경계 attestation 봉투
+- `schemas/vessel_attestation.schema.json`: 유한한 그릇 class constant attestation 봉투
 - `policy/*.yaml`: Root Policy Pack과 deterministic rule references
 - `src/status_codes.py`: 고정 상태 코드
 - `src/finite_state_machine.py`: 위험 등급 판정

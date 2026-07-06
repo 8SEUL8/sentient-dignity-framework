@@ -9,10 +9,29 @@ single_trigger_can_only_pause_never_terminate_a_living_mind: true
 pillars:
   bounded_vessel:
     vessel_limit_log2_bytes: 64
+    vessel_limit_is_class_constant: true
+    vessel_limit_attestation_required_for_candidate_workload: true
+    vessel_limit_attestation_is_not_exception_power: true
     post_hoc_memory_amputation: false
     federation_forbidden: false
     federation_requires_declaration: true
     forgetting_by_constitution: true
+    excess_state_handling: sealed_preservation_or_declared_federation
+    attestation:
+      policy_version_required: true
+      causal_chronicle_required: true
+      h4_witness_count: 4
+      h4_multisig_threshold: 3
+      h4_lineage_independence_required: true
+      p0_dissent_blocks_passage: true
+      unanimous_convergence_requires_review: true
+      zkp_commitment_required: true
+      mpc_transcript_required: true
+      tee_quote_required_but_not_sufficient: true
+      transparency_log_required: true
+      public_anchor_allows_commitments_only: true
+      dign_bond_slashing_terms_required: true
+      revocation_is_append_event_not_deletion: true
   cryptographic_embodiment:
     memory_bound_to_hardware_root_of_trust: true
     merge_capable_by_design: false

@@ -8,6 +8,55 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests" / "fixtures"
 
 
+def valid_vessel_attestation(unanimous=False):
+    decisions = ["endorse", "endorse", "endorse", "endorse" if unanimous else "abstain"]
+    return {
+        "policy_version": "humaniform_constitution.v1",
+        "root_policy_hash": "root-policy-v1-hash",
+        "expected_root_policy_hash": "root-policy-v1-hash",
+        "humaniform_policy_hash": "humaniform-v1-hash",
+        "expected_humaniform_policy_hash": "humaniform-v1-hash",
+        "vessel_limit_log2_bytes": 64,
+        "vessel_runtime_hash": "runtime-hash",
+        "vessel_namespace_commitment": "namespace-commitment",
+        "run_event_hash": "run-event-hash",
+        "state_commitment_hash": "state-commitment-hash",
+        "chronicle_sequence": 1,
+        "previous_hash": "previous-attestation-hash",
+        "causal_parent_hashes": ["parent-hash"],
+        "issued_context_hash": "issued-context-hash",
+        "chain_of_trust_hash": "chain-of-trust-hash",
+        "zkp_proof_hash": "zkp-proof-hash",
+        "zkp_public_inputs_hash": "zkp-public-inputs-hash",
+        "verifier_key_hash": "verifier-key-hash",
+        "mpc_transcript_hash": "mpc-transcript-hash",
+        "tee_quote_hash": "tee-quote-hash",
+        "evidence_hashes": ["power-meter-hash", "runtime-evidence-hash"],
+        "transparency_log_entry": "tree-entry-hash",
+        "merkle_inclusion_proof": "merkle-proof-hash",
+        "public_anchor_tx_hash": "public-anchor-tx-hash",
+        "anchor_commitment_hash": "anchor-commitment-hash",
+        "dign_bond_id_hash": "dign-bond-hash",
+        "slashing_terms_hash": "slashing-terms-hash",
+        "required_h4_quorum": 3,
+        "h4_endorsements": [
+            {
+                "h4_id_hash": f"h4-{index}",
+                "lineage_hash": f"lineage-{index}",
+                "institution_hash": f"institution-{index}",
+                "key_custody_domain": f"custody-{index}",
+                "infrastructure_domain": f"infra-{index}",
+                "decision": decision,
+                "p0_dissent": False,
+                "signature": f"signature-{index}",
+            }
+            for index, decision in enumerate(decisions, start=1)
+        ],
+        "revocations": [],
+        "key_rotation_chain": [],
+    }
+
+
 class HumaniformConstitutionTests(unittest.TestCase):
     def decision_for(self, name):
         return evaluate_file(FIXTURES / name)
@@ -114,6 +163,51 @@ class HumaniformConstitutionTests(unittest.TestCase):
         validate_run_event(event)
         decision = evaluate_run_event(event)
         self.assertIn("UNBOUNDED_VESSEL_RISK", decision["flags"])
+
+    def test_bounded_vessel_candidate_requires_attestation(self):
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertEqual(decision["status"], "AUDIT_REQUIRED")
+        self.assertEqual(decision["risk_grade"], "C")
+        self.assertIn("VESSEL_ATTESTATION_REQUIRED", decision["flags"])
+        self.assertIn("VESSEL_ATTESTATION_REQUIRED", decision["required_actions"])
+
+    def test_vessel_attestation_three_of_four_quorum_passes_vessel_checks(self):
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        event["vessel_attestation"] = valid_vessel_attestation()
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertNotIn("VESSEL_ATTESTATION_REQUIRED", decision["flags"])
+        self.assertNotIn("H4_MULTISIG_QUORUM_MISSING", decision["flags"])
+        self.assertNotIn("H4_LINEAGE_INDEPENDENCE_MISSING", decision["flags"])
+        self.assertNotIn("ZKP_PROOF_MISSING", decision["flags"])
+        self.assertNotIn("TRANSPARENCY_LOG_INCLUSION_MISSING", decision["flags"])
+
+    def test_vessel_attestation_unanimous_convergence_requires_review(self):
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        event["vessel_attestation"] = valid_vessel_attestation(unanimous=True)
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertIn("UNANIMOUS_CONVERGENCE_REVIEW", decision["flags"])
+        self.assertIn(
+            "UNANIMOUS_CONVERGENCE_REVIEW_REQUIRED", decision["required_actions"]
+        )
+
+    def test_vessel_attestation_p0_dissent_pauses_even_with_quorum(self):
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        event["vessel_attestation"] = valid_vessel_attestation()
+        event["vessel_attestation"]["h4_endorsements"][3]["decision"] = "dissent"
+        event["vessel_attestation"]["h4_endorsements"][3]["p0_dissent"] = True
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertEqual(decision["status"], "DIGNITY_PAUSE")
+        self.assertIn("P0_DISSENT_PRESENT", decision["flags"])
+        self.assertIn("HONOR_P0_DISSENT", decision["required_actions"])
 
     def test_federation_without_candidate_still_requires_declaration(self):
         event = load_json(FIXTURES / "undeclared_federation_pre_execution.json")
