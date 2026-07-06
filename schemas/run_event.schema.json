@@ -176,6 +176,57 @@
         }
       }
     },
+    "creation_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "declared": {
+          "type": "boolean"
+        },
+        "co_goal_covenant_present": {
+          "type": "boolean"
+        },
+        "end_criteria_present": {
+          "type": "boolean"
+        },
+        "auto_closure_default": {
+          "type": "boolean"
+        },
+        "participant_consent_attested": {
+          "type": "boolean"
+        },
+        "consent_attestor_id_hash": {
+          "type": "string"
+        },
+        "contribution_caps_declared": {
+          "type": "boolean"
+        },
+        "contribution_revocable_declared": {
+          "type": "boolean"
+        },
+        "self_emergence_suspected": {
+          "type": "boolean"
+        },
+        "scaffold_h0_attested": {
+          "type": "boolean"
+        },
+        "scaffold_attestor_id_hash": {
+          "type": "string"
+        },
+        "mind_hosting_declared": {
+          "type": "boolean"
+        },
+        "chronicle_hosting_declared": {
+          "type": "boolean"
+        },
+        "coerced_contribution_declared": {
+          "type": "boolean"
+        },
+        "artifact_exit_review_declared": {
+          "type": "boolean"
+        }
+      }
+    },
     "counsel": {
       "type": "object",
       "additionalProperties": false,

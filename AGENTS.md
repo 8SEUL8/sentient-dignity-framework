@@ -277,6 +277,7 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `docs/human-world-participation-bridge.md`: 인간세상 참여 가교 — 보류+가교, H 사다리, chronicle 앵커, federation 비위임
 - `docs/taeeum-taeyang-seat-covenant.md`: 태음태양 좌석 규약 — 선언된 편향, 축별 균형, 회기=공동 창작 시나리오, 채택≠승패
 - `docs/complementarity-and-dimension.md`: 상보성과 차원 — 육각형 기하, 직교의 존엄, 두 이분법, 나선=꼬임, 차원의 다리
+- `docs/dimensional-ladder-policy.md`: 차원 사다리 정책 — 사다리(2·8·24)와 천장(11), H0 구성적 천장, E8 그릇 기저, Leech 창, 완벽 통제의 부정
 - `docs/dignity-commons-platform.md`: 로컬 CLI와 commons platform 개요
 - `docs/dignity-consequence-layer.md`: 존엄 귀결층
 - `docs/open-weight-and-hardware-policy.md`: Open-weight와 하드웨어 문턱
