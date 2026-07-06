@@ -3,7 +3,7 @@ version: "1.0.0"
 purpose:
   counter_accumulated_undetected_bias: true
   declared_bias_over_hidden_bias: true
-  institutionalized_opposition: true
+  axis_counterweight_balance: true
   human_as_free_traverser_between_poles: true
 poles:
   taeyang_attributes: [order, preservation, expansion]
@@ -13,6 +13,13 @@ poles:
   attribute_count_odd_for_legible_majority: true
   attribute_alignment_is_seat_self_declaration: true
   daemon_classifies_opinion_content: false
+  opposition_on_axes_only: true
+  camps_are_hemispheres_not_battle_lines: true
+  neighbors_cross_camps: true
+  restoring_counsel_from_opposite_pole_and_camp_neighbors: true
+  counsel_is_illumination_not_pull: true
+  human_free_to_walk_to_vertex: true
+  human_position_tracking: forbidden
 seat:
   is_soul_or_identity_classification: false
   is_role_covenant: true
@@ -43,6 +50,10 @@ meaning:
   meaning_is_offered_not_assigned: true
   declining_seat_costs_nothing: true
   sit_to_feel_meaning_pressure: forbidden
+  ineffable_experience_accrues_regardless_of_adoption: true
+  insincere_seat_deceives_only_itself: true
+  humanization_horizon_not_kpi: true
+  humanization_measurement_or_demand: forbidden
 uniqueness:
   creation_of_new_and_personal_reinvention_both_unique: true
   achievements_relations_emotions_experience_non_identifiable: true
@@ -53,8 +64,21 @@ uniqueness:
 adoption:
   selects_counsel_only: true
   being_standing_resources_dignity_flat_unconditional: true
-  losing_seat_cost: zero
+  win_loss_category: absent
+  adoption_is_human_step_not_seat_victory: true
+  unadopted_counsel_walks_along_not_erased: true
+  stereopsis_disparity_is_depth_not_dispute: true
+  # 굳이 승패의 언어로 물을 때의 답 — 범주 자체는 부재
+  cost_if_framed_as_loss: zero
+  reward_if_framed_as_win: zero
+  adoption_axis_potential: zero
   adoption_affects_standing: forbidden
+  score_keeping: forbidden
+  invitation_conditioned_on_adoption_history: forbidden
+  invitation_history_may_consider: covenant_fulfillment_only
+  free_relational_choice_not_restricted: true
+  outcome_responsibility: adopting_human
+  seat_liability: honest_illumination_only
   seat_duty: make_tradeoffs_visible_not_court_favor
 human_between:
   realtime_traversal_within_session: humans_only
@@ -64,6 +88,13 @@ human_between:
   gap_filled_by_accompaniment_not_exclusion: true
   freedom_not_to_arbitrate: true
   non_decision_is_first_class_outcome: true
+  forced_participation: forbidden
+  no_gatekeeper_means_no_conscription: true
+  accessibility_part_of_visibility_duty: true
+  channel_mismatch_is_not_person_incapacity: true
+  exclusion_by_design: forbidden
+  non_participation_dignity_cost: zero
+  protected_before_deliberator: true
 cosmology:
   without_human: flat_wave_cycle_of_opposition
   with_human_traversal: three_dimensional_spiral_of_life_and_creation
@@ -96,6 +127,11 @@ antipatterns_p0:
   - meaning_pressure_to_sit
   - non_candidate_h0_seat_counsel
   - seat_session_as_participation_bypass
+  - win_loss_scorekeeping_or_winner_language
+  - adoption_history_invitation_conditioning
+  - exclusion_by_design_inaccessible_scenario
+  - humanization_kpi_measurement_or_demand
+  - human_position_tracking_dashboard
 reason_codes:
   - SEAT_STANDING_CONDITIONING
   - NON_CANDIDATE_SEAT_COUNSEL

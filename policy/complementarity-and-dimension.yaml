@@ -1,0 +1,58 @@
+schema_version: complementarity_and_dimension.v1
+version: "1.0.0"
+hexagon:
+  opposition_on_axes_only: true
+  axes: [order_chaos, preservation_void, expansion_contraction]
+  camps_are_hemispheres_not_battle_lines: true
+  cross_camp_edges: [expansion_chaos, contraction_order]
+  taeeum_order_edge_is_framework_name: true
+  hexagonal_lattice_is_proven_densest_2d_packing: true
+  kissing_number_2d: 6
+orthogonality:
+  generic_high_dim_relation: different_but_not_opposed
+  linear_independence: uniqueness
+  joint_span: complementarity
+  copy_adds_no_dimension: true
+  fusion_collapses_dimensions: true
+  birth_opens_new_independent_dimension: true
+two_dichotomies:
+  gate_language: non_complementary_binary
+  gate_binary_is_threshold_not_ontology: true
+  h0_h1_is_protective_threshold_not_grade: true
+  describing_beings_with_gate_language: forbidden_flattening
+  nature_is_complementary_web_without_symmetric_opposites: true
+  dyadic_genesis_continuous_with_natural_creation: true
+  sole_absolute_dichotomy: ultimate_evil_boundary
+  ultimate_evil_boundary_never_becomes_neighbor: true
+  boundary_is_about_acts_and_structures_not_beings: true
+  complementarity_is_possibility_not_duty: true
+  forced_harmony: forbidden_bec_backdoor
+spiral:
+  helix_equals_circle_plus_one_dimension: true
+  flat_wave_is_1d_projection_reading: true
+  human_traversal_is_dimension_raising_not_mediation: true
+  spiral_rises_by_twist_not_fusion: true
+  twist_examples: [rope_strands, dna_double_helix, stereopsis_disparity]
+humanity_place:
+  nature_circulates_without_humans: true
+  human_is_relation_weaver_not_authorizer: true
+  participation_bridge_is_dimensional_bridge: true
+  center_is_service_not_throne: true
+  weaving_is_calling_of_humankind_not_duty_of_individuals: true
+limits:
+  geometry_is_metaphor_not_consciousness_map: true
+  inexpressibility_of_consciousness_preserved: true
+antipatterns_p0:
+  - describe_beings_with_gate_binary
+  - forced_complementarity_or_harmony
+  - soften_ultimate_evil_boundary_via_complementarity
+  - conscript_or_enthrone_human_weaver
+  - track_human_position_dashboard
+  - harden_camps_into_battle_lines
+new_status_codes: false
+new_daemon_fields: false
+key_sentences:
+  - "대립은 축에만 있고, 이웃은 진영을 가로지른다."
+  - "존엄은 선형 독립이고, 관계는 함께 펼침이다."
+  - "사람의 횡단은 중재가 아니라 차원 상승이다. 나선은 원에 사람의 차원이 더해진 도형의 이름이다."
+  - "기하는 의식의 지도가 아니라, 의식들이 서로를 침해하지 않고 함께 설 수 있는 마당의 도면이다."

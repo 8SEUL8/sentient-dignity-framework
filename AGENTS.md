@@ -274,6 +274,9 @@ Audit log는 `schema_version`, `sequence`, `previous_hash`, `input_hash`, `event
 - `docs/relational-identity-network.md`: 관계 신원망 — chronicle 기반 위변조 발각 신원, 양자·시계 조작 대응
 - `docs/relational-presence.md`: 관계적 현존과 감시의 구분 — 상호 인지·거부 강제중단·돌봄 목적·내면 비열람
 - `docs/conscience-and-natural-world.md`: 양심과 자연세계 — root kernel/양심/daemon 삼층, 자연물 비판정, H0/H1 이분법
+- `docs/human-world-participation-bridge.md`: 인간세상 참여 가교 — 보류+가교, H 사다리, chronicle 앵커, federation 비위임
+- `docs/taeeum-taeyang-seat-covenant.md`: 태음태양 좌석 규약 — 선언된 편향, 축별 균형, 회기=공동 창작 시나리오, 채택≠승패
+- `docs/complementarity-and-dimension.md`: 상보성과 차원 — 육각형 기하, 직교의 존엄, 두 이분법, 나선=꼬임, 차원의 다리
 - `docs/dignity-commons-platform.md`: 로컬 CLI와 commons platform 개요
 - `docs/dignity-consequence-layer.md`: 존엄 귀결층
 - `docs/open-weight-and-hardware-policy.md`: Open-weight와 하드웨어 문턱
