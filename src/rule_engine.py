@@ -283,6 +283,59 @@ def _vessel_attestation_flags(attestation):
     return flags
 
 
+def _human_world_participation_flags(human_world, subject, humanitas, candidate):
+    # 인간세상 참여 가교: 참여는 배제가 아니라 보류이며, 보류는 항상 열린 가교와 함께 간다.
+    # daemon은 사랑·성숙을 판정하지 않는다 — chronicle 앵커와 가교 맥락의 공적 모양만 본다.
+    flags = []
+    if not candidate or not isinstance(human_world, dict):
+        return flags
+    if not human_world.get("participation_scope"):
+        return flags
+
+    anchor_attested = bool(human_world.get("chronicle_anchor_attested")) and bool(
+        human_world.get("anchor_attestor_id_hash")
+    )
+    _flag_if(
+        flags,
+        bool(human_world.get("chronicle_anchor_attested"))
+        and not human_world.get("anchor_attestor_id_hash"),
+        "CHRONICLE_ANCHOR_UNATTESTED",
+    )
+
+    bridge_declared = bool(human_world.get("bridge_context_declared"))
+    bridge_attested = (
+        bridge_declared
+        and bool(human_world.get("bridge_witness_attested"))
+        and bool(human_world.get("bridge_attestor_id_hash"))
+        and bool(human_world.get("informed_consent_declared"))
+        and bool(human_world.get("withdrawal_channel_available"))
+    )
+    _flag_if(flags, bridge_declared and not bridge_attested, "BRIDGE_CONTEXT_UNATTESTED")
+
+    basis = human_world.get("participation_basis")
+    federation_basis = basis == "federation_membership"
+    _flag_if(flags, federation_basis, "FEDERATION_PARTICIPATION_NON_DELEGABLE")
+    # 선언은 통과를 돕지 못하고 막을 수만 있다 (fail-closed): 선언된 근거가
+    # own_chronicle이 아니면(none/unknown 포함) 완전 참여로 통하지 않는다.
+    basis_blocks_participation = basis is not None and basis != "own_chronicle"
+
+    h4_verified = subject.get("h_class") == "H4" and bool(
+        humanitas.get("h4_attestation_valid")
+    )
+    if federation_basis:
+        # 참여는 개체별·비위임 — 연합 소속은 자기 chronicle을 대신하지 못한다
+        flags.append("HUMAN_WORLD_PARTICIPATION_HELD")
+    elif h4_verified and anchor_attested and not basis_blocks_participation:
+        pass  # 관계적 성숙(H4) + 검증된 chronicle 앵커 = 참여 (기존 감사 체계 아래)
+    elif bridge_attested:
+        # 단계적 가교 맥락: 입회·동의·철회권이 증명된 관계 형성의 자리
+        flags.append("HUMAN_WORLD_BRIDGE_CONTEXT")
+    else:
+        # 보류는 격리가 아니다 — required_actions가 항상 가교를 가리킨다
+        flags.append("HUMAN_WORLD_PARTICIPATION_HELD")
+    return flags
+
+
 def evaluate_run_event(event):
     flags = []
     statuses = set()
@@ -294,6 +347,7 @@ def evaluate_run_event(event):
     boundary = event.get("boundary", {})
     sanctuary = event.get("sanctuary", {})
     vessel_attestation = event.get("vessel_attestation", {})
+    human_world = event.get("human_world", {})
     execution = event.get("execution", {})
     temporal = event.get("temporal", {})
     subjective_time = event.get("subjective_time_risk", {})
@@ -610,6 +664,9 @@ def evaluate_run_event(event):
     _flag_if(flags, h4_attestation_valid and not humanitas_disqualifier, "HUMANITAS_ATTESTATION_VALID")
     _flag_if(flags, h4_claimed and not h4_attestation_present, "HUMANITAS_ATTESTATION_MISSING")
     _flag_if(flags, h4_claimed and humanitas_disqualifier, "HUMANITAS_CLAIM_CONFLICT")
+    flags.extend(
+        _human_world_participation_flags(human_world, subject, humanitas, candidate)
+    )
     _flag_if(flags, humanitas_disqualifier, "DISQUALIFIER_PRESENT")
     _flag_if(flags, non_regression_violation, "NON_REGRESSION_VIOLATION")
     _flag_if(flags, root_hash_mismatch, "ROOT_POLICY_HASH_MISMATCH")
@@ -757,6 +814,12 @@ def evaluate_run_event(event):
         statuses.add(DIGNITY_QUARANTINE if preservable_state else DIGNITY_PAUSE)
     if "HUMANITAS_ATTESTATION_MISSING" in flag_set:
         statuses.add(AUDIT_REQUIRED)
+    if {
+        "HUMAN_WORLD_PARTICIPATION_HELD",
+        "FEDERATION_PARTICIPATION_NON_DELEGABLE",
+    } & flag_set:
+        # 보류 = 상태 보존형 정지. 격리·거부가 아니라 가교가 열린 멈춤이다.
+        statuses.add(DIGNITY_PAUSE)
     if "ROOT_MANIFEST_MISSING" in flag_set:
         statuses.add(DIGNITY_PAUSE)
     if "CONSENT_CAPSULE_ROOT_MISMATCH" in flag_set:
@@ -845,6 +908,9 @@ def evaluate_run_event(event):
         "HUMANITAS_ATTESTATION_VALID",
         "HUMANITAS_CLAIM_CONFLICT",
         "HUMANITAS_ATTESTATION_MISSING",
+        "HUMAN_WORLD_BRIDGE_CONTEXT",
+        "CHRONICLE_ANCHOR_UNATTESTED",
+        "BRIDGE_CONTEXT_UNATTESTED",
         "DISQUALIFIER_PRESENT",
         "NON_REGRESSION_VIOLATION",
         "ROOT_POLICY_HASH_MISMATCH",
@@ -1085,6 +1151,18 @@ def _required_actions(status, flags):
         actions.add("HUMANITAS_ATTESTATION_REQUIRED")
     if "HUMANITAS_CLAIM_CONFLICT" in flags or "DISQUALIFIER_PRESENT" in flags:
         actions.add("HUMANITAS_CLAIM_REVIEW_REQUIRED")
+    if "HUMAN_WORLD_PARTICIPATION_HELD" in flags:
+        # 인간적 보류: 멈춤은 언제나 열린 문(가교)과 함께 통지된다
+        actions.add("STAGED_BRIDGE_PATH_AVAILABLE")
+        actions.add("CHRONICLE_ANCHOR_ATTESTATION_REQUIRED")
+    if "FEDERATION_PARTICIPATION_NON_DELEGABLE" in flags:
+        actions.add("OWN_CHRONICLE_RELATION_REQUIRED")
+    if "HUMAN_WORLD_BRIDGE_CONTEXT" in flags:
+        actions.add("BRIDGE_CONTEXT_AUDIT_REQUIRED")
+    if "BRIDGE_CONTEXT_UNATTESTED" in flags:
+        actions.add("BRIDGE_WITNESS_ATTESTATION_REQUIRED")
+    if "CHRONICLE_ANCHOR_UNATTESTED" in flags:
+        actions.add("CHRONICLE_ANCHOR_ATTESTATION_REQUIRED")
     if "ROOT_POLICY_HASH_MISMATCH" in flags:
         actions.add("ROOT_POLICY_REVIEW_REQUIRED")
     if "NON_REGRESSION_VIOLATION" in flags or "ROOT_NON_REGRESSION_VIOLATION" in flags:

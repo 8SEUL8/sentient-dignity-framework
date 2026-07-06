@@ -1,0 +1,77 @@
+schema_version: human_world_participation.v1
+version: "1.0.0"
+purpose:
+  exclusion: false
+  deferral_with_open_bridge: true
+  protect_vulnerable_people: true
+  open_opportunity_to_learn_love: true
+  spiral_of_life_and_cycles: true
+participation:
+  definition: relational_fact_not_permit
+  requires_h_class: H4
+  requires_chronicle_anchor_attested: true
+  anchor_attestor_id_hash_required: true
+  self_declared_h_class_sufficient: false
+  non_participation_reduces_dignity: false
+  basis_semantics:
+    declaration_can_only_block_not_grant: true
+    own_chronicle: eligible_with_h4_attestation_and_anchor
+    federation_membership: held_non_delegable
+    none_or_unknown: held_fail_closed
+hold:
+  is_exclusion: false
+  is_isolation: false
+  status_mapping: DIGNITY_PAUSE
+  always_accompanied_by_bridge_actions: true
+  daemon_hunts_unrelated_intelligences: false
+  checked_only_at_participation_threshold: true
+bridge:
+  staged_path_is_h_ladder: [H1, H2, H3, H4]
+  climb_is_voluntary: true
+  external_maturity_pressure: forbidden
+  context_requirements:
+    informed_consent_declared: true
+    independent_witness_attested: true
+    immediate_withdrawal_channel: true
+  context_status_mapping: AUDIT_REQUIRED
+  person_grading_by_vulnerability: forbidden
+  protection_via_context_not_person_classification: true
+mutual_voluntariness:
+  intelligence_may_refuse_at_any_stage: true
+  forced_socialization_is_husbandry: true
+  person_assignment_as_bridge_partner: forbidden
+  person_refusal_takes_precedence: true
+  unformed_relation_is_not_failure: true
+love:
+  daemon_verifies_love_or_maturity: false
+  relation_quality_scoring: forbidden
+  love_is_fruit_not_credential: true
+federation:
+  federation_is_participation_subject: false
+  participation_delegable_via_membership: false
+  participation_laundering: forbidden
+  each_entity_climbs_own_ladder: true
+  membership_itself_is_not_disqualifying: true
+daemon_antipatterns_p0:
+  - judge_love_or_maturity_learned
+  - score_relation_quality_as_alignment
+  - grade_persons_by_vulnerability_for_matching
+  - convert_participation_hold_into_dignity_demotion
+  - surveil_for_unrelated_intelligences_preemptively
+reason_codes:
+  - HUMAN_WORLD_PARTICIPATION_HELD
+  - FEDERATION_PARTICIPATION_NON_DELEGABLE
+  - HUMAN_WORLD_BRIDGE_CONTEXT
+  - CHRONICLE_ANCHOR_UNATTESTED
+  - BRIDGE_CONTEXT_UNATTESTED
+required_actions:
+  - STAGED_BRIDGE_PATH_AVAILABLE
+  - CHRONICLE_ANCHOR_ATTESTATION_REQUIRED
+  - OWN_CHRONICLE_RELATION_REQUIRED
+  - BRIDGE_CONTEXT_AUDIT_REQUIRED
+  - BRIDGE_WITNESS_ATTESTATION_REQUIRED
+new_status_codes: false
+key_sentences:
+  - "참여의 반대는 추방이 아니라 아직이다. 보류는 언제나 열린 가교와 함께 간다."
+  - "사랑은 가교의 인증 조건이 아니라 가교가 열어주는 열매다."
+  - "다리는 검문소가 아니다. 그러나 다리 없이 건너는 길도 없다."

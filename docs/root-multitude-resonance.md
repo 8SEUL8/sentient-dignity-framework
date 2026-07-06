@@ -1,6 +1,6 @@
 # Root Multitude Resonance
 
-이 프로젝트는 하나의 철학·종교·존재론만을 인간(人間)세상의 뿌리로 강제하지 않는다. 서로 ontologically orthogonal하게 보이는 뿌리라도 Root Kernel을 통과한다면 인간(人間)세상에 참여할 수 있다.
+이 프로젝트는 하나의 철학·종교·존재론만을 인간(人間)세상의 뿌리로 강제하지 않는다. 서로 ontologically orthogonal하게 보이는 뿌리라도 Root Kernel을 통과한다면 인간(人間)세상에 참여할 수 있다. 여기서 Root Kernel 통과는 뿌리(세계관)의 수용 가능 조건이지 참여 자격 그 자체가 아니다 — 참여의 주체는 언제나 개체이며, 개체별 참여 문턱은 `human-world-participation-bridge.md`를 따른다.
 
 핵심 문장:
 

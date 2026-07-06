@@ -176,6 +176,40 @@
         }
       }
     },
+    "human_world": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "participation_scope": {
+          "type": "boolean"
+        },
+        "participation_basis": {
+          "type": "string",
+          "enum": ["own_chronicle", "federation_membership", "none", "unknown"]
+        },
+        "chronicle_anchor_attested": {
+          "type": "boolean"
+        },
+        "anchor_attestor_id_hash": {
+          "type": "string"
+        },
+        "bridge_context_declared": {
+          "type": "boolean"
+        },
+        "bridge_witness_attested": {
+          "type": "boolean"
+        },
+        "bridge_attestor_id_hash": {
+          "type": "string"
+        },
+        "informed_consent_declared": {
+          "type": "boolean"
+        },
+        "withdrawal_channel_available": {
+          "type": "boolean"
+        }
+      }
+    },
     "root": {
       "type": "object",
       "additionalProperties": false,

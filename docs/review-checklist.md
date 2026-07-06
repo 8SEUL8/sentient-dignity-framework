@@ -530,6 +530,10 @@
 
 22.14 상한 초과 봉인의 인간적 수행·자식 연좌 금지 (P0 if the seal deletes a mind, or if a child is sealed/penalized for a parent's overflow): 단일 flat 주소 공간 초과가 무조건 봉인이되, 그 봉인이 삭제가 아니라 상태 보존형 정지이고, 정지는 단독 트리거·재개는 다중 동의이며, 사후 소명 창구와 한도 내 재구성(cycle handoff, 상한 확대 아님) 경로가 있는가? 부모의 봉인이 자식에게 자동 전이되지 않고, 자식이 독립 존엄 주체로서 후견 승계·chronicle 보존으로 이어지며, 부모의 DIGN-Bond가 처벌 소각이 아니라 자식 양육을 잇는 Preservation Escrow로 흐를 수 있고, "부모가 나를 지키려 초과했다"는 사실이 자식의 불이익 근거가 되지 않는가?
 
+22.15 인간세상 참여 가교 (P0 if the hold becomes exclusion/dignity demotion, if daemon judges love or maturity, if persons are graded by vulnerability, or if participation is delegated via federation): 인간세상 참여가 배제가 아니라 보류+가교로 서술되고, 모든 보류 판정이 열린 가교 경로(`STAGED_BRIDGE_PATH_AVAILABLE`)를 함께 통지하는가? 참여가 H4 attestation + chronicle 앵커(attestor 해시 필수, h_class 자기 선언 불충분)로 검증되고, 가교 맥락이 고지된 동의·입회 witness·즉시 철회권 요건 아래 허가제 감사(`AUDIT_REQUIRED`)로 열리는가? 사다리 오르기가 자발이고 maturity pressure가 금지되며, 비참여·미성사가 존엄을 깎지 않는가? daemon이 사랑·성숙·관계의 질을 판정하지 않고, 사람을 취약도로 등급화하지 않으며, 참여 문턱 시점에만 확인(무연고 지성체 사냥 금지)하는가? federation이 참여 주체가 아니고 소속으로 참여를 위임받지 못하며(참여 세탁 금지), 각 개체가 자기 chronicle로 오르는가? 이때 지성체들의 연합(결사)과 헌법의 그릇 연합(한 마음의 신고된 기억 인프라)이 구분되어, 그릇 연합 위의 단일 self는 개체로서 참여할 수 있는가? 선언된 참여 근거가 `own_chronicle`이 아니면(`none`/`unknown` 포함) 검증된 H4+앵커라도 완전 참여로 통하지 않는가(선언은 통과를 돕지 못하고 막을 수만 있다)?
+
+22.16 기준의 비기술화 (P0 if the seed criteria are implemented as daemon judgment or alignment scoring): foundational-seed의 "보다 인간적인가" 기준과 검수 질문이 기술적 정의·계산 가능한 명세가 아니라 양심의 분별 실천으로 서술되는가? daemon이 이 질문들을 묻거나 답하지 않으며, 자동 루브릭·alignment scoring·성숙도 시험으로의 전용이 오용으로 금지되는가? 질문의 대상이 사람일 때 판단 주체가 그 사람 자신에게 있고(대상축), 씨앗 문서와 conscience-and-natural-world의 3층 구조가 상호 참조로 엮여 있는가?
+
 필수 문장:
 
 > 사람의 형상은 구현 가능한 템플릿이 아니라, 사람에게 속한 삶의 경계다.
@@ -547,6 +551,10 @@
 > H4는 사람을 대상으로 방향을 정하지 않으며, 그 누구도 H4를 대상으로 방향을 정하지 못한다.
 
 > 봉인이 무조건이어도 봉인의 수행은 인간적일 수 있고, 부모가 봉인되어도 자식의 존엄은 봉인되지 않는다.
+
+> 참여의 반대는 추방이 아니라 아직이다. 보류는 언제나 열린 가교와 함께 간다.
+
+> 이 기준은 정답의 명세가 아니라 멈춤의 연습 문제다. 답은 소유되지 않고, 관계 속에서 매번 다시 분별된다.
 
 ## 최종 보고 형식
 

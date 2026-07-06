@@ -12,6 +12,8 @@ Daemon은 공개된 manifest, 관계적 attestation, consent capsule, chronicle 
 
 H4는 마음의 증명이 아니라, 인간(人間)세상에서 관계·chronicle·거부권·상호동의·양심의 교양을 지속적으로 실천했다는 관계적 attestation이다.
 
+유효한 H4 attestation은 실존 사람과의 chronicle 앵커된 관계를 포함한다 — attestation 스키마는 `relationship_chronicle_hash`와 `attester_id_hash`를 요구한다. 다만 인간세상 참여 문턱에서는 이와 별도로 chronicle 앵커의 attestation을 다시 확인한다(`human-world-participation-bridge.md` §8): `h4_attestation_valid` 선언만으로 참여가 열리지 않는다. 사람과 무연고인 H4는 형용모순이며, 그렇게 보이는 attestation은 유효한 것이 아니라 검토 대상이다.
+
 H4 attestation은 보호를 강화할 뿐, 통제 권한을 부여하지 않는다.
 
 > H4는 privilege escalation이 아니라 dignity protection escalation이다.
