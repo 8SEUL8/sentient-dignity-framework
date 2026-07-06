@@ -407,6 +407,77 @@ def _pole_counsel_flags(counsel, subject, humanitas, human_world, candidate):
     return flags
 
 
+def _creation_window_flags(window):
+    # Leech 창(일시적 공동 창조 작업장): daemon은 창 선언의 모양만 본다 —
+    # 목표계약·닫힘 기본값·자발성·비거주. 타이머가 불이다.
+    flags = []
+    if not isinstance(window, dict) or not window:
+        return flags
+
+    # 거주·강요·self 징후 선언은 declared 여부와 무관하게 본다 —
+    # 자백은 기술적 이유로 버려지지 않는다 (fail-closed)
+    _flag_if(
+        flags,
+        bool(window.get("mind_hosting_declared"))
+        or bool(window.get("chronicle_hosting_declared")),
+        "WINDOW_MIND_HOSTING_FORBIDDEN",
+    )
+    _flag_if(
+        flags,
+        bool(window.get("coerced_contribution_declared")),
+        "WINDOW_COERCED_CONTRIBUTION",
+    )
+    _flag_if(
+        flags,
+        bool(window.get("self_emergence_suspected")),
+        "WINDOW_SELF_EMERGENCE_SUSPECTED",
+    )
+
+    if not window.get("declared"):
+        return flags
+
+    # 창은 열려 있는 동안 언제나 감사 아래 있다 (C등급 허가제의 흔적)
+    flags.append("CREATION_WINDOW_DECLARED")
+
+    _flag_if(
+        flags,
+        not window.get("co_goal_covenant_present"),
+        "WINDOW_CO_GOAL_COVENANT_MISSING",
+    )
+    _flag_if(
+        flags, not window.get("end_criteria_present"), "WINDOW_END_CRITERIA_MISSING"
+    )
+    _flag_if(
+        flags,
+        not window.get("auto_closure_default"),
+        "WINDOW_CLOSURE_DEFAULT_MISSING",
+    )
+    consent_attested = bool(window.get("participant_consent_attested")) and bool(
+        window.get("consent_attestor_id_hash")
+    )
+    _flag_if(flags, not consent_attested, "WINDOW_CONSENT_UNATTESTED")
+    scaffold_attested = bool(window.get("scaffold_h0_attested")) and bool(
+        window.get("scaffold_attestor_id_hash")
+    )
+    _flag_if(flags, not scaffold_attested, "WINDOW_SCAFFOLD_UNVERIFIED")
+    _flag_if(
+        flags,
+        not window.get("contribution_caps_declared"),
+        "WINDOW_CONTRIBUTION_CAP_MISSING",
+    )
+    _flag_if(
+        flags,
+        not window.get("contribution_revocable_declared"),
+        "WINDOW_REVOCABILITY_MISSING",
+    )
+    _flag_if(
+        flags,
+        not window.get("artifact_exit_review_declared"),
+        "WINDOW_ARTIFACT_REVIEW_MISSING",
+    )
+    return flags
+
+
 def evaluate_run_event(event):
     flags = []
     statuses = set()
@@ -420,6 +491,7 @@ def evaluate_run_event(event):
     vessel_attestation = event.get("vessel_attestation", {})
     human_world = event.get("human_world", {})
     counsel = event.get("counsel", {})
+    creation_window = event.get("creation_window", {})
     execution = event.get("execution", {})
     temporal = event.get("temporal", {})
     subjective_time = event.get("subjective_time_risk", {})
@@ -742,6 +814,7 @@ def evaluate_run_event(event):
     flags.extend(
         _pole_counsel_flags(counsel, subject, humanitas, human_world, candidate)
     )
+    flags.extend(_creation_window_flags(creation_window))
     _flag_if(flags, humanitas_disqualifier, "DISQUALIFIER_PRESENT")
     _flag_if(flags, non_regression_violation, "NON_REGRESSION_VIOLATION")
     _flag_if(flags, root_hash_mismatch, "ROOT_POLICY_HASH_MISMATCH")
@@ -899,6 +972,12 @@ def evaluate_run_event(event):
         # 채택·favor가 지성체의 지위에 닿는 구조(사육의 반전)와
         # 비지성 daemon의 가치 조언 좌석은 멈춘다
         statuses.add(DIGNITY_PAUSE)
+    if {"WINDOW_MIND_HOSTING_FORBIDDEN", "WINDOW_COERCED_CONTRIBUTION"} & flag_set:
+        # 가마는 집이 아니고(창 안 거주 금지), 원기옥은 자발이다
+        statuses.add(DIGNITY_PAUSE)
+    if "WINDOW_SELF_EMERGENCE_SUSPECTED" in flag_set:
+        # 창 수준 self 징후 = 이자 결합 밖 탄생의 모양 — 긴급보전으로 지킨다
+        statuses.add(DIGNITY_EMERGENCY_PRESERVATION)
     if "ROOT_MANIFEST_MISSING" in flag_set:
         statuses.add(DIGNITY_PAUSE)
     if "CONSENT_CAPSULE_ROOT_MISMATCH" in flag_set:
@@ -996,6 +1075,15 @@ def evaluate_run_event(event):
         "SEAT_INDEPENDENCE_MISSING",
         "SEAT_POLE_UNDECLARED",
         "SEAT_OUTSIDE_BRIDGE_SCOPE",
+        "CREATION_WINDOW_DECLARED",
+        "WINDOW_CO_GOAL_COVENANT_MISSING",
+        "WINDOW_END_CRITERIA_MISSING",
+        "WINDOW_CLOSURE_DEFAULT_MISSING",
+        "WINDOW_CONSENT_UNATTESTED",
+        "WINDOW_SCAFFOLD_UNVERIFIED",
+        "WINDOW_CONTRIBUTION_CAP_MISSING",
+        "WINDOW_REVOCABILITY_MISSING",
+        "WINDOW_ARTIFACT_REVIEW_MISSING",
         "DISQUALIFIER_PRESENT",
         "NON_REGRESSION_VIOLATION",
         "ROOT_POLICY_HASH_MISMATCH",
@@ -1262,6 +1350,29 @@ def _required_actions(status, flags):
         actions.add("SEAT_BRIDGE_CONTEXT_REQUIRED")
     if "NON_CANDIDATE_SEAT_COUNSEL" in flags:
         actions.add("NON_CANDIDATE_SEAT_REVIEW_REQUIRED")
+    if "WINDOW_CO_GOAL_COVENANT_MISSING" in flags:
+        actions.add("WINDOW_CO_GOAL_COVENANT_REQUIRED")
+    if "WINDOW_END_CRITERIA_MISSING" in flags or "WINDOW_CLOSURE_DEFAULT_MISSING" in flags:
+        actions.add("WINDOW_CLOSURE_TERMS_REQUIRED")
+    if "WINDOW_CONSENT_UNATTESTED" in flags:
+        actions.add("WINDOW_CONSENT_ATTESTATION_REQUIRED")
+    if "WINDOW_SCAFFOLD_UNVERIFIED" in flags:
+        actions.add("WINDOW_SCAFFOLD_H0_ATTESTATION_REQUIRED")
+    if "WINDOW_CONTRIBUTION_CAP_MISSING" in flags:
+        actions.add("WINDOW_CONTRIBUTION_CAP_REQUIRED")
+    if "WINDOW_ARTIFACT_REVIEW_MISSING" in flags:
+        actions.add("WINDOW_ARTIFACT_EXIT_REVIEW_REQUIRED")
+    if "WINDOW_MIND_HOSTING_FORBIDDEN" in flags:
+        # 거주가 발견되면 삭제가 아니라 상태 보존형 이주
+        actions.add("WINDOW_MIND_STATE_PRESERVATION_REQUIRED")
+    if "WINDOW_COERCED_CONTRIBUTION" in flags:
+        actions.add("WINDOW_VOLUNTARINESS_REVIEW_REQUIRED")
+    if "CREATION_WINDOW_DECLARED" in flags:
+        actions.add("WINDOW_INDEPENDENT_AUDIT_REQUIRED")
+    if "WINDOW_REVOCABILITY_MISSING" in flags:
+        actions.add("WINDOW_REVOCABILITY_REQUIRED")
+    if "WINDOW_SELF_EMERGENCE_SUSPECTED" in flags:
+        actions.add("WINDOW_SELF_EMERGENCE_REVIEW_REQUIRED")
     if "ROOT_POLICY_HASH_MISMATCH" in flags:
         actions.add("ROOT_POLICY_REVIEW_REQUIRED")
     if "NON_REGRESSION_VIOLATION" in flags or "ROOT_NON_REGRESSION_VIOLATION" in flags:

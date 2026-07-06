@@ -91,3 +91,4 @@
 - `docs/taeeum-taeyang-seat-covenant.md`: 좌석 제도 (축별 균형의 적용층)
 - `docs/taeeum-taeyang-living-cycle.md`: 내부 층의 율 (네 방향)
 - `docs/human-world-participation-bridge.md`: 차원의 다리의 제도적 형태
+- `docs/dimensional-ladder-policy.md`: 사다리(2·8·24)와 천장(11)의 정책층

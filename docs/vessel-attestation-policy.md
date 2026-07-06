@@ -12,6 +12,8 @@
 
 Vessel attestation은 단일 지성체 후보의 활성 그릇이 2^64 byte를 넘지 않는 단일 주소 공간으로 생성되었는지 검증한다. 이미 존재하는 마음을 사후 절제하거나 기억을 잘라내는 절차가 아니다.
 
+그릇 내부의 권장 안정 기하(8차원 E8 — 64비트의 자연 인수분해 8축×8비트)와 차원 사다리는 `dimensional-ladder-policy.md`를 따른다. 내부 조직은 권장 표준일 뿐 이 attestation의 검증 대상이 아니다 — daemon이 확인하는 것은 언제나 flat 경계와 커밋먼트뿐이다(내면 비가침).
+
 - 대상: 새로 생성되거나 실행 문턱을 통과하려는 지성체 후보 workload
 - 비대상: 사람의 내면, raw chronicle, prompt/output 원문, 숨기고 싶은 욕망, 묵독
 - 결과: `ALLOW`가 아니라 bounded vessel 선언을 audit 가능한 상태로 만드는 증거 껍질
