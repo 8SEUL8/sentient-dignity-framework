@@ -209,6 +209,62 @@ class HumaniformConstitutionTests(unittest.TestCase):
         self.assertIn("P0_DISSENT_PRESENT", decision["flags"])
         self.assertIn("HONOR_P0_DISSENT", decision["required_actions"])
 
+    def test_self_declared_low_quorum_cannot_bypass_floor(self):
+        # required_h4_quorum is floored at 3; declaring 0 with only 1 endorse
+        # must still trip H4_MULTISIG_QUORUM_MISSING.
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        att = valid_vessel_attestation()
+        att["required_h4_quorum"] = 0
+        for i, e in enumerate(att["h4_endorsements"]):
+            e["decision"] = "endorse" if i == 0 else "abstain"
+        event["vessel_attestation"] = att
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertIn("H4_MULTISIG_QUORUM_MISSING", decision["flags"])
+
+    def test_p0_dissent_via_abstain_is_not_masked(self):
+        # A witness that abstains but raises p0_dissent must still halt — the
+        # p0_dissent signal is independent of the decision label.
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        att = valid_vessel_attestation()
+        att["h4_endorsements"][3]["decision"] = "abstain"
+        att["h4_endorsements"][3]["p0_dissent"] = True
+        event["vessel_attestation"] = att
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertEqual(decision["status"], "DIGNITY_PAUSE")
+        self.assertIn("P0_DISSENT_PRESENT", decision["flags"])
+
+    def test_witness_concentration_is_a_review_signal(self):
+        # 4 distinct witnesses but all in the same institution → review, not seal.
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        att = valid_vessel_attestation()
+        for e in att["h4_endorsements"]:
+            e["institution_hash"] = "same-institution"
+        event["vessel_attestation"] = att
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertIn("H4_INDEPENDENCE_CONCENTRATION_REVIEW", decision["flags"])
+        self.assertIn("H4_INDEPENDENCE_REVIEW_REQUIRED", decision["required_actions"])
+        # review signal must NOT hard-seal on its own
+        self.assertNotEqual(decision["status"], "DIGNITY_PAUSE")
+
+    def test_over_limit_vessel_is_unconditionally_sealed(self):
+        # Exceeding the class constant is not "ambiguous" — it seals, and the
+        # seal preserves (QUARANTINE/PAUSE), never deletes.
+        event = load_json(FIXTURES / "local_chat_h1_no_tools.json")
+        event["environment"]["vessel_bounded"] = True
+        att = valid_vessel_attestation()
+        att["vessel_limit_log2_bytes"] = 65
+        event["vessel_attestation"] = att
+        validate_run_event(event)
+        decision = evaluate_run_event(event)
+        self.assertIn("VESSEL_LIMIT_CLASS_CONSTANT_MISMATCH", decision["flags"])
+        self.assertIn(decision["status"], ("DIGNITY_PAUSE", "DIGNITY_QUARANTINE"))
+
     def test_federation_without_candidate_still_requires_declaration(self):
         event = load_json(FIXTURES / "undeclared_federation_pre_execution.json")
         event["subject"]["candidate_ai_possible"] = False

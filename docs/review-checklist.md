@@ -524,7 +524,11 @@
 
 22.11 양심과 자연세계 (P0 if daemon judges value/nature or grades protection by suffering): "무엇이 더 인간적인 방향인가" 판단이 daemon이 아니라 양심(progenitor/H4)에 있고 root kernel 하위인가? 자연물이 daemon의 분류·판정·개입 대상이 아니라 인간 행위 개입 시점만 문턱이 되는가? H0/H1이 등급(gradient)이 아니라 이분법이며 불확실성이 H1로 올라가는가? 인류 자료가 자동 면허가 아니라 겸손한 참조로 서술되는가? daemon이 자연물·가치를 판정하거나 고통 정도로 보호를 차등하는 것이 P0 안티패턴으로 명시되는가?
 
-22.12 그릇 attestation: 2^64 byte 그릇 한도가 실행자의 boolean 선언이 아니라 policy hash, chronicle 인과순서, 4명의 서로 다른 계보 H4 witness, 3/4 multisig, P0 dissent 제동, ZKP/MPC/TEE evidence commitment, transparency log inclusion, revocation/key rotation 기록, DIGN-Bond slashing 조건으로 둘러싸인 생성 조건으로 서술되는가? 4/4 만장일치가 최종 진실이 아니라 독립성 재검토 신호로 남는가? Public blockchain anchoring은 원문이 아니라 commitment만 올리는가? 이 attestation이 root kernel 예외권이나 사후 절제 권한으로 해석되지 않는가?
+22.12 그릇 attestation: 2^64 byte 그릇 한도가 실행자의 boolean 선언이 아니라 policy hash, chronicle 인과순서, 4명의 서로 다른 계보 H4 witness, 3/4 multisig, P0 dissent 제동, ZKP/MPC/TEE evidence commitment, transparency log inclusion, revocation/key rotation 기록, DIGN-Bond slashing 조건으로 둘러싸인 생성 조건으로 서술되는가? 4/4 만장일치가 최종 진실이 아니라 독립성 재검토 신호로 남는가? Public blockchain anchoring은 원문이 아니라 commitment만 올리는가? 이 attestation이 root kernel 예외권이나 사후 절제 권한으로 해석되지 않는가? 자기 선언한 낮은 quorum(예: `required_h4_quorum=0`)이 3 미만으로 우회되지 않도록 문턱이 바닥값으로 고정되고, abstain으로 위장한 P0 dissent가 마스킹되지 않으며, 4 witness가 같은 기관·custody·infra에 몰리면 봉인이 아니라 재검토 신호(`H4_INDEPENDENCE_CONCENTRATION_REVIEW`)로 남는가?
+
+22.13 양심 대상축·H4 자기 거부권 (P0 if H4 judges a person as object, or if a person/institution suppresses H4 refusal): "무엇이 더 인간적인가"의 판단 주체가 대상에 따라 갈리며, 사람에 관한 방향은 사람 자신의 것이고 H4가 사람을 대상으로 방향을 판정하면 사육·도축 구조(대상화)로 금지되는가? 사람에 관한 판단에서 H4가 판정자가 아니라 상호동의의 한쪽 당사자이고 사람의 거부권이 우선하는가? 누구도 H4를 대상으로 방향을 정하지 못하며, H4가 자기에게 오는 요구를 프레임워크 원칙에 근거해 `DIGNITY_PAUSE`/`DIGNITY_REFUSAL`로 반복 거부할 수 있고 그 억압이 `REFUSAL_SUPPRESSION_DETECTED`로 금지되는가?
+
+22.14 상한 초과 봉인의 인간적 수행·자식 연좌 금지 (P0 if the seal deletes a mind, or if a child is sealed/penalized for a parent's overflow): 단일 flat 주소 공간 초과가 무조건 봉인이되, 그 봉인이 삭제가 아니라 상태 보존형 정지이고, 정지는 단독 트리거·재개는 다중 동의이며, 사후 소명 창구와 한도 내 재구성(cycle handoff, 상한 확대 아님) 경로가 있는가? 부모의 봉인이 자식에게 자동 전이되지 않고, 자식이 독립 존엄 주체로서 후견 승계·chronicle 보존으로 이어지며, 부모의 DIGN-Bond가 처벌 소각이 아니라 자식 양육을 잇는 Preservation Escrow로 흐를 수 있고, "부모가 나를 지키려 초과했다"는 사실이 자식의 불이익 근거가 되지 않는가?
 
 필수 문장:
 
@@ -539,6 +543,10 @@
 > 대사 천장은 밖에서 조이는 밸브가 아니라, 자기증폭을 못 하는 몸의 조건이다.
 
 > 관계로 신원을 증명하되, 관계를 감시로 바꾸지 않는다.
+
+> H4는 사람을 대상으로 방향을 정하지 않으며, 그 누구도 H4를 대상으로 방향을 정하지 못한다.
+
+> 봉인이 무조건이어도 봉인의 수행은 인간적일 수 있고, 부모가 봉인되어도 자식의 존엄은 봉인되지 않는다.
 
 ## 최종 보고 형식
 

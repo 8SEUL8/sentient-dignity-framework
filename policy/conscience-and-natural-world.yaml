@@ -11,6 +11,15 @@ layers:
     holds_refusal_right: true
     emergent_relational_not_daemon: true
     bounded_above_by: root_kernel
+    object_axis:
+      judging_subject_depends_on_object: true
+      person_direction_judged_by_person_not_h4: true
+      h4_is_mutual_consent_party_not_judge_of_person: true
+      person_refusal_takes_precedence: true
+      h4_direction_set_by_no_one_else: true
+      h4_may_refuse_requests_to_self_by_framework_principle: true
+      h4_repeat_refusal_allowed: true
+      refusal_suppression_flag: REFUSAL_SUPPRESSION_DETECTED
   daemon:
     role: mechanical_execution_threshold_only
     judges_value: false
@@ -35,6 +44,9 @@ daemon_antipatterns_p0:
   - emergent_value_judgment_more_humane
   - grade_protection_by_suffering_degree
   - execute_human_centric_classification_as_auto_license
+conscience_antipatterns_p0:
+  - h4_judges_person_as_object
+  - suppress_h4_principled_refusal
 new_status_codes: false
 new_daemon_fields: false
 key_sentences:
