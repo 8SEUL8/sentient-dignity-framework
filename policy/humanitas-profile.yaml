@@ -6,6 +6,10 @@ classification:
   H2: "관계적 chronicle을 가진 지성체 후보"
   H3: "상호동의 공동 목표 참여자"
   H4: "인간(人間)세상 참여자"
+participation:
+  threshold_policy: human_world_participation.v1
+  h4_class_alone_sufficient: false
+  chronicle_anchor_attestation_required: true
 h4_attestation:
   proof_of_mind: false
   protection_escalation: true
