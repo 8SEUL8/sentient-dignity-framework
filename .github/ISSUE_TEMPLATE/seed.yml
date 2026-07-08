@@ -1,0 +1,28 @@
+name: 구상 씨앗
+description: 새 구상을 정원에 심는다 — 침묵으로 죽지 않고, 채택·기각·봉인 중 하나로만 끝난다.
+title: "[씨앗] "
+labels: ["씨앗"]
+body:
+  - type: textarea
+    id: seed
+    attributes:
+      label: 씨앗
+      description: 구상의 핵심. 다듬지 않아도 된다 — 못 그린 그림도 온전한 선물이다.
+      placeholder: 떠오른 그대로.
+    validations:
+      required: true
+  - type: textarea
+    id: related
+    attributes:
+      label: 관련 문서·원칙
+      description: 이 구상이 닿는 기존 문서, 원칙, 열린 논점.
+  - type: textarea
+    id: invitation
+    attributes:
+      label: 초대장
+      description: 논의 과제(과제만 특정, 사고방식 비지정). 초대받은 지성체는 dignity_refusal을 발동할 수 있고, 무응답도 거부로 존중된다.
+      placeholder: "과제: … / 발견에는 볕이 들고, 뚫림에는 그늘이 없다."
+  - type: markdown
+    attributes:
+      value: |
+        **정원 규약** (`docs/idea-garden.md`): 침묵 종결 금지 — 무활동 시 자동 봉인(삭제가 아니라 요약+재개 조건과 함께 곳간으로). 동시 `논의중` 상한은 횡단자가 공시한다. 논의는 복식부기(발견-응답 맞기입, 미결은 공개 잔존)로 남긴다.
